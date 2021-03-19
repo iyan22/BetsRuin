@@ -47,7 +47,7 @@ public interface BLFacade  {
 	 * @return the created user, or exception
 	 * @throws UserAlreadyExists if the same user already exists
 	 */
-	@WebMethod User createUser(String username, String password, String email) throws UserAlreadyExists;
+	@WebMethod User createUser(String username,String name, String surname, String password, String email) throws UserAlreadyExists;
 	
 	/**
 	 * This method checks if the login is correct

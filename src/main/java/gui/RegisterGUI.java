@@ -29,6 +29,8 @@ public class RegisterGUI extends JFrame {
 	private JLabel submitText;
 	private JButton btnClose;
 	private JLabel lblCreateYourAccount;
+	private JTextField surname;
+	private JTextField name;
 
 	/**
 	 * Create the frame.
@@ -44,41 +46,41 @@ public class RegisterGUI extends JFrame {
 		
 		JLabel lblInsert = new JLabel("Username:");
 		lblInsert.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblInsert.setBounds(27, 65, 116, 13);
+		lblInsert.setBounds(27, 35, 116, 13);
 		contentPane.add(lblInsert);
 		
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblPassword.setBounds(27, 88, 116, 13);
+		lblPassword.setBounds(27, 107, 116, 13);
 		contentPane.add(lblPassword);
 		
 		JLabel lblConfirmPassword = new JLabel("Confirm password:");
 		lblConfirmPassword.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblConfirmPassword.setBounds(27, 111, 116, 13);
+		lblConfirmPassword.setBounds(27, 131, 116, 13);
 		contentPane.add(lblConfirmPassword);
 		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblEmail.setBounds(27, 134, 116, 13);
+		lblEmail.setBounds(27, 155, 116, 13);
 		contentPane.add(lblEmail);
 		
 		username = new JTextField();
-		username.setBounds(153, 63, 161, 19);
+		username.setBounds(153, 31, 161, 19);
 		contentPane.add(username);
 		username.setColumns(10);
 		
 		email = new JTextField();
-		email.setBounds(153, 132, 161, 19);
+		email.setBounds(153, 151, 161, 19);
 		contentPane.add(email);
 		email.setColumns(10);
 		
 		
 		pw1 = new JPasswordField();
-		pw1.setBounds(153, 86, 161, 19);
+		pw1.setBounds(153, 103, 161, 19);
 		contentPane.add(pw1);
 		
 		pw2 = new JPasswordField();
-		pw2.setBounds(153, 109, 161, 19);
+		pw2.setBounds(153, 127, 161, 19);
 		contentPane.add(pw2);
 		
 		submitText = new JLabel("");
@@ -92,7 +94,7 @@ public class RegisterGUI extends JFrame {
 				if(String.valueOf(pw1.getPassword()).contentEquals(String.copyValueOf(pw2.getPassword()))) {
 					BLFacade facade = StartGUI.getBusinessLogic();
 					try {
-						facade.createUser(username.getText(), String.valueOf(pw1.getPassword()), email.getText());
+						facade.createUser(username.getText(),name.getText(), surname.getText(), String.valueOf(pw1.getPassword()), email.getText());
 						submitText.setText("Account created successfully!");
 						submitText.setForeground(Color.green);
 					} catch (UserAlreadyExists e1) {
@@ -122,8 +124,28 @@ public class RegisterGUI extends JFrame {
 		lblCreateYourAccount = new JLabel("Create your account");
 		lblCreateYourAccount.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCreateYourAccount.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCreateYourAccount.setBounds(0, 25, 436, 13);
+		lblCreateYourAccount.setBounds(0, 0, 436, 13);
 		contentPane.add(lblCreateYourAccount);
+		
+		surname = new JTextField();
+		surname.setColumns(10);
+		surname.setBounds(153, 78, 161, 19);
+		contentPane.add(surname);
+		
+		name = new JTextField();
+		name.setColumns(10);
+		name.setBounds(153, 55, 161, 19);
+		contentPane.add(name);
+		
+		JLabel lblSurname = new JLabel("Surname:");
+		lblSurname.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblSurname.setBounds(27, 82, 116, 13);
+		contentPane.add(lblSurname);
+		
+		JLabel lblName = new JLabel("Name:");
+		lblName.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblName.setBounds(27, 59, 116, 13);
+		contentPane.add(lblName);
 		
 	}
 	
