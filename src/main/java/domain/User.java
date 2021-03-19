@@ -8,17 +8,27 @@ public class User {
 	
 	@Id
 	private String username;
+	private String name;
+	private String surname;
 	private String password;
 	private String email;
 	private boolean admin;
 	
-	public User(String username, String password, String email) {
+	public User(String username, String name,String surname, String password, String email) {
 		this.username=username;
 		this.password=password;
+		this.name=name;
+		this.surname=surname;
 		this.email=email;
 		this.admin=false;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	public String getSurname() {
+		return surname;
+	}
 	public String getUsername() {
 		return username;
 	}

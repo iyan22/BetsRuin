@@ -122,7 +122,7 @@ public class DataAccess  {
 
 			}
 
-			User admin = new User("admin", "admin", "admin");
+			User admin = new User("admin", "admin","admin","admin", "admin");
 			admin.setAdmin();
 			db.persist(admin);
 
@@ -198,13 +198,13 @@ public class DataAccess  {
 	 * @return the created user or exception
 	 * @throws UserAlreadyExists if there is a user with the same username
 	 */
-	public User createUser(String username, String password, String email) throws UserAlreadyExists {
+	public User createUser(String username,String name, String surname, String password, String email) throws UserAlreadyExists {
 		System.out.println(">> DataAccess: createUser=> username= "+username+" email= "+email);
 		User usr = db.find(User.class, username);
 		if(usr!=null) throw new UserAlreadyExists(ResourceBundle.getBundle("Etiquetas").getString("ErrorUserAlreadyExist"));
 
 		db.getTransaction().begin();
-		db.persist(new User(username, password, email));
+		db.persist(new User(username,name,surname, password, email));
 		db.getTransaction().commit();
 		return usr;
 	}
