@@ -11,6 +11,8 @@ import javax.swing.text.StyleConstants;
 
 import businessLogic.BLFacade;
 import domain.Question;
+import domain.User;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
@@ -33,7 +35,7 @@ public class AddBetGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddBetGUI(Question q) {
+	public AddBetGUI(Question q, User user) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 506, 335);
 		contentPane = new JPanel();
@@ -85,9 +87,9 @@ public class AddBetGUI extends JFrame {
 						float amount = Float.parseFloat(amountBet.getText());
 						BLFacade facade = StartGUI.getBusinessLogic();
 						if(amount>=q.getBetMinimum()) {
-							if(firstButton.isSelected()) facade.addBet("first", amount, q);
-							else if(secondButton.isSelected()) facade.addBet("second", amount, q);
-							else if(tieButton.isSelected()) facade.addBet("tie", amount, q);
+							if(firstButton.isSelected()) facade.addBet(user,"first", amount, q);
+							else if(secondButton.isSelected()) facade.addBet(user,"second", amount, q);
+							else if(tieButton.isSelected()) facade.addBet(user,"tie", amount, q);
 							submitted.setText("Bet submitted successfully!");
 							submitted.setForeground(Color.green);
 						}

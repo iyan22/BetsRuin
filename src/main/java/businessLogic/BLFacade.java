@@ -2,10 +2,7 @@ package businessLogic;
 
 import java.util.Vector;
 import java.util.Date;
-
-
-
-
+import java.util.List;
 
 //import domain.Booking;
 import domain.Question;
@@ -54,9 +51,9 @@ public interface BLFacade  {
 	 * 
 	 * @param username to check
 	 * @param password to check
-	 * @return if the username and password are correct
+	 * @return user if the username is correct, null if username or password are not correct
 	 */
-	@WebMethod boolean login(String username, String password);
+	@WebMethod User login(String username, String password);
 	
 	/**
 	 * This method creates and event
@@ -91,7 +88,7 @@ public interface BLFacade  {
 	 * @return the created bet
 	 */
 	@WebMethod
-	public Bet addBet(String win, float amount, Question question);
+	public Bet addBet(User user,String win, float amount, Question question);
 	
 	/**
 	 * This method find a question in the data base.
@@ -113,5 +110,10 @@ public interface BLFacade  {
 	 */	
 	@WebMethod public void initializeBD();
 
-	
+	/**
+	 * Method used to obtain all the bets a user has made
+	 * @param username
+	 * @return list of bets
+	 */
+	public List<Bet> getBets(String username);
 }

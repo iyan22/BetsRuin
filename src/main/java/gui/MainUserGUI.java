@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.*;
 
+import domain.User;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -29,14 +30,15 @@ public class MainUserGUI extends JFrame {
 	private JPanel panel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton btnReturn;
-
+	private User u;
+	private JButton UserZone;
 
 	/**
 	 * This is the default constructor
 	 */
-	public MainUserGUI() {
+	public MainUserGUI(User u) {
 		super();
-
+		this.u=u;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -79,9 +81,10 @@ public class MainUserGUI extends JFrame {
 			jContentPane = new JPanel();
 			jContentPane.setLayout(null);
 			jContentPane.add(getLblNewLabel());
-			jContentPane.add(getBoton3());
 			jContentPane.add(getPanel());
 			jContentPane.add(getBtnReturn());
+			jContentPane.add(getUserZone());
+			jContentPane.add(getBoton3());
 		}
 		return jContentPane;
 	}
@@ -101,11 +104,11 @@ public class MainUserGUI extends JFrame {
 	private JButton getBoton3() {
 		if (jButtonQueryQueries == null) {
 			jButtonQueryQueries = new JButton();
-			jButtonQueryQueries.setBounds(0, 69, 481, 68);
+			jButtonQueryQueries.setBounds(0, 66, 481, 49);
 			jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 			jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					JFrame a = new FindQuestionsGUI();
+					JFrame a = new FindQuestionsGUI(u);
 					a.setVisible(true);
 				}
 			});
@@ -168,7 +171,7 @@ public class MainUserGUI extends JFrame {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setBounds(0, 137, 481, 68);
+			panel.setBounds(0, 164, 481, 68);
 			panel.add(getRdbtnNewRadioButton_1());
 			panel.add(getRdbtnNewRadioButton_2());
 			panel.add(getRdbtnNewRadioButton());
@@ -198,6 +201,20 @@ public class MainUserGUI extends JFrame {
 		JFrame a = new StartGUI();
 		a.setVisible(true);
 		this.dispose();
+	}
+	private JButton getUserZone() {
+		if (UserZone == null) {
+			UserZone = new JButton(); //$NON-NLS-1$ //$NON-NLS-2$
+			UserZone.setText(u.getName()+"'s Zone");
+			UserZone.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					UserZoneGUI usZ= new UserZoneGUI(u);
+					usZ.setVisible(true);
+				}
+			});
+			UserZone.setBounds(0, 114, 481, 49);
+		}
+		return UserZone;
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"
 

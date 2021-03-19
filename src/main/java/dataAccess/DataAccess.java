@@ -215,10 +215,10 @@ public class DataAccess  {
 	 * @param password of the user.
 	 * @return true if the user and the password coincide, false otherwise.
 	 */
-	public boolean login(String username, String password) {
+	public User login(String username, String password) {
 		User usr = db.find(User.class, username);
-		if(usr!=null && password.contentEquals(usr.getPassword())) return true;
-		else return false;
+		if(usr!=null && password.contentEquals(usr.getPassword())) return usr;
+		else return null;
 	}
 	
 	/**
@@ -283,15 +283,23 @@ public class DataAccess  {
 	 * @return the created bet
 	 * @throws BetDenied if the probabilities of winning/tie ar over 100
 	 */
-	public Bet addBet(String win, float amount, Question question) {
+	public Bet addBet(User user,String win, float amount, Question question) {
 		System.out.println(">> DataAccess: addBet");
-		Bet bet = new Bet(win, amount, question);
+		int id=countBets();
+		id++;
+		Bet bet = new Bet(id,win, amount, question);
+		bet.setUser(user);
 		question.addBet(bet);
 		System.out.println("Bet added!");
 		db.getTransaction().begin();
 		db.persist(bet);
 		db.getTransaction().commit();
 		return bet;
+	}
+	public int countBets() {
+		Query q=  db.createQuery("SELECT COUNT(*) AS total FROM Bet");
+		return q.getMaxResults();
+		
 	}
 
 	/**
@@ -387,6 +395,16 @@ public class DataAccess  {
 	public void close(){
 		db.close();
 		System.out.println("DataBase closed");
+	}
+	/**
+	 * Method used to obtain all the bets a user has made
+	 * @param username
+	 * @return list of bets
+	 */
+	public List<Bet> getBets(String username){
+		TypedQuery<Bet> query= db.createQuery("SELECT b FROM Bet b WHERE b.user=?1",Bet.class);
+		query.setParameter(1, username);
+		return  query.getResultList();
 	}
 
 }

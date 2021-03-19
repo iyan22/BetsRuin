@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
+import domain.User;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -86,15 +87,17 @@ public class LoginGUI extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = StartGUI.getBusinessLogic();
-				if(facade.login(textField.getText(), String.copyValueOf(passwordField.getPassword()))){
+				User usr=facade.login(textField.getText(), String.copyValueOf(passwordField.getPassword()));
+				if(usr!=null){
 					if(userMode.isSelected()) {
-						JFrame a = new MainUserGUI();
+						
+						JFrame a = new MainUserGUI(usr);
 						closeWindow(e);
 						a.setVisible(true);
 					}
 					else if(adminMode.isSelected()) {
 						if(facade.isAdmin(textField.getText())) {
-							JFrame a = new MainAdminGUI();
+							JFrame a = new MainAdminGUI(usr);
 							closeWindow(e);
 							a.setVisible(true);
 						} else {
@@ -102,6 +105,9 @@ public class LoginGUI extends JFrame {
 							submittedBtn.setForeground(Color.red);
 						}
 					}
+				}else{
+					submittedBtn.setText("Username or password are incorrect!");
+					submittedBtn.setForeground(Color.red);
 				}
 			}
 		});
