@@ -16,8 +16,8 @@ public class User {
 	
 	//addFunds
 	private boolean bankdata=false;
-	private int[] card; // 1-CARD NUMBER 2-MM 3-YYYY 4-CVV
-	private int funds=0;
+	private int[] card; // 0,1,2,3-CARD NUMBER 4-MM 5-YYYY 6-CVV
+	private float funds=0;
 	
 	public User(String username, String name,String surname, String password, String email) {
 		this.username=username;
@@ -30,10 +30,10 @@ public class User {
 	public String getMail() {
 		return email;
 	}
-	public int getFunds() {
+	public float getFunds() {
 		return funds;
 	}
-	public void addFunds(int amount) {
+	public void addFunds(float amount) {
 		funds=funds+amount;
 	}
 	public void setBank() {
@@ -43,7 +43,11 @@ public class User {
 		return bankdata;
 	}
 	public void setCard(int[] card) {
+		setBank();
 		this.card=card;
+	}
+	public void betMade(float amount) {
+		this.funds=this.funds-amount;
 	}
 	public int[] getCard() {
 		return card;

@@ -236,6 +236,7 @@ public class FindQuestionsGUI extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						JFrame a = new AddBetGUI(q,u);
 						a.setVisible(true);
+						jButton2_actionPerformed(e);
 					}
 				});
 			}
@@ -269,6 +270,6 @@ public class FindQuestionsGUI extends JFrame {
 	}
 
 	private void jButton2_actionPerformed(ActionEvent e) {
-		this.setVisible(false);
+		this.dispose();
 	}
 }

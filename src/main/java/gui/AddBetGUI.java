@@ -30,7 +30,7 @@ public class AddBetGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField amountBet;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-
+	
 
 	/**
 	 * Create the frame.
@@ -86,17 +86,38 @@ public class AddBetGUI extends JFrame {
 					{
 						float amount = Float.parseFloat(amountBet.getText());
 						BLFacade facade = StartGUI.getBusinessLogic();
-						if(amount>=q.getBetMinimum()) {
-							if(firstButton.isSelected()) facade.addBet(user,"first", amount, q);
-							else if(secondButton.isSelected()) facade.addBet(user,"second", amount, q);
-							else if(tieButton.isSelected()) facade.addBet(user,"tie", amount, q);
-							submitted.setText("Bet submitted successfully!");
-							submitted.setForeground(Color.green);
-						}
-						else {
-							submitted.setText("Error!");
+						float userFunds=user.getFunds();
+						if(userFunds<q.getBetMinimum() || amount>userFunds) {
+							submitted.setText("Not enough funds!");
 							submitted.setForeground(Color.red);
-						}
+						}else {
+							if(amount>=q.getBetMinimum()) {
+								if(firstButton.isSelected()) {
+									facade.addBet(user,"first", amount, q);
+									user.betMade(amount);
+									submitted.setText("Bet submitted successfully!");
+									submitted.setForeground(Color.green);
+								}else if(secondButton.isSelected()) { 
+									facade.addBet(user,"second", amount, q);
+									user.betMade(amount);
+									submitted.setText("Bet submitted successfully!");
+									submitted.setForeground(Color.green);
+								}else if(tieButton.isSelected()) { 
+									facade.addBet(user,"tie", amount, q);
+									user.betMade(amount);
+									submitted.setText("Bet submitted successfully!");
+									submitted.setForeground(Color.green);
+								}else {
+									submitted.setText("Error!");
+									submitted.setForeground(Color.red);
+								}
+						
+							}else{
+								submitted.setText("Error!");
+								submitted.setForeground(Color.red);
+							}
+					}
+				
 					} catch(NumberFormatException ex) {
 						submitted.setText("Not valid format for the amount!");
 						submitted.setForeground(Color.red);
@@ -110,7 +131,7 @@ public class AddBetGUI extends JFrame {
 		btnReturn.setBounds(233, 242, 85, 21);
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnClose_actionPerformed(e);
+				btnClose_actionPerformed(e,user);
 			}
 		});
 		contentPane.add(btnReturn);
@@ -136,7 +157,9 @@ public class AddBetGUI extends JFrame {
 		contentPane.add(textPane);
 	}
 
-	public void btnClose_actionPerformed(ActionEvent e) {
-		this.setVisible(false);
+	public void btnClose_actionPerformed(ActionEvent e, User u) {
+		FindQuestionsGUI f= new FindQuestionsGUI(u);
+		f.setVisible(true);
+		this.dispose();
 	}
 }

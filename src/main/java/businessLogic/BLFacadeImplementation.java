@@ -228,6 +228,41 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return l;
 	}
+	/**
+	 * Method used to add funds to user's account
+	 * @param user
+	 * @return boolean if successful or not
+	 */
+	public boolean addFunds(User user, float amount) {
+		dbManager.open(false);
+		boolean res=dbManager.addFunds(user, amount);
+		dbManager.close();
+		return res;
+	}
+	/**
+	 * Method used to assign a credit card to a user
+	 * @param user
+	 * @param card
+	 * @return true if success, false if error
+	 */
+	public boolean addCard(User user, int[] card) {
+		dbManager.open(false);
+		boolean res=dbManager.addCard(user, card);
+		dbManager.close();
+		return res;
+	}
+	/**
+	 * Method used to subtract the amount betted
+	 * @param user
+	 * @param amount
+	 */
+	public void betMade(User user, float amount) {
+		dbManager.open(false);
+		dbManager.betMade(user, amount);
+		dbManager.close();
+		
+	}
+
 
 }
 

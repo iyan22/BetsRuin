@@ -116,4 +116,23 @@ public interface BLFacade  {
 	 * @return list of bets
 	 */
 	public List<Bet> getBets(String username);
+	/**
+	 * Method used to add funds to user's account
+	 * @param user
+	 * @return boolean if successful or not
+	 */
+	public boolean addFunds(User user, float amount);
+	/**
+	 * Method used to assign a credit card to a user
+	 * @param user
+	 * @param card
+	 * @return true if success, false if error
+	 */
+	public boolean addCard(User user, int[] card);
+	/**
+	 * Method used to subtract the amount betted
+	 * @param user
+	 * @param amount
+	 */
+	public void betMade(User user, float amount);
 }

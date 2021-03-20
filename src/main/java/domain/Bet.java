@@ -2,16 +2,14 @@ package domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Bet {
 	@Id
 	private int id;
-	@OneToMany
+	
 	private Question question;
-	@ManyToOne
+	
 	private String user;
 	private float amount;
 	private boolean first;
@@ -61,5 +59,13 @@ public class Bet {
 
 	public float getAmount() {
 		return amount;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
 	}
 }
