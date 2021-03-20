@@ -74,8 +74,4 @@ public class User {
 		return password;
 	}
 	
-	public String email() {
-		return email;
-	}
-	
 }
