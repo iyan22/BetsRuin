@@ -1,22 +1,23 @@
 package domain;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Id;
 
 @Entity
 public class Bet {
-
-	@OneToMany
+	@Id
+	private int id;
+	
 	private Question question;
-	@ManyToOne
-	private User user;
+	
+	private String user;
 	private float amount;
 	private boolean first;
 	private boolean tie;
 	private boolean second;
 
-	public Bet(String win, float amount, Question question){
+	public Bet(int id,String win, float amount, Question question){
+		this.id=id;
 		this.question=question;
 		this.amount=amount;
 		if(win.equalsIgnoreCase("first")) {
@@ -37,7 +38,7 @@ public class Bet {
 	}
 	
 	public void setUser(User user) {
-		this.user = user;
+		this.user = user.getUsername();
 	}
 
 	public Question getQuestion() {
@@ -58,5 +59,13 @@ public class Bet {
 
 	public float getAmount() {
 		return amount;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
 	}
 }

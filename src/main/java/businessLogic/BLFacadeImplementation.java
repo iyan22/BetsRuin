@@ -1,6 +1,7 @@
 package businessLogic;
 //hola
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -171,15 +172,15 @@ public class BLFacadeImplementation  implements BLFacade {
 	 * 
 	 * @param username to check
 	 * @param password to check
-	 * @return if the username and password are correct
+	 * @return user if the username is correct, null if username or password are not correct
 	 */
-	public boolean login(String username, String password) {
+	public User login(String username, String password) {
 		dbManager.open(false);
 		
-		boolean logged = dbManager.login(username, password);
+		User usr = dbManager.login(username, password);
 		dbManager.close();
 		
-		return logged;
+		return usr;
 	}
 	
 	/**
@@ -189,9 +190,9 @@ public class BLFacadeImplementation  implements BLFacade {
 	 * @param question to add the bet to
 	 * @return the created bet
 	 */
-	public Bet addBet(String win, float amount, Question question){
+	public Bet addBet(User user,String win, float amount, Question question){
 		dbManager.open(false);
-		Bet bet = dbManager.addBet(win, amount, question);
+		Bet bet = dbManager.addBet(user,win, amount, question);
 		dbManager.close();
 		return bet;
 	}
@@ -216,6 +217,52 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.initializeDB();
 		dbManager.close();
 	}
+	/**
+	 * Method used to obtain all the bets a user has made
+	 * @param username
+	 * @return list of bets
+	 */
+	public List<Bet> getBets(String username){
+		dbManager.open(false);
+		List<Bet> l=dbManager.getBets(username);
+		dbManager.close();
+		return l;
+	}
+	/**
+	 * Method used to add funds to user's account
+	 * @param user
+	 * @return boolean if successful or not
+	 */
+	public boolean addFunds(User user, float amount) {
+		dbManager.open(false);
+		boolean res=dbManager.addFunds(user, amount);
+		dbManager.close();
+		return res;
+	}
+	/**
+	 * Method used to assign a credit card to a user
+	 * @param user
+	 * @param card
+	 * @return true if success, false if error
+	 */
+	public boolean addCard(User user, int[] card) {
+		dbManager.open(false);
+		boolean res=dbManager.addCard(user, card);
+		dbManager.close();
+		return res;
+	}
+	/**
+	 * Method used to subtract the amount betted
+	 * @param user
+	 * @param amount
+	 */
+	public void betMade(User user, float amount) {
+		dbManager.open(false);
+		dbManager.betMade(user, amount);
+		dbManager.close();
+		
+	}
+
 
 }
 

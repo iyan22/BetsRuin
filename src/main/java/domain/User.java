@@ -14,6 +14,11 @@ public class User {
 	private String email;
 	private boolean admin;
 	
+	//addFunds
+	private boolean bankdata=false;
+	private int[] card; // 0,1,2,3-CARD NUMBER 4-MM 5-YYYY 6-CVV
+	private float funds=0;
+	
 	public User(String username, String name,String surname, String password, String email) {
 		this.username=username;
 		this.password=password;
@@ -22,7 +27,31 @@ public class User {
 		this.email=email;
 		this.admin=false;
 	}
-	
+	public String getMail() {
+		return email;
+	}
+	public float getFunds() {
+		return funds;
+	}
+	public void addFunds(float amount) {
+		funds=funds+amount;
+	}
+	public void setBank() {
+		bankdata=true;
+	}
+	public boolean getBank() {
+		return bankdata;
+	}
+	public void setCard(int[] card) {
+		setBank();
+		this.card=card;
+	}
+	public void betMade(float amount) {
+		this.funds=this.funds-amount;
+	}
+	public int[] getCard() {
+		return card;
+	}
 	public String getName() {
 		return name;
 	}
@@ -43,10 +72,6 @@ public class User {
 	
 	public String getPassword() {
 		return password;
-	}
-	
-	public String email() {
-		return email;
 	}
 	
 }

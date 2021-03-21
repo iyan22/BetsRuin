@@ -1,5 +1,6 @@
 package dataAccess;
 
+import java.util.ArrayList;
 //hello
 import java.util.Calendar;
 import java.util.Date;
@@ -9,13 +10,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Vector;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-
 import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Bet;
@@ -175,13 +173,13 @@ public class DataAccess  {
 	 */
 	public Question createQuestion(Event event, String question, float betMinimum) throws  QuestionAlreadyExist {
 		System.out.println(">> DataAccess: createQuestion=> event= "+event+" question= "+question+" betMinimum="+betMinimum);
-
+		
 		Event ev = db.find(Event.class, event.getEventNumber());
-
+		System.out.println(event.getDescription());
 		if (ev.DoesQuestionExists(question)) throw new QuestionAlreadyExist(ResourceBundle.getBundle("Etiquetas").getString("ErrorQueryAlreadyExist"));
-
-		db.getTransaction().begin();
 		Question q = ev.addQuestion(question, betMinimum);
+		db.getTransaction().begin();
+		
 		//db.persist(q);
 		db.persist(ev); // db.persist(q) not required when CascadeType.PERSIST is added in questions property of Event class
 		// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
@@ -215,10 +213,10 @@ public class DataAccess  {
 	 * @param password of the user.
 	 * @return true if the user and the password coincide, false otherwise.
 	 */
-	public boolean login(String username, String password) {
+	public User login(String username, String password) {
 		User usr = db.find(User.class, username);
-		if(usr!=null && password.contentEquals(usr.getPassword())) return true;
-		else return false;
+		if(usr!=null && password.contentEquals(usr.getPassword())) return usr;
+		else return null;
 	}
 	
 	/**
@@ -228,8 +226,10 @@ public class DataAccess  {
 	 * @return the event.
 	 */
 	public Event createEvent(String description, Date date) {
-		Query q = db.createQuery("SELECT COUNT(*) AS total FROM Event");
-		Event event = new Event(q.getMaxResults()+1, description, date);
+		TypedQuery<Event> query= db.createQuery("SELECT e FROM Event e", Event.class);
+		ArrayList<Event> resv= (ArrayList<Event>) query.getResultList();
+		int res=resv.size();
+		Event event = new Event(res+1, description, date);
 		db.getTransaction().begin();
 		db.persist(event);
 		db.getTransaction().commit();
@@ -283,15 +283,26 @@ public class DataAccess  {
 	 * @return the created bet
 	 * @throws BetDenied if the probabilities of winning/tie ar over 100
 	 */
-	public Bet addBet(String win, float amount, Question question) {
+	public Bet addBet(User user,String win, float amount, Question question) {
 		System.out.println(">> DataAccess: addBet");
-		Bet bet = new Bet(win, amount, question);
+		int i=countBets();
+		Bet bet = new Bet(i,win, amount, question);
+		bet.setUser(user);
 		question.addBet(bet);
 		System.out.println("Bet added!");
 		db.getTransaction().begin();
 		db.persist(bet);
 		db.getTransaction().commit();
+		betMade(user, amount);
 		return bet;
+	}
+	public int countBets() {
+		TypedQuery<Bet> query= db.createQuery("SELECT b FROM Bet b", Bet.class);
+		ArrayList<Bet> resv= (ArrayList<Bet>) query.getResultList();
+		int res=resv.size();
+		res++;
+		return res;
+		
 	}
 
 	/**
@@ -378,7 +389,11 @@ public class DataAccess  {
 	 */
 	public boolean isAdmin(String username) {
 		User us = db.find(User.class, username);
-		return us.isAdmin();
+		boolean res=false;
+		if(us!=null) {
+			res=us.isAdmin();
+		}
+		return res;
 	}
 	
 	/**
@@ -387,6 +402,61 @@ public class DataAccess  {
 	public void close(){
 		db.close();
 		System.out.println("DataBase closed");
+	}
+	/**
+	 * Method used to obtain all the bets a user has made
+	 * @param username
+	 * @return list of bets
+	 */
+	public List<Bet> getBets(String username){
+		TypedQuery<Bet> query= db.createQuery("SELECT b FROM Bet b WHERE b.user=?1",Bet.class);
+		query.setParameter(1, username);
+		return  query.getResultList();
+	}
+	
+	/**
+	 * Method used to add funds to user's account
+	 * @param user
+	 * @return boolean if successful or not
+	 */
+	public boolean addFunds(User user, float amount) {
+		User u=db.find(User.class, user.getUsername());
+		if(u!=null) {
+			db.getTransaction().begin();
+			u.addFunds(amount);
+			db.getTransaction().commit();
+			return true;
+		}else {
+			return false;
+		}
+	}
+	/**
+	 * Method used to assign a credit card to a user
+	 * @param user
+	 * @param card
+	 * @return true if success, false if error
+	 */
+	public boolean addCard(User user, int[] card) {
+		User u=db.find(User.class, user.getUsername());
+		if(u!=null) {
+			db.getTransaction().begin();
+			u.setCard(card);
+			db.getTransaction().commit();
+			return true;
+		}else {
+			return false;
+		}
+	}
+	/**
+	 * Method used to subtract the amount betted
+	 * @param user
+	 * @param amount
+	 */
+	public void betMade(User user, float amount) {
+		User u=db.find(User.class, user.getUsername());
+			db.getTransaction().begin();
+			u.betMade(amount);
+			db.getTransaction().commit();
 	}
 
 }

@@ -6,6 +6,8 @@ import configuration.UtilDate;
 import com.toedter.calendar.JCalendar;
 
 import domain.Question;
+import domain.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -26,7 +28,7 @@ public class FindQuestionsGUI extends JFrame {
 	private JButton jAddBet = new JButton("Add Bet"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));	
-
+	private User u;
 	// Code for JCalendar
 	private JCalendar jCalendar1 = new JCalendar();
 	private Calendar calendarAnt = null;
@@ -51,11 +53,12 @@ public class FindQuestionsGUI extends JFrame {
 	private String[] columnNamesQueries = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("QueryN"), 
 			ResourceBundle.getBundle("Etiquetas").getString("Query")
-
+			
 	};
 
-	public FindQuestionsGUI()
+	public FindQuestionsGUI(User u)
 	{
+		this.u=u;
 		try
 		{
 			jbInit();
@@ -231,8 +234,9 @@ public class FindQuestionsGUI extends JFrame {
 				System.out.println(q.getQuestion());
 				jAddBet.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						JFrame a = new AddBetGUI(q);
+						JFrame a = new AddBetGUI(q,u);
 						a.setVisible(true);
+						jButton2_actionPerformed(e);
 					}
 				});
 			}
@@ -266,6 +270,6 @@ public class FindQuestionsGUI extends JFrame {
 	}
 
 	private void jButton2_actionPerformed(ActionEvent e) {
-		this.setVisible(false);
+		this.dispose();
 	}
 }

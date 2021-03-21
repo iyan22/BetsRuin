@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import domain.Event;
+import domain.User;
+
 import javax.swing.SwingConstants;
 
 public class MainAdminGUI extends JFrame {
@@ -26,14 +28,15 @@ public class MainAdminGUI extends JFrame {
 	private JButton jButtonQueryQueries = null;
 	protected JLabel jLabelSelectOption;
 	private JButton btnReturn;
+	private User u;
 	
 	/**
 	 * Create the frame.
 	 */
-	public MainAdminGUI() {
-
+	public MainAdminGUI(User u) {
+		
 		super();
-
+		this.u=u;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -90,7 +93,7 @@ public class MainAdminGUI extends JFrame {
 			jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 			jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					JFrame a = new FindQuestionsGUI();
+					JFrame a = new FindQuestionsGUI(u);
 
 					a.setVisible(true);
 				}
