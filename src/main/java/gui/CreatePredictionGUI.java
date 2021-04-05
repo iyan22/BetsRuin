@@ -1,34 +1,44 @@
 package gui;
 
-import businessLogic.BLFacade;
-import configuration.UtilDate;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JCalendar;
 
+import businessLogic.BLFacade;
+import configuration.UtilDate;
 import domain.Question;
-import domain.User;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.text.DateFormat;
-import java.util.*;
+public class CreatePredictionGUI extends JFrame {
 
-import javax.swing.table.DefaultTableModel;
-
-
-public class FindQuestionsGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
 	private final JLabel jLabelQueries = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Queries")); 
 	private final JLabel jLabelEvents = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Events")); 
 
-	private JButton seePreds = new JButton("See Predictions"); //$NON-NLS-1$ //$NON-NLS-2$
+	private JButton jAddPred = new JButton("Add Prediction");
 
-	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));	
-	private User u;
+	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 	// Code for JCalendar
 	private JCalendar jCalendar1 = new JCalendar();
 	private Calendar calendarAnt = null;
@@ -56,9 +66,8 @@ public class FindQuestionsGUI extends JFrame {
 			
 	};
 
-	public FindQuestionsGUI(User u)
+	public CreatePredictionGUI()
 	{
-		this.u=u;
 		try
 		{
 			jbInit();
@@ -228,14 +237,15 @@ public class FindQuestionsGUI extends JFrame {
 		tableQueries.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				seePreds.setEnabled(true);
+				jAddPred.setEnabled(true);
 				int i = tableQueries.getSelectedRow();
 				Question q = (Question)tableModelQueries.getValueAt(i, 2);
 				System.out.println(q.getQuestion());
-				seePreds.addActionListener(new ActionListener() {
+				jAddPred.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						JFrame a = new SeePredictionsGUI(q,u);
+						JFrame a = new AddPredictionGUI(q);
 						a.setVisible(true);
+						jButton2_actionPerformed(e);
 					}
 				});
 			}
@@ -259,11 +269,11 @@ public class FindQuestionsGUI extends JFrame {
 		this.getContentPane().add(scrollPaneEvents, null);
 		this.getContentPane().add(scrollPaneQueries, null);
 
-		seePreds = new JButton("See Predictions"); //$NON-NLS-1$ //$NON-NLS-2$
-		seePreds.setBounds(new Rectangle(352, 423, 130, 30));
-		seePreds.setBounds(188, 423, 130, 30);
-		getContentPane().add(seePreds);
-		seePreds.setEnabled(false);
+		jAddPred = new JButton(ResourceBundle.getBundle("Etiquetas").getString("CreatePredictionGUI.jAddBet.text")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-2$
+		jAddPred.setBounds(new Rectangle(352, 423, 130, 30));
+		jAddPred.setBounds(188, 423, 130, 30);
+		getContentPane().add(jAddPred);
+		jAddPred.setEnabled(false);
 
 
 	}

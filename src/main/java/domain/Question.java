@@ -26,7 +26,7 @@ public class Question implements Serializable {
 	@XmlIDREF
 	private Event event;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
-	private Vector<Bet> bets = new Vector<Bet>();
+	private Vector<Prediction> preds = new Vector<Prediction>();
 
 	public Question(){
 		super();
@@ -157,11 +157,17 @@ public class Question implements Serializable {
 		this.event = event;
 	}
 	
-	public void addBet(Bet bet) {
-		bets.add(bet);
+	public void addPrediction(Prediction pred) {
+		preds.add(pred);
 	}
 
-
+	public Vector<Prediction> getPredictions(){
+		return preds;
+	}
+	
+	public void setPredictions(Vector<Prediction> preds) {
+		this.preds = preds;
+	}
 
 
 	public String toString(){
