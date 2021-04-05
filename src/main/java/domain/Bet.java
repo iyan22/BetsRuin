@@ -6,24 +6,23 @@ import javax.xml.bind.annotation.XmlIDREF;
 
 @Entity
 public class Bet {
+	
 	@Id
 	private int id;
-	
 	@XmlIDREF
 	private Prediction pred;
-	
-	private String user;
+	private String username;
 	private float amount;
 
-	public Bet(int id, float amount, User user, Prediction pred){
-		this.id=id;
-		this.amount=amount;
-		this.user=user.getUsername();
-		this.pred=pred;
+	public Bet(int id, float amount, User user, Prediction pred) {
+		this.id = id;
+		this.amount = amount;
+		this.username = user.getUsername();
+		this.pred = pred;
 	}
 	
-	public void setUser(User user) {
-		this.user = user.getUsername();
+	public void setUsername(User username) {
+		this.username = username.getUsername();
 	}
 
 	public Prediction getPrediction() {
@@ -33,11 +32,12 @@ public class Bet {
 		return amount;
 	}
 
-	public String getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUser(User user) {
+		this.username = user.getUsername();
 	}
+	
 }

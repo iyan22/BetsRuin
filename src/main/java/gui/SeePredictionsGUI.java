@@ -35,9 +35,9 @@ public class SeePredictionsGUI extends JFrame {
 	private JScrollPane scrollPane = new JScrollPane();
 
 	private String[] columnNamesPredictions = new String[] {
-			"Event","Question","Prediction"
+            "Event","Question","Prediction"
 
-	};
+    };
 
 	/**
 	 * Create the frame.

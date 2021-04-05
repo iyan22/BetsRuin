@@ -25,7 +25,7 @@ public class MainAdminGUI extends JFrame {
 	private JPanel contentPane=null;
 	private JButton jButtonCreateEvent = null;
 	private JButton jButtonCreateQuery = null;
-	private JButton jButtonQueryQueries = null;
+	private JButton jButtonQueryQuestions = null;
 	private JButton jButtonCreatePrediction = null;
 	protected JLabel jLabelSelectOption;
 	private JButton btnReturn;
@@ -44,7 +44,6 @@ public class MainAdminGUI extends JFrame {
 				try {
 					//if (ConfigXML.getInstance().isBusinessLogicLocal()) facade.close();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					System.out.println("Error: "+e1.toString()+" , probably problems with Business Logic or Database");
 				}
 				System.exit(0);
@@ -56,7 +55,7 @@ public class MainAdminGUI extends JFrame {
 
 	public void initialize() {
 		
-		this.setSize(495, 311);
+		this.setSize(635, 337);
 		this.setContentPane(getJContentPane());
 		this.setTitle("Main Admin");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,6 +72,28 @@ public class MainAdminGUI extends JFrame {
 			contentPane.add(getBoton3());
 			contentPane.add(getBoton5());
 			contentPane.add(getBtnReturn());
+			
+			JButton btnCloseEvent = new JButton();
+			btnCloseEvent.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					JFrame a = new CloseEventsGUI();
+
+					a.setVisible(true);
+				}
+			});
+			btnCloseEvent.setText(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.btnCloseEvent.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnCloseEvent.setBounds(315, 111, 269, 37);
+			contentPane.add(btnCloseEvent);
+			
+			JButton btnCloseQuestion = new JButton();
+			btnCloseQuestion.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					// TODO Close lo que haga falta
+				}
+			});
+			btnCloseQuestion.setText(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.btnCloseQuestion.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnCloseQuestion.setBounds(315, 194, 269, 37);
+			contentPane.add(btnCloseQuestion);
 		}
 		return contentPane;
 	}
@@ -80,7 +101,7 @@ public class MainAdminGUI extends JFrame {
 	private JLabel getLblNewLabel() {
 		if (jLabelSelectOption == null) {
 			jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("SelectOption"));
-			jLabelSelectOption.setBounds(0, 1, 481, 68);
+			jLabelSelectOption.setBounds(75, 6, 481, 55);
 			jLabelSelectOption.setFont(new Font("Tahoma", Font.BOLD, 13));
 			jLabelSelectOption.setForeground(Color.BLACK);
 			jLabelSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
@@ -89,11 +110,11 @@ public class MainAdminGUI extends JFrame {
 	}
 	
 	private JButton getBoton3() {
-		if (jButtonQueryQueries == null) {
-			jButtonQueryQueries = new JButton();
-			jButtonQueryQueries.setBounds(0, 70, 481, 37);
-			jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
-			jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
+		if (jButtonQueryQuestions == null) {
+			jButtonQueryQuestions = new JButton();
+			jButtonQueryQuestions.setBounds(36, 70, 548, 37);
+			jButtonQueryQuestions.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
+			jButtonQueryQuestions.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					JFrame a = new FindQuestionsGUI(u);
 
@@ -101,13 +122,13 @@ public class MainAdminGUI extends JFrame {
 				}
 			});
 		}
-		return jButtonQueryQueries;
+		return jButtonQueryQuestions;
 	}
 	
 	private JButton getBoton2() {
 		if (jButtonCreateQuery == null) {
 			jButtonCreateQuery = new JButton();
-			jButtonCreateQuery.setBounds(0, 172, 481, 37);
+			jButtonCreateQuery.setBounds(36, 194, 269, 37);
 			jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateQuery"));
 			jButtonCreateQuery.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -122,7 +143,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton4() {
 		if(jButtonCreateEvent == null) {
 			jButtonCreateEvent = new JButton();
-			jButtonCreateEvent.setBounds(0, 104, 481, 37);
+			jButtonCreateEvent.setBounds(36, 111, 269, 37);
 			jButtonCreateEvent.setText("Create Event");
 			jButtonCreateEvent.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -137,7 +158,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton5() {
 		if(jButtonCreatePrediction == null) {
 			jButtonCreatePrediction = new JButton();
-			jButtonCreatePrediction.setBounds(0, 138, 481, 37);
+			jButtonCreatePrediction.setBounds(36, 153, 269, 37);
 			jButtonCreatePrediction.setText("Create Prediction");
 			jButtonCreatePrediction.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -154,7 +175,7 @@ public class MainAdminGUI extends JFrame {
 		if (btnReturn == null) {
 			btnReturn = new JButton();
 			btnReturn.setText("Return");
-			btnReturn.setBounds(197, 243, 85, 21);
+			btnReturn.setBounds(264, 260, 85, 21);
 			btnReturn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					close(e);

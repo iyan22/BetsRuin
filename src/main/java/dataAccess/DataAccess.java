@@ -177,7 +177,7 @@ public class DataAccess  {
 
 		Event ev = db.find(Event.class, event.getEventNumber());
 		System.out.println(event.getDescription());
-		if (ev.DoesQuestionExists(question)) throw new QuestionAlreadyExist(ResourceBundle.getBundle("Etiquetas").getString("ErrorQueryAlreadyExist"));
+		if (ev.doesQuestionExists(question)) throw new QuestionAlreadyExist(ResourceBundle.getBundle("Etiquetas").getString("ErrorQueryAlreadyExist"));
 		Question q = ev.addQuestion(question, betMinimum);
 		db.getTransaction().begin();
 
@@ -310,9 +310,9 @@ public class DataAccess  {
 	}
 
 
-	public Prediction addPrediction(Question q, String answer, float multiplier, float minim) {
+	public Prediction addPrediction(Question q, String answer, float share) {
 		int i = countPredictions();
-		Prediction pred = new Prediction(i, q, answer, multiplier, minim);
+		Prediction pred = new Prediction(i, q, answer, share);
 		q.addPrediction(pred);
 		db.getTransaction().begin();
 		db.persist(pred);
@@ -411,7 +411,7 @@ public class DataAccess  {
 	public boolean existQuestion(Event event, String question) {
 		System.out.println(">> DataAccess: existQuestion=> event= "+event+" question= "+question);
 		Event ev = db.find(Event.class, event.getEventNumber());
-		return ev.DoesQuestionExists(question);
+		return ev.doesQuestionExists(question);
 
 	}
 
@@ -422,9 +422,9 @@ public class DataAccess  {
 	 */
 	public boolean isAdmin(String username) {
 		User us = db.find(User.class, username);
-		boolean res=false;
-		if(us!=null) {
-			res=us.isAdmin();
+		boolean res = false;
+		if(us != null) {
+			res = us.isAdmin();
 		}
 		return res;
 	}
@@ -453,15 +453,14 @@ public class DataAccess  {
 	 * @return boolean if successful or not
 	 */
 	public boolean addFunds(User user, float amount) {
-		User u=db.find(User.class, user.getUsername());
-		if(u!=null) {
+		User u = db.find(User.class, user.getUsername());
+		if (u != null) {
 			db.getTransaction().begin();
 			u.addFunds(amount);
 			db.getTransaction().commit();
 			return true;
-		}else {
-			return false;
 		}
+		return false;
 	}
 	/**
 	 * Method used to assign a credit card to a user
@@ -470,25 +469,53 @@ public class DataAccess  {
 	 * @return true if success, false if error
 	 */
 	public boolean addCard(User user, int[] card) {
-		User u=db.find(User.class, user.getUsername());
-		if(u!=null) {
+		User u = db.find(User.class, user.getUsername());
+		if (u != null) {
 			db.getTransaction().begin();
 			u.setCard(card);
 			db.getTransaction().commit();
 			return true;
-		}else {
-			return false;
 		}
+		return false;
 	}
 	/**
-	 * Method used to subtract the amount betted
+	 * Method used to subtract the amount bet
 	 * @param user
 	 * @param amount
 	 */
 	public void betMade(User user, float amount) {
-		User u=db.find(User.class, user.getUsername());
+		User u = db.find(User.class, user.getUsername());
 		db.getTransaction().begin();
 		u.betMade(amount);
+		db.getTransaction().commit();
+	}
+	
+	public User getUser(String username) {
+		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.getUsername()=?1", User.class);
+		query.setParameter(1, username);
+		return query.getSingleResult();
+	}
+	
+	public void closeEvent(Event e) {
+		TypedQuery<Question> query = db.createQuery("SELECT q FROM Question q WHERE q.getEvent().equals(?1)", Question.class);
+		query.setParameter(1, e);
+		ArrayList<Question> qlist = (ArrayList<Question>) query.getResultList();
+		db.getTransaction().begin();
+		e.close();
+		// Iterate all over the questions
+		for (Question q: qlist) {
+			// And all over the bets of each
+			for (Prediction p: q.getPredictions()) {
+				if (p.isWinner()) {
+					// And now over the winner bets
+					for (Bet b: p.getBets()) {
+						getUser(b.getUsername()).addFunds((float) (b.getAmount()*p.getShare()));
+					}
+				}
+			}
+		}
+		// Remove the event from the database
+		db.remove(e);
 		db.getTransaction().commit();
 	}
 

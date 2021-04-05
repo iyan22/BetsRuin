@@ -13,65 +13,50 @@ import javax.xml.bind.annotation.XmlIDREF;
 public class Prediction {
 
 	@Id
-	private int id;
-	
+	private int predictionId;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
-	private Vector<Bet> bets=new Vector<Bet>();
-	
+	private Vector<Bet> bets = new Vector<Bet>();
 	@XmlIDREF
 	private Question question;
-	
 	private String answer;
-	private float multiplier;
-	private float minim;
+	private float share;
 	private boolean win = false;
 	
-	public Prediction(int id, Question q, String ans, float mult, float minim) {
-		this.id=id;
-		this.question=q;
-		this.answer=ans;
-		this.multiplier=mult;
-		this.minim=minim;
-	}
-	
-	public void setMinim(float minim) {
-		this.minim=minim;
-	}
-	
-	public float getMinim() {
-		return minim;
-	}
-	
-	public void setWinner() {
-		this.win = true;
+	public Prediction(int id, Question question, String answer, float share) {
+		this.predictionId = id;
+		this.question = question;
+		this.answer = answer;
+		this.share = share;
 	}
 	
 	public boolean isWinner() {
 		return win;
 	}
-	
-	public void setQuestion(Question q) {
-		this.question=q;
+	public void setWinner() {
+		this.win = true;
 	}
-	
 	public Question getQuestion() {
 		return question;
 	}
-	
-	public void setAnswer(String answer) {
-		this.answer=answer;
+	public void setQuestion(Question question) {
+		this.question = question;
 	}
-	
 	public String getAnswer() {
 		return answer;
 	}
-	
-	public void setMultiplier(float mult) {
-		this.multiplier=mult;
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
-	
-	public float getMultiplier() {
-		return multiplier;
+	public float getShare() {
+		return share;
+	}
+
+	public void setShare(float share) {
+		this.share = share;
+	}
+
+	public Vector<Bet> getBets() {
+		return bets;
 	}
 	
 	public void addBet(Bet bet) {

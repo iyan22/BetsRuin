@@ -22,7 +22,7 @@ public class Question implements Serializable {
 	private Integer questionNumber;
 	private String question; 
 	private float betMinimum;
-	private String result;  
+	private boolean open = true;
 	@XmlIDREF
 	private Event event;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
@@ -32,22 +32,19 @@ public class Question implements Serializable {
 		super();
 	}
 	
-	public Question(Integer queryNumber, String query, float betMinimum, Event event) {
+	public Question(Integer questionNumber, String question, float betMinimum, Event event) {
 		super();
-		this.questionNumber = queryNumber;
-		this.question = query;
-		this.betMinimum=betMinimum;
+		this.questionNumber = questionNumber;
+		this.question = question;
+		this.betMinimum = betMinimum;
 		this.event = event;
 	}
 	
-	public Question(String query, float betMinimum,  Event event) {
+	public Question(String question, float betMinimum, Event event) {
 		super();
-		this.question = query;
-		this.betMinimum=betMinimum;
-		this.event=event;
-		
-
-		//this.event = event;
+		this.question = question;
+		this.betMinimum = betMinimum;
+		this.event = event;
 	}
 
 	/**
@@ -62,7 +59,7 @@ public class Question implements Serializable {
 	/**
 	 * Set the bet number to a question
 	 * 
-	 * @param questionNumber to be setted
+	 * @param questionNumber to be set
 	 */
 	public void setQuestionNumber(Integer questionNumber) {
 		this.questionNumber = questionNumber;
@@ -83,7 +80,7 @@ public class Question implements Serializable {
 	/**
 	 * Set the question description of the bet
 	 * 
-	 * @param question to be setted
+	 * @param question to be set
 	 */	
 	public void setQuestion(String question) {
 		this.question = question;
@@ -92,9 +89,9 @@ public class Question implements Serializable {
 
 
 	/**
-	 * Get the minimun ammount of the bet
+	 * Get the minimum amount of the bet
 	 * 
-	 * @return the minimum bet ammount
+	 * @return the minimum bet amount
 	 */
 	
 	public float getBetMinimum() {
@@ -103,38 +100,14 @@ public class Question implements Serializable {
 
 
 	/**
-	 * Get the minimun ammount of the bet
+	 * Get the minimum amount of the bet
 	 * 
-	 * @param  betMinimum minimum bet ammount to be setted
+	 * @param  betMinimum minimum bet amount to be set
 	 */
 
 	public void setBetMinimum(float betMinimum) {
 		this.betMinimum = betMinimum;
 	}
-
-
-
-	/**
-	 * Get the result of the  query
-	 * 
-	 * @return the the query result
-	 */
-	public String getResult() {
-		return result;
-	}
-
-
-
-	/**
-	 * Get the result of the  query
-	 * 
-	 * @param result of the query to be setted
-	 */
-	
-	public void setResult(String result) {
-		this.result = result;
-	}
-
 
 
 	/**
@@ -167,6 +140,14 @@ public class Question implements Serializable {
 	
 	public void setPredictions(Vector<Prediction> preds) {
 		this.preds = preds;
+	}
+	
+	public boolean isOpen() {
+		return open;
+	}	
+
+	public void close() {
+		this.open = false;
 	}
 
 

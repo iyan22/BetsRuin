@@ -14,9 +14,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @Entity
 public class Event implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@XmlID
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
@@ -24,6 +21,7 @@ public class Event implements Serializable {
 	private Integer eventNumber;
 	private String description; 
 	private Date eventDate;
+	private boolean open;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private Vector<Question> questions=new Vector<Question>();
 
@@ -99,12 +97,32 @@ public class Event implements Serializable {
 	 * @param question that needs to be checked if there exists
 	 * @return true if the question exists and false in other case
 	 */
-	public boolean DoesQuestionExists(String question)  {	
+	public boolean doesQuestionExists(String question)  {	
 		for (Question q:this.getQuestions()){
 			if (q.getQuestion().compareTo(question)==0)
 				return true;
 		}
 		return false;
+	}
+	
+	public boolean isOpen() {
+		return open;
+	}
+	
+	public void close() {
+		open = false;
+	}
+	
+	public boolean areAllQuestionsClosed() {
+		boolean res = true;
+		int i = 0;
+		while (i < questions.size() && res) {
+			if (questions.get(i).isOpen()) {
+				res = false;
+			}
+			i++;
+		}
+		return res;
 	}
 		
 

@@ -134,7 +134,7 @@ public class PlaceBetGUI extends JFrame {
 		
 		JLabel multiplierField = new JLabel("");
 		multiplierField.setBounds(135, 132, 216, 14);
-		multiplierField.setText(Float.toString(prediction.getMultiplier()));
+		multiplierField.setText(Float.toString(prediction.getShare()));
 		contentPane.add(multiplierField);
 	}
 

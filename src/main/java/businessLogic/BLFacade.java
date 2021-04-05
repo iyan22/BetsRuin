@@ -92,7 +92,7 @@ public interface BLFacade  {
 	public Bet addBet(User user, float amount, Prediction pred);
 	
 	@WebMethod
-	public Prediction addPrediction(Question q, String answer, float mult, float minim);
+	public Prediction addPrediction(Question q, String answer, float mult);
 	
 	/**
 	 * This method find a question in the data base.
@@ -147,4 +147,9 @@ public interface BLFacade  {
 	 * @param amount
 	 */
 	public void betMade(User user, float amount);
+	/**
+	 * Method used to close an event, all questions must be closed
+	 * @param e
+	 */
+	public void closeEvent(Event e);
 }

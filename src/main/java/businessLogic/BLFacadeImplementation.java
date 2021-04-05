@@ -184,9 +184,9 @@ public class BLFacadeImplementation  implements BLFacade {
 		return usr;
 	}
 	
-	public Prediction addPrediction(Question q, String answer, float mult, float minim) {
+	public Prediction addPrediction(Question q, String answer, float share) {
 		dbManager.open(false);
-		Prediction pred = dbManager.addPrediction(q, answer, mult, minim);
+		Prediction pred = dbManager.addPrediction(q, answer, share);
 		dbManager.close();
 		return pred;
 	}
@@ -274,7 +274,17 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.open(false);
 		dbManager.betMade(user, amount);
 		dbManager.close();
-		
+	}
+	
+	
+	/**
+	 * Method used to close an event, all questions must be closed
+	 * @param e
+	 */
+	public void closeEvent(Event e) {
+		dbManager.open(false);
+		dbManager.closeEvent(e);
+		dbManager.close();
 	}
 
 
