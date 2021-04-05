@@ -23,7 +23,7 @@ public class MainAdminGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane=null;
-	private JButton jButtonCreateEvent = null;
+	private JButton jButtonManageEvents = null;
 	private JButton jButtonCreateQuery = null;
 	private JButton jButtonQueryQueries = null;
 	protected JLabel jLabelSelectOption;
@@ -55,7 +55,7 @@ public class MainAdminGUI extends JFrame {
 
 	public void initialize() {
 		
-		this.setSize(495, 311);
+		this.setSize(553, 391);
 		this.setContentPane(getJContentPane());
 		this.setTitle("Main Admin");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,6 +71,17 @@ public class MainAdminGUI extends JFrame {
 			contentPane.add(getBoton4());
 			contentPane.add(getBoton3());
 			contentPane.add(getBtnReturn());
+			
+			JButton jButtonCloseQuestion = new JButton();
+			jButtonCloseQuestion.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JFrame a = new ManageQuestionsGUI(u);
+					a.setVisible(true);
+				}
+			});
+			jButtonCloseQuestion.setText(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.jButtonCloseQuestion.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			jButtonCloseQuestion.setBounds(31, 250, 481, 49);
+			contentPane.add(jButtonCloseQuestion);
 		}
 		return contentPane;
 	}
@@ -78,7 +89,7 @@ public class MainAdminGUI extends JFrame {
 	private JLabel getLblNewLabel() {
 		if (jLabelSelectOption == null) {
 			jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("SelectOption"));
-			jLabelSelectOption.setBounds(0, 1, 481, 68);
+			jLabelSelectOption.setBounds(6, 6, 539, 68);
 			jLabelSelectOption.setFont(new Font("Tahoma", Font.BOLD, 13));
 			jLabelSelectOption.setForeground(Color.BLACK);
 			jLabelSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
@@ -89,7 +100,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton3() {
 		if (jButtonQueryQueries == null) {
 			jButtonQueryQueries = new JButton();
-			jButtonQueryQueries.setBounds(0, 78, 481, 49);
+			jButtonQueryQueries.setBounds(31, 70, 481, 49);
 			jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 			jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -105,7 +116,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton2() {
 		if (jButtonCreateQuery == null) {
 			jButtonCreateQuery = new JButton();
-			jButtonCreateQuery.setBounds(0, 125, 481, 49);
+			jButtonCreateQuery.setBounds(31, 190, 481, 49);
 			jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateQuery"));
 			jButtonCreateQuery.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -118,25 +129,26 @@ public class MainAdminGUI extends JFrame {
 	}
 	
 	private JButton getBoton4() {
-		if(jButtonCreateEvent == null) {
-			jButtonCreateEvent = new JButton();
-			jButtonCreateEvent.setBounds(0, 172, 481, 49);
-			jButtonCreateEvent.setText("Create Event");
-			jButtonCreateEvent.addActionListener(new java.awt.event.ActionListener() {
+		if(jButtonManageEvents == null) {
+			jButtonManageEvents = new JButton();
+			jButtonManageEvents.setBounds(31, 129, 481, 49);
+			jButtonManageEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.jButtonManageEvents.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			jButtonManageEvents.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					JFrame a = new CreateEventGUI();
+					JFrame a = new ManageEventGUI();
 					a.setVisible(true);
 				}
 			});
 		}
-		return jButtonCreateEvent;
+		return jButtonManageEvents;
 	}
 	
 	private JButton getBtnReturn() {
 		if (btnReturn == null) {
 			btnReturn = new JButton();
+			btnReturn.setBackground(Color.WHITE);
 			btnReturn.setText("Return");
-			btnReturn.setBounds(197, 243, 85, 21);
+			btnReturn.setBounds(236, 322, 85, 21);
 			btnReturn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					close(e);

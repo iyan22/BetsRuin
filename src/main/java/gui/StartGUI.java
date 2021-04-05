@@ -33,7 +33,7 @@ public class StartGUI extends JFrame {
 	}
 
 	public static void setBussinessLogic (BLFacade afi){
-		appFacadeInterface=afi;
+		appFacadeInterface = afi;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class StartGUI extends JFrame {
 	}
 	
 	private JButton getClose() {
-		if(btnClose==null) {
+		if(btnClose == null) {
 			btnClose = new JButton("Close");
 			btnClose.setBounds(197, 222, 85, 21);
 			btnClose.addActionListener(new ActionListener() {

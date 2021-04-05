@@ -92,24 +92,18 @@ public class ObjectdbManagerServer extends JDialog {
 			textArea.append("\nERROR, the database is configured as local");
 		}
 		else {
-		try{
-			System.out.println("Lauching objectdb server");
-
-			
 			try {
-		    	Runtime.getRuntime().exec("java -cp src\\main\\resources\\objectdb.jar com.objectdb.Server -port "+ c.getDatabasePort()+" start");
-		    } catch (Exception ioe) {
-		    	System.out.println (ioe);
-		    }
-
-		    textArea.append("\nAccess granted to: "+c.getUser());
-		    
-			textArea.append("\nPress button to exit this database server... ");
-			
-		} catch (Exception e) {
-			textArea.append("Something has happened in ObjectDbManagerServer: "+e.toString());
-
-		}
+				System.out.println("Lauching objectdb server");
+				try {
+			    	Runtime.getRuntime().exec("java -cp src\\main\\resources\\objectdb.jar com.objectdb.Server -port "+ c.getDatabasePort()+" start");
+			    } catch (Exception ioe) {
+			    	System.out.println (ioe);
+			    }
+			    textArea.append("\nAccess granted to: "+c.getUser());
+				textArea.append("\nPress button to exit this database server... ");
+			} catch (Exception e) {
+				textArea.append("Something has happened in ObjectDbManagerServer: "+e.toString());
+			}
 		
 		}
 	}

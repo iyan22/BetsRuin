@@ -19,14 +19,13 @@ import java.util.*;
 import javax.swing.table.DefaultTableModel;
 
 
-public class FindQuestionsGUI extends JFrame {
+public class ManageQuestionsGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
 	private final JLabel jLabelQueries = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Queries")); 
 	private final JLabel jLabelEvents = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Events")); 
-
-	private JButton jAddBet = new JButton("Add Bet"); //$NON-NLS-1$ //$NON-NLS-2$
+	private JButton jButtonCloseQuestion;
 
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));	
 	private User u;
@@ -57,7 +56,7 @@ public class FindQuestionsGUI extends JFrame {
 			
 	};
 
-	public FindQuestionsGUI(User u) {
+	public ManageQuestionsGUI(User u) {
 		this.u = u;
 		try {
 			jbInit();
@@ -85,11 +84,9 @@ public class FindQuestionsGUI extends JFrame {
 
 		jButtonClose.setBounds(new Rectangle(352, 423, 130, 30));
 
-		jButtonClose.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				jButton2_actionPerformed(e);
+		jButtonClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 
@@ -185,8 +182,6 @@ public class FindQuestionsGUI extends JFrame {
 
 		scrollPaneEvents.setBounds(new Rectangle(292, 50, 346, 150));
 		scrollPaneQueries.setBounds(new Rectangle(138, 274, 406, 116));
-		tableEvents.setCellSelectionEnabled(true);
-		tableEvents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		tableEvents.addMouseListener(new MouseAdapter() {
 			@Override
@@ -206,15 +201,12 @@ public class FindQuestionsGUI extends JFrame {
 				else {
 					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectedEvent")+" "+ev.getDescription());
 					for (Question q : queries){
-						if (q.isOpen()) {
-							Vector<Object> row = new Vector<Object>();
+						Vector<Object> row = new Vector<Object>();
 	
-							row.add(q.getQuestionNumber());
-							row.add(q.getQuestion());
-							row.add(q);
-							tableModelQueries.addRow(row);
-						}
-						
+						row.add(q.getQuestionNumber());
+						row.add(q.getQuestion());
+						row.add(q);
+						tableModelQueries.addRow(row);
 					}
 					tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
 					tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
@@ -224,20 +216,18 @@ public class FindQuestionsGUI extends JFrame {
 				
 			}
 		});
-		tableQueries.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		tableQueries.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				jAddBet.setEnabled(true);
+				jButtonCloseQuestion.setEnabled(true);
 				int i = tableQueries.getSelectedRow();
 				Question q = (Question)tableModelQueries.getValueAt(i, 2);
 				System.out.println(q.getQuestion());
-				jAddBet.addActionListener(new ActionListener() {
+				jButtonCloseQuestion.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						JFrame a = new AddBetGUI(q, u);
+						JFrame a = new CloseQuestionGUI(q, u);
 						a.setVisible(true);
-						jButton2_actionPerformed(e);
 					}
 				});
 			}
@@ -261,16 +251,13 @@ public class FindQuestionsGUI extends JFrame {
 		this.getContentPane().add(scrollPaneEvents, null);
 		this.getContentPane().add(scrollPaneQueries, null);
 
-		jAddBet = new JButton("Add Bet"); //$NON-NLS-1$ //$NON-NLS-2$
-		jAddBet.setBounds(new Rectangle(352, 423, 130, 30));
-		jAddBet.setBounds(188, 423, 130, 30);
-		getContentPane().add(jAddBet);
-		jAddBet.setEnabled(false);
+		jButtonCloseQuestion = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ManageQuestionsGUI.jButtonCloseQuestion.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		jButtonCloseQuestion.setBounds(new Rectangle(352, 423, 130, 30));
+		jButtonCloseQuestion.setBounds(188, 423, 130, 30);
+		getContentPane().add(jButtonCloseQuestion);
+		jButtonCloseQuestion.setEnabled(false);
 
 
 	}
 
-	private void jButton2_actionPerformed(ActionEvent e) {
-		this.dispose();
-	}
 }

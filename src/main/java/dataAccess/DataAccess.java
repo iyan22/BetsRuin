@@ -24,68 +24,68 @@ import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
 
 /**
- * It implements the data access to the objectDb database
+ * It implements the data access to the objectDB database
  */
 public class DataAccess  {
+	
+	// Attributes
 	protected static EntityManager  db;
 	protected static EntityManagerFactory emf;
+	ConfigXML c = ConfigXML.getInstance();
 
-
-	ConfigXML c=ConfigXML.getInstance();
-
-	public DataAccess(boolean initializeMode)  {
-
-		System.out.println("Creating DataAccess instance => isDatabaseLocal: "+c.isDatabaseLocal()+" getDatabBaseOpenMode: "+c.getDataBaseOpenMode());
-
-		open(initializeMode);
-
-	}
-
+	
+	// Constructors
 	public DataAccess()  {	
-		new DataAccess(false);
+		this(false);
+	}
+	public DataAccess(boolean initializeMode)  {
+		System.out.println("Creating DataAccess instance => isDatabaseLocal: "+c.isDatabaseLocal()+" getDatabBaseOpenMode: "+c.getDataBaseOpenMode());
+		open(initializeMode);
 	}
 
-
+	
+	// Methods
 	/**
 	 * This is the data access method that initializes the database with some events and questions.
 	 * This method is invoked by the business logic (constructor of BLFacadeImplementation) when the option "initialize" is declared in the tag dataBaseOpenMode of resources/config.xml file
 	 */	
-	public void initializeDB(){
+	public void initializeDB() {
 
 		db.getTransaction().begin();
+		
 		try {
-
-
 			Calendar today = Calendar.getInstance();
+			int month = today.get(Calendar.MONTH);
+			month += 1;
+			int year = today.get(Calendar.YEAR);
+			if (month == 12) {
+				month = 0;
+				year += 1;
+			}  
 
-			int month=today.get(Calendar.MONTH);
-			month+=1;
-			int year=today.get(Calendar.YEAR);
-			if (month==12) { month=0; year+=1;}  
+			Event ev1 = new Event(1, "Atletico-Athletic", UtilDate.newDate(year,month,17));
+			Event ev2 = new Event(2, "Eibar-Barcelona", UtilDate.newDate(year,month,17));
+			Event ev3 = new Event(3, "Getafe-Celta", UtilDate.newDate(year,month,17));
+			Event ev4 = new Event(4, "Alaves-Deportivo", UtilDate.newDate(year,month,17));
+			Event ev5 = new Event(5, "Espanyol-Villareal", UtilDate.newDate(year,month,17));
+			Event ev6 = new Event(6, "Las Palmas-Sevilla", UtilDate.newDate(year,month,17));
+			Event ev7 = new Event(7, "Malaga-Valencia", UtilDate.newDate(year,month,17));
+			Event ev8 = new Event(8, "Girona-Leganes", UtilDate.newDate(year,month,17));
+			Event ev9 = new Event(9, "Real Sociedad-Levante", UtilDate.newDate(year,month,17));
+			Event ev10 = new Event(10, "Betis-Real Madrid", UtilDate.newDate(year,month,17));
 
-			Event ev1=new Event(1, "Atlético-Athletic", UtilDate.newDate(year,month,17));
-			Event ev2=new Event(2, "Eibar-Barcelona", UtilDate.newDate(year,month,17));
-			Event ev3=new Event(3, "Getafe-Celta", UtilDate.newDate(year,month,17));
-			Event ev4=new Event(4, "Alavés-Deportivo", UtilDate.newDate(year,month,17));
-			Event ev5=new Event(5, "Español-Villareal", UtilDate.newDate(year,month,17));
-			Event ev6=new Event(6, "Las Palmas-Sevilla", UtilDate.newDate(year,month,17));
-			Event ev7=new Event(7, "Malaga-Valencia", UtilDate.newDate(year,month,17));
-			Event ev8=new Event(8, "Girona-Leganés", UtilDate.newDate(year,month,17));
-			Event ev9=new Event(9, "Real Sociedad-Levante", UtilDate.newDate(year,month,17));
-			Event ev10=new Event(10, "Betis-Real Madrid", UtilDate.newDate(year,month,17));
-
-			Event ev11=new Event(11, "Atletico-Athletic", UtilDate.newDate(year,month,1));
-			Event ev12=new Event(12, "Eibar-Barcelona", UtilDate.newDate(year,month,1));
-			Event ev13=new Event(13, "Getafe-Celta", UtilDate.newDate(year,month,1));
-			Event ev14=new Event(14, "Alavés-Deportivo", UtilDate.newDate(year,month,1));
-			Event ev15=new Event(15, "Español-Villareal", UtilDate.newDate(year,month,1));
-			Event ev16=new Event(16, "Las Palmas-Sevilla", UtilDate.newDate(year,month,1));
+			Event ev11 = new Event(11, "Atletico-Athletic", UtilDate.newDate(year,month,1));
+			Event ev12 = new Event(12, "Eibar-Barcelona", UtilDate.newDate(year,month,1));
+			Event ev13 = new Event(13, "Getafe-Celta", UtilDate.newDate(year,month,1));
+			Event ev14 = new Event(14, "Alavés-Deportivo", UtilDate.newDate(year,month,1));
+			Event ev15 = new Event(15, "Espanyol-Villareal", UtilDate.newDate(year,month,1));
+			Event ev16 = new Event(16, "Las Palmas-Sevilla", UtilDate.newDate(year,month,1));
 
 
-			Event ev17=new Event(17, "Málaga-Valencia", UtilDate.newDate(year,month+1,28));
-			Event ev18=new Event(18, "Girona-Leganés", UtilDate.newDate(year,month+1,28));
-			Event ev19=new Event(19, "Real Sociedad-Levante", UtilDate.newDate(year,month+1,28));
-			Event ev20=new Event(20, "Betis-Real Madrid", UtilDate.newDate(year,month+1,28));
+			Event ev17 = new Event(17, "Malaga-Valencia", UtilDate.newDate(year,month+1,28));
+			Event ev18 = new Event(18, "Girona-Leganes", UtilDate.newDate(year,month+1,28));
+			Event ev19 = new Event(19, "Real Sociedad-Levante", UtilDate.newDate(year,month+1,28));
+			Event ev20 = new Event(20, "Betis-Real Madrid", UtilDate.newDate(year,month+1,28));
 
 			Question q1;
 			Question q2;
@@ -95,35 +95,34 @@ public class DataAccess  {
 			Question q6;
 
 			if (Locale.getDefault().equals(new Locale("es"))) {
-				q1=ev1.addQuestion("¿Quién ganará el partido?",1);
-				q2=ev1.addQuestion("¿Quién meterá el primer gol?",2);
-				q3=ev11.addQuestion("¿Quién ganará el partido?",1);
-				q4=ev11.addQuestion("¿Cuántos goles se marcarán?",2);
-				q5=ev17.addQuestion("¿Quién ganará el partido?",1);
-				q6=ev17.addQuestion("¿Habrá goles en la primera parte?",2);
+				q1 = ev1.addQuestion("¿Quién ganará el partido?", 1, (float) 1.08);
+				q2 = ev1.addQuestion("¿Quién meterá el primer gol?", 2, 1.09);
+				q3 = ev11.addQuestion("¿Quién ganará el partido?", 1, 1.81);
+				q4 = ev11.addQuestion("¿Cuántos goles se marcarán?", 2, 1.16);
+				q5 = ev17.addQuestion("¿Quién ganará el partido?", 1, 1.28);
+				q6 = ev17.addQuestion("¿Habrá goles en la primera parte?", 2, 1.13);
 			}
 			else if (Locale.getDefault().equals(new Locale("en"))) {
-				q1=ev1.addQuestion("Who will win the match?",1);
-				q2=ev1.addQuestion("Who will score first?",2);
-				q3=ev11.addQuestion("Who will win the match?",1);
-				q4=ev11.addQuestion("How many goals will be scored in the match?",2);
-				q5=ev17.addQuestion("Who will win the match?",1);
-				q6=ev17.addQuestion("Will there be goals in the first half?",2);
+				q1 = ev1.addQuestion("Who will win the match?", 1, 1.08);
+				q2 = ev1.addQuestion("Who will score first?", 2, 1.09);
+				q3 = ev11.addQuestion("Who will win the match?", 1, 1.81);
+				q4 = ev11.addQuestion("How many goals will be scored in the match?", 2, 1.16);
+				q5 = ev17.addQuestion("Who will win the match?", 1, 1.28);
+				q6 = ev17.addQuestion("Will there be goals in the first half?", 2, 1.13);
 			}			
 			else {
-				q1=ev1.addQuestion("Zeinek irabaziko du partidua?",1);
-				q2=ev1.addQuestion("Zeinek sartuko du lehenengo gola?",2);
-				q3=ev11.addQuestion("Zeinek irabaziko du partidua?",1);
-				q4=ev11.addQuestion("Zenbat gol sartuko dira?",2);
-				q5=ev17.addQuestion("Zeinek irabaziko du partidua?",1);
-				q6=ev17.addQuestion("Golak sartuko dira lehenengo zatian?",2);
-
+				q1 = ev1.addQuestion("Zeinek irabaziko du partidua?", 1, 1.08);
+				q2 = ev1.addQuestion("Zeinek sartuko du lehenengo gola?", 2, 1.09);
+				q3 = ev11.addQuestion("Zeinek irabaziko du partidua?", 1, 1.81);
+				q4 = ev11.addQuestion("Zenbat gol sartuko dira?", 2, 1.16);
+				q5 = ev17.addQuestion("Zeinek irabaziko du partidua?", 1, 1.28);
+				q6 = ev17.addQuestion("Golak sartuko dira lehenengo zatian?", 2, 1.13);
 			}
 
 			User admin = new User("admin", "admin","admin","admin", "admin");
 			admin.setAdmin();
+			
 			db.persist(admin);
-
 
 			db.persist(q1);
 			db.persist(q2);
@@ -155,39 +154,74 @@ public class DataAccess  {
 			db.persist(ev20);			
 
 			db.getTransaction().commit();
-			System.out.println("Db initialized");
+			
+			System.out.println("Database initialized");
 		}
 		catch (Exception e){
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * This method opens the data base.
+	 * @param initializeMode
+	 */
+	public void open(boolean initializeMode) {
 
+		System.out.println("Opening DataAccess instance => isDatabaseLocal: " + c.isDatabaseLocal() + " getDatabBaseOpenMode: " + c.getDataBaseOpenMode());
+
+		String fileName = c.getDbFilename();
+		
+		if (initializeMode) {
+			fileName = fileName+";drop";
+			System.out.println("Deleting the DataBase");
+		}
+
+		if (c.isDatabaseLocal()) {
+			emf = Persistence.createEntityManagerFactory("objectdb:" + fileName);
+			db = emf.createEntityManager();
+		}
+		else {
+			Map<String, String> properties = new HashMap<String, String>();
+			properties.put("javax.persistence.jdbc.user", c.getUser());
+			properties.put("javax.persistence.jdbc.password", c.getPassword());
+
+			emf = Persistence.createEntityManagerFactory("objectdb://"+c.getDatabaseNode()+":"+c.getDatabasePort()+"/"+fileName, properties);
+			db = emf.createEntityManager();
+			
+		}
+
+	}
+	/**
+	 * This method closes the data base.
+	 */
+	public void close(){
+		db.close();
+		System.out.println("DataBase closed");
+	}
 	/**
 	 * This method creates a question for an event, with a question text and the minimum bet
-	 * 
 	 * @param event to which question is added
 	 * @param question text of the question
 	 * @param betMinimum minimum quantity of the bet
 	 * @return the created question, or null, or an exception
 	 * @throws QuestionAlreadyExist if the same question already exists for the event
 	 */
-	public Question createQuestion(Event event, String question, float betMinimum) throws  QuestionAlreadyExist {
+	public Question createQuestion(Event event, String question, float betMinimum, double betShare) throws  QuestionAlreadyExist {
 		System.out.println(">> DataAccess: createQuestion=> event= "+event+" question= "+question+" betMinimum="+betMinimum);
 		
 		Event ev = db.find(Event.class, event.getEventNumber());
 		System.out.println(event.getDescription());
-		if (ev.DoesQuestionExists(question)) throw new QuestionAlreadyExist(ResourceBundle.getBundle("Etiquetas").getString("ErrorQueryAlreadyExist"));
-		Question q = ev.addQuestion(question, betMinimum);
-		db.getTransaction().begin();
+		if (ev.doesQuestionExists(question)) {
+			throw new QuestionAlreadyExist(ResourceBundle.getBundle("Etiquetas").getString("ErrorQueryAlreadyExist"));
+		}
+		Question q = ev.addQuestion(question, betMinimum, betShare);
 		
-		//db.persist(q);
-		db.persist(ev); // db.persist(q) not required when CascadeType.PERSIST is added in questions property of Event class
-		// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+		db.getTransaction().begin();
+		db.persist(ev);
 		db.getTransaction().commit();
+		
 		return q;
-
 	}
-	
 	/**
 	 * This method creates a user and stores it in the data base.
 	 * @param username that the user will identify
@@ -196,17 +230,19 @@ public class DataAccess  {
 	 * @return the created user or exception
 	 * @throws UserAlreadyExists if there is a user with the same username
 	 */
-	public User createUser(String username,String name, String surname, String password, String email) throws UserAlreadyExists {
+	public User createUser(String username, String name, String surname, String password, String email) throws UserAlreadyExists {
 		System.out.println(">> DataAccess: createUser=> username= "+username+" email= "+email);
 		User usr = db.find(User.class, username);
-		if(usr!=null) throw new UserAlreadyExists(ResourceBundle.getBundle("Etiquetas").getString("ErrorUserAlreadyExist"));
+		if (usr != null) {
+			throw new UserAlreadyExists(ResourceBundle.getBundle("Etiquetas").getString("ErrorUserAlreadyExist"));
+		}
 
 		db.getTransaction().begin();
-		db.persist(new User(username,name,surname, password, email));
+		db.persist(new User(username, name, surname, password, email));
 		db.getTransaction().commit();
+		
 		return usr;
 	}
-	
 	/**
 	 * This method checks if the user and the password coincide.
 	 * @param username of the user.
@@ -215,10 +251,11 @@ public class DataAccess  {
 	 */
 	public User login(String username, String password) {
 		User usr = db.find(User.class, username);
-		if(usr!=null && password.contentEquals(usr.getPassword())) return usr;
-		else return null;
+		if (usr != null && password.contentEquals(usr.getPassword())) {
+			return usr;
+		}
+		return null;
 	}
-	
 	/**
 	 * This method creates an event and stores it in the data base.
 	 * @param description of the event.
@@ -226,16 +263,17 @@ public class DataAccess  {
 	 * @return the event.
 	 */
 	public Event createEvent(String description, Date date) {
-		TypedQuery<Event> query= db.createQuery("SELECT e FROM Event e", Event.class);
-		ArrayList<Event> resv= (ArrayList<Event>) query.getResultList();
-		int res=resv.size();
+		TypedQuery<Event> query = db.createQuery("SELECT e FROM Event e", Event.class);
+		ArrayList<Event> resv = (ArrayList<Event>) query.getResultList();
+		int res = resv.size();
 		Event event = new Event(res+1, description, date);
+		
 		db.getTransaction().begin();
 		db.persist(event);
 		db.getTransaction().commit();
+		
 		return event;
 	}
-
 	/**
 	 * This method retrieves from the database the events of a given date 
 	 * 
@@ -248,31 +286,28 @@ public class DataAccess  {
 		TypedQuery<Event> query = db.createQuery("SELECT ev FROM Event ev WHERE ev.eventDate=?1",Event.class);   
 		query.setParameter(1, date);
 		List<Event> events = query.getResultList();
-		for (Event ev:events){
+		for (Event ev:events) {
 			System.out.println(ev.toString());		 
 			res.add(ev);
 		}
 		return res;
 	}
-	
 	/**
 	 * This method gets all the bets from a questions, not used for first iteration.
 	 * @param q question to get the bets.
 	 * @return a vector with all the bets related to that questions.
 	 */
-	public Vector<Bet> getBets(Question q){
+	public Vector<Bet> getBets(Question q) {
 		System.out.println(">> DataAccess: getBets");
 		Vector<Bet> res = new Vector<Bet>();
 		TypedQuery<Bet> query = db.createQuery("SELECT b FROM Bet b WHERE b.question=q", Bet.class);
 		List<Bet> bets = query.getResultList();
-		for(Bet b: bets)
-		{
+		for(Bet b: bets) {
 			res.add(b);
 			System.out.println(b.toString());
 		}
 		return res;
 	}
-
 	/**
 	 * Adds a bet to a question
 	 * @param amount to bet
@@ -285,29 +320,30 @@ public class DataAccess  {
 	 */
 	public Bet addBet(User user,String win, float amount, Question question) {
 		System.out.println(">> DataAccess: addBet");
-		int i=countBets();
-		Bet bet = new Bet(i,win, amount, question);
+		int i = countBets();
+		Bet bet = new Bet(i, win, amount, question);
 		bet.setUser(user);
 		question.addBet(bet);
 		System.out.println("Bet added!");
+		
 		db.getTransaction().begin();
 		db.persist(bet);
 		db.getTransaction().commit();
+		
 		betMade(user, amount);
 		return bet;
 	}
-	public int countBets() {
-		TypedQuery<Bet> query= db.createQuery("SELECT b FROM Bet b", Bet.class);
-		ArrayList<Bet> resv= (ArrayList<Bet>) query.getResultList();
-		int res=resv.size();
-		res++;
-		return res;
-		
-	}
-
 	/**
-	 * This method retrieves from the database the dates a month for which there are events
-	 * 
+	 * Counts the number of bets.
+	 * @return number of bets.
+	 */
+	public int countBets() {
+		TypedQuery<Bet> query = db.createQuery("SELECT b FROM Bet b", Bet.class);
+		ArrayList<Bet> resv = (ArrayList<Bet>) query.getResultList();
+		return resv.size()+1;
+	}
+	/**
+	 * This method retrieves from the database the dates a month for which there are events.
 	 * @param date of the month for which days with events want to be retrieved 
 	 * @return collection of dates
 	 */
@@ -315,21 +351,20 @@ public class DataAccess  {
 		System.out.println(">> DataAccess: getEventsMonth");
 		Vector<Date> res = new Vector<Date>();	
 
-		Date firstDayMonthDate= UtilDate.firstDayMonth(date);
-		Date lastDayMonthDate= UtilDate.lastDayMonth(date);
+		Date firstDayMonthDate = UtilDate.firstDayMonth(date);
+		Date lastDayMonthDate = UtilDate.lastDayMonth(date);
 
 
-		TypedQuery<Date> query = db.createQuery("SELECT DISTINCT ev.eventDate FROM Event ev WHERE ev.eventDate BETWEEN ?1 and ?2",Date.class);   
+		TypedQuery<Date> query = db.createQuery("SELECT DISTINCT ev.eventDate FROM Event ev WHERE ev.eventDate BETWEEN ?1 and ?2 AND ev.isOpen()",Date.class);   
 		query.setParameter(1, firstDayMonthDate);
 		query.setParameter(2, lastDayMonthDate);
 		List<Date> dates = query.getResultList();
-		for (Date d:dates){
+		for (Date d: dates){
 			System.out.println(d.toString());		 
 			res.add(d);
 		}
 		return res;
 	}
-	
 	/**
 	 * This method  find a question in the data base with its number.
 	 * @param questionNumber to search in the data base.
@@ -339,36 +374,6 @@ public class DataAccess  {
 		Question qst = db.find(Question.class, questionNumber);
 		return qst;
 	}
-	
-	/**
-	 * This method opens the data base.
-	 * @param initializeMode
-	 */
-	public void open(boolean initializeMode){
-
-		System.out.println("Opening DataAccess instance => isDatabaseLocal: "+c.isDatabaseLocal()+" getDatabBaseOpenMode: "+c.getDataBaseOpenMode());
-
-		String fileName=c.getDbFilename();
-		if (initializeMode) {
-			fileName=fileName+";drop";
-			System.out.println("Deleting the DataBase");
-		}
-
-		if (c.isDatabaseLocal()) {
-			emf = Persistence.createEntityManagerFactory("objectdb:"+fileName);
-			db = emf.createEntityManager();
-		} else {
-			Map<String, String> properties = new HashMap<String, String>();
-			properties.put("javax.persistence.jdbc.user", c.getUser());
-			properties.put("javax.persistence.jdbc.password", c.getPassword());
-
-			emf = Persistence.createEntityManagerFactory("objectdb://"+c.getDatabaseNode()+":"+c.getDatabasePort()+"/"+fileName, properties);
-
-			db = emf.createEntityManager();
-		}
-
-	}
-	
 	/**
 	 * This method checks if the question in an event is already registered in the data base.
 	 * @param event of the question.
@@ -376,12 +381,11 @@ public class DataAccess  {
 	 * @return true if already exist, false otherwise.
 	 */
 	public boolean existQuestion(Event event, String question) {
-		System.out.println(">> DataAccess: existQuestion=> event= "+event+" question= "+question);
+		System.out.println(">> DataAccess: existQuestion=> event= " + event + " question= " + question);
 		Event ev = db.find(Event.class, event.getEventNumber());
-		return ev.DoesQuestionExists(question);
+		return ev.doesQuestionExists(question);
 
 	}
-	
 	/**
 	 * This method checks if the user is stored at the data base as admin.
 	 * @param username to search.
@@ -389,19 +393,11 @@ public class DataAccess  {
 	 */
 	public boolean isAdmin(String username) {
 		User us = db.find(User.class, username);
-		boolean res=false;
-		if(us!=null) {
-			res=us.isAdmin();
+		boolean res = false;
+		if(us != null) {
+			res = us.isAdmin();
 		}
 		return res;
-	}
-	
-	/**
-	 * This method closes the data base.
-	 */
-	public void close(){
-		db.close();
-		System.out.println("DataBase closed");
 	}
 	/**
 	 * Method used to obtain all the bets a user has made
@@ -409,26 +405,24 @@ public class DataAccess  {
 	 * @return list of bets
 	 */
 	public List<Bet> getBets(String username){
-		TypedQuery<Bet> query= db.createQuery("SELECT b FROM Bet b WHERE b.user=?1",Bet.class);
+		TypedQuery<Bet> query = db.createQuery("SELECT b FROM Bet b WHERE b.getUsername().equals(?1) AND b.question.isOpen()", Bet.class);
 		query.setParameter(1, username);
 		return  query.getResultList();
 	}
-	
 	/**
 	 * Method used to add funds to user's account
 	 * @param user
 	 * @return boolean if successful or not
 	 */
 	public boolean addFunds(User user, float amount) {
-		User u=db.find(User.class, user.getUsername());
-		if(u!=null) {
+		User u = db.find(User.class, user.getUsername());
+		if (u != null) {
 			db.getTransaction().begin();
 			u.addFunds(amount);
 			db.getTransaction().commit();
 			return true;
-		}else {
-			return false;
 		}
+		return false;
 	}
 	/**
 	 * Method used to assign a credit card to a user
@@ -437,26 +431,66 @@ public class DataAccess  {
 	 * @return true if success, false if error
 	 */
 	public boolean addCard(User user, int[] card) {
-		User u=db.find(User.class, user.getUsername());
-		if(u!=null) {
+		User u = db.find(User.class, user.getUsername());
+		if (u != null) {
 			db.getTransaction().begin();
 			u.setCard(card);
 			db.getTransaction().commit();
 			return true;
-		}else {
-			return false;
 		}
+		return false;
 	}
 	/**
-	 * Method used to subtract the amount betted
+	 * Method used to subtract the amount bet
 	 * @param user
 	 * @param amount
 	 */
 	public void betMade(User user, float amount) {
-		User u=db.find(User.class, user.getUsername());
-			db.getTransaction().begin();
-			u.betMade(amount);
-			db.getTransaction().commit();
+		User u = db.find(User.class, user.getUsername());
+		db.getTransaction().begin();
+		u.betMade(amount);
+		db.getTransaction().commit();
 	}
+	
+	
+	
+	public User getUser(String username) {
+		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.getUsername()=?1", User.class);
+		query.setParameter(1, username);
+		return query.getSingleResult();
+	}
+	
+	public void closeEvent(Event e) {
+		TypedQuery<Question> query = db.createQuery("SELECT q FROM Question q WHERE q.getEvent().equals(?1)", Question.class);
+		query.setParameter(1, e);
+		// TODO Solventar problemas
+		ArrayList<Question> qlist = (ArrayList<Question>) query.getResultList();
+		db.getTransaction().begin();
+		e.close();
+		// Iterate all over the questions
+		for (Question q: qlist) {
+			// And all over the bets of each
+			for (Bet b: q.getBetList()) {
+				System.out.println("Event: " + q.getEvent().getDescription() + " Question res: " + q.getResult() + " Bet res: " + b.getResult());
+				// If the results of bet and question are the same
+				if (q.getResult().equals(b.getResult())) {
+					// Add funds to the user
+					getUser(b.getUsername()).addFunds((float) (b.getAmount()*q.getBetShare()));
+				}
+			}
+		}
+		// Remove the event from the database
+		db.remove(e);
+		db.getTransaction().commit();
+	}
+	
+	public void setQuestionResult(Question q, String res) {
+		Question qc = db.find(Question.class, q.getQuestionNumber());
+		db.getTransaction().begin();
+		qc.setResult(res);
+		qc.close();
+		db.getTransaction().commit();
+	}
+	
 
 }

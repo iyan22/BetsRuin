@@ -208,10 +208,8 @@ public class MainUserGUI extends JFrame {
 			UserZone.setText(u.getName()+"'s Zone");
 			UserZone.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					UserZoneGUI usZ= new UserZoneGUI(u);
+					UserZoneGUI usZ = new UserZoneGUI(u);
 					usZ.setVisible(true);
-					
 				}
 			});
 			UserZone.setBounds(0, 114, 481, 49);

@@ -10,62 +10,38 @@ public class Bet {
 	
 	private Question question;
 	
-	private String user;
+	private String username;
 	private float amount;
-	private boolean first;
-	private boolean tie;
-	private boolean second;
+	private String result;
 
-	public Bet(int id,String win, float amount, Question question){
-		this.id=id;
-		this.question=question;
-		this.amount=amount;
-		if(win.equalsIgnoreCase("first")) {
-			tie=false;
-			second=false;
-			first=true;
-		}
-		else if(win.equalsIgnoreCase("tie")) {
-			first=false;
-			second=false;
-			tie=true;
-		}
-		else {
-			first=false;
-			tie=false;
-			second=true;
-		}
+	public Bet(int id, String result, float amount, Question question){
+		this.id = id;
+		this.question = question;
+		this.amount = amount;
+		this.result = result;
 	}
 	
 	public void setUser(User user) {
-		this.user = user.getUsername();
+		this.username = user.getUsername();
 	}
 
 	public Question getQuestion() {
 		return this.question;
 	}
 
-	public boolean getFirst() {
-		return first;
+	public String getResult() {
+		return result;
 	}
-
-	public boolean getTie() {
-		return tie;
-	}
-
-	public boolean getSecond() {
-		return second;
-	}
-
+	
 	public float getAmount() {
 		return amount;
 	}
 
-	public String getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUser(String username) {
+		this.username = username;
 	}
 }

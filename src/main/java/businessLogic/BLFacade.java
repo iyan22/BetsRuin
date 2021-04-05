@@ -33,7 +33,7 @@ public interface BLFacade  {
 	 * @throws EventFinished if current data is after data of the event
  	 * @throws QuestionAlreadyExist if the same question already exists for the event
 	 */
-	@WebMethod Question createQuestion(Event event, String question, float betMinimum) throws EventFinished, QuestionAlreadyExist;
+	@WebMethod Question createQuestion(Event event, String question, float betMinimum, double betShare) throws EventFinished, QuestionAlreadyExist;
 	
 	/**
 	 * This method creates an user
@@ -135,4 +135,16 @@ public interface BLFacade  {
 	 * @param amount
 	 */
 	public void betMade(User user, float amount);
+	/**
+	 * Method used to set question result by admin
+	 * @param q
+	 * @param res
+	 */
+	public void setQuestionResult(Question q, String res);
+	/**
+	 * Method used to close an event, all questions must be closed
+	 * @param e
+	 */
+	public void closeEvent(Event e);
+	
 }

@@ -19,15 +19,15 @@ public class ApplicationLauncher {
 	
 	public static void main(String[] args) {
 		
-		ConfigXML c=ConfigXML.getInstance();
+		ConfigXML c = ConfigXML.getInstance();
 	
 		System.out.println(c.getLocale());
 		
 		Locale.setDefault(new Locale(c.getLocale()));
 		
-		System.out.println("Locale: "+Locale.getDefault());
+		System.out.println("Locale: " + Locale.getDefault());
 		
-		StartGUI a=new StartGUI();
+		StartGUI a = new StartGUI();
 		a.setVisible(true);
 
 
@@ -45,7 +45,7 @@ public class ApplicationLauncher {
 
 				//In this option, you can parameterize the DataAccess (e.g. a Mock DataAccess object)
 
-				DataAccess da= new DataAccess(c.getDataBaseOpenMode().equals("initialize"));
+				DataAccess da = new DataAccess(c.getDataBaseOpenMode().equals("initialize"));
 				appFacadeInterface=new BLFacadeImplementation(da);
 
 				
@@ -59,8 +59,8 @@ public class ApplicationLauncher {
 				URL url = new URL(serviceName);
 
 		 
-		        //1st argument refers to wsdl document above
-				//2nd argument is service name, refer to wsdl document above
+		        // 1st argument refers to wsdl document above
+				// 2nd argument is service name, refer to wsdl document above
 //		        QName qname = new QName("http://businessLogic/", "FacadeImplementationWSService");
 		        QName qname = new QName("http://businessLogic/", "BLFacadeImplementationService");
 		 
@@ -68,9 +68,9 @@ public class ApplicationLauncher {
 
 		         appFacadeInterface = service.getPort(BLFacade.class);
 			} 
-			/*if (c.getDataBaseOpenMode().equals("initialize")) 
-				appFacadeInterface.initializeBD();
-				*/
+			if (c.getDataBaseOpenMode().equals("initialize")) {
+				//appFacadeInterface.initializeBD();
+			}
 			StartGUI.setBussinessLogic(appFacadeInterface);
 
 		

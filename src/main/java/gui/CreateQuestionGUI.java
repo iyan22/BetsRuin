@@ -25,12 +25,14 @@ public class CreateQuestionGUI extends JFrame {
 	DefaultComboBoxModel<Event> modelEvents = new DefaultComboBoxModel<Event>();
 
 	private JLabel jLabelListOfEvents = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ListEvents"));
-	private JLabel jLabelQuery = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Query"));
+	private JLabel jLabelQuestion = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Query"));
 	private JLabel jLabelMinBet = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MinimumBetPrice"));
 	private JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
 
 	private JTextField jTextFieldQuery = new JTextField();
-	private JTextField jTextFieldPrice = new JTextField();
+	private JTextField jTextFieldMinBet = new JTextField();
+	private JTextField jTextFieldBetshare = new JTextField();
+	
 	private JCalendar jCalendar = new JCalendar();
 	private Calendar calendarAct = null;
 	private Calendar calendarAnt = null;
@@ -43,8 +45,9 @@ public class CreateQuestionGUI extends JFrame {
 	private JLabel jLabelError = new JLabel();
 	
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
+	
 
-	public CreateQuestionGUI(Vector<domain.Event> v) {
+	public CreateQuestionGUI(Vector<Event> v) {
 		try {
 			jbInit(v);
 		} catch (Exception e) {
@@ -52,25 +55,25 @@ public class CreateQuestionGUI extends JFrame {
 		}
 	}
 
-	private void jbInit(Vector<domain.Event> v) throws Exception {
+	private void jbInit(Vector<Event> v) throws Exception {
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(604, 370));
+		this.setSize(new Dimension(604, 404));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("CreateQuery"));
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		jComboBoxEvents.setModel(modelEvents);
 		jComboBoxEvents.setBounds(new Rectangle(275, 47, 250, 20));
 		jLabelListOfEvents.setBounds(new Rectangle(290, 18, 277, 20));
-		jLabelQuery.setBounds(new Rectangle(25, 211, 75, 20));
+		jLabelQuestion.setBounds(new Rectangle(25, 211, 75, 20));
 		jTextFieldQuery.setBounds(new Rectangle(100, 211, 429, 20));
 		jLabelMinBet.setBounds(new Rectangle(25, 243, 75, 20));
-		jTextFieldPrice.setBounds(new Rectangle(100, 243, 60, 20));
+		jTextFieldMinBet.setBounds(new Rectangle(100, 243, 60, 20));
 
 		jCalendar.setBounds(new Rectangle(40, 50, 225, 150));
 		scrollPaneEvents.setBounds(new Rectangle(25, 44, 346, 116));
 
-		jButtonCreate.setBounds(new Rectangle(100, 275, 130, 30));
+		jButtonCreate.setBounds(new Rectangle(120, 312, 145, 40));
 		jButtonCreate.setEnabled(false);
 
 		jButtonCreate.addActionListener(new ActionListener() {
@@ -79,7 +82,7 @@ public class CreateQuestionGUI extends JFrame {
 			}
 		});
 		
-		jButtonClose.setBounds(new Rectangle(275, 275, 130, 30));
+		jButtonClose.setBounds(new Rectangle(302, 312, 145, 40));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jButtonClose_actionPerformed(e);
@@ -99,8 +102,8 @@ public class CreateQuestionGUI extends JFrame {
 		this.getContentPane().add(jButtonClose, null);
 		this.getContentPane().add(jButtonCreate, null);
 		this.getContentPane().add(jTextFieldQuery, null);
-		this.getContentPane().add(jLabelQuery, null);
-		this.getContentPane().add(jTextFieldPrice, null);
+		this.getContentPane().add(jLabelQuestion, null);
+		this.getContentPane().add(jTextFieldMinBet, null);
 
 		this.getContentPane().add(jLabelMinBet, null);
 		this.getContentPane().add(jLabelListOfEvents, null);
@@ -118,6 +121,16 @@ public class CreateQuestionGUI extends JFrame {
 		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
 		jLabelEventDate.setBounds(40, 16, 140, 25);
 		getContentPane().add(jLabelEventDate);
+		
+		JLabel lblBetshare = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateQuestionGUI.lblBetshare.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lblBetshare.setBounds(new Rectangle(25, 243, 75, 20));
+		lblBetshare.setBounds(25, 275, 75, 20);
+		getContentPane().add(lblBetshare);
+		
+	
+		jTextFieldBetshare.setBounds(new Rectangle(100, 243, 60, 20));
+		jTextFieldBetshare.setBounds(100, 275, 60, 20);
+		getContentPane().add(jTextFieldBetshare);
 
 		
 		// Code for JCalendar
@@ -161,25 +174,30 @@ public class CreateQuestionGUI extends JFrame {
 					try {
 						BLFacade facade = StartGUI.getBusinessLogic();
 
-						Vector<domain.Event> events = facade.getEvents(firstDay);
+						Vector<Event> events = facade.getEvents(firstDay);
 
-						if (events.isEmpty())
-							jLabelListOfEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("NoEvents")
-									+ ": " + dateformat1.format(calendarAct.getTime()));
-						else
-							jLabelListOfEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events") + ": "
-									+ dateformat1.format(calendarAct.getTime()));
+						if (events.isEmpty()) {
+							jLabelListOfEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("NoEvents") + ": " + dateformat1.format(calendarAct.getTime()));
+						}
+						else {
+							jLabelListOfEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events") + ": " + dateformat1.format(calendarAct.getTime()));
+						}
 						jComboBoxEvents.removeAllItems();
 						System.out.println("Events " + events);
 
-						for (domain.Event ev : events)
-							modelEvents.addElement(ev);
+						for (Event ev : events) {
+							if (ev.isOpen()) {
+								modelEvents.addElement(ev);
+							}
+						}
 						jComboBoxEvents.repaint();
 
-						if (events.size() == 0)
+						if (events.size() == 0) {
 							jButtonCreate.setEnabled(false);
-						else
+						}
+						else {
 							jButtonCreate.setEnabled(true);
+						}
 
 					} catch (Exception e1) {
 
@@ -240,7 +258,7 @@ public static void paintDaysWithEvents(JCalendar jCalendar,Vector<Date> datesWit
 	
 	 
 	private void jButtonCreate_actionPerformed(ActionEvent e) {
-		domain.Event event = ((domain.Event) jComboBoxEvents.getSelectedItem());
+		Event event = ((Event) jComboBoxEvents.getSelectedItem());
 
 		try {
 			jLabelError.setText("");
@@ -252,16 +270,21 @@ public static void paintDaysWithEvents(JCalendar jCalendar,Vector<Date> datesWit
 			if (inputQuery.length() > 0) {
 
 				// It could be to trigger an exception if the introduced string is not a number
-				float inputPrice = Float.parseFloat(jTextFieldPrice.getText());
+				float inputPrice = Float.parseFloat(jTextFieldMinBet.getText());
+				double inputShare = Double.parseDouble(jTextFieldBetshare.getText());
 
-				if (inputPrice <= 0)
+				if (inputPrice <= 0) {
 					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorNumber"));
+				}
+				if (inputShare <= 1) {
+					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorNumber"));
+				}
 				else {
 
 					// Obtain the business logic from a StartWindow class (local or remote)
 					BLFacade facade = StartGUI.getBusinessLogic();
 
-					facade.createQuestion(event, inputQuery, inputPrice);
+					facade.createQuestion(event, inputQuery, inputPrice, inputShare);
 
 					jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryCreated"));
 				}
@@ -272,12 +295,10 @@ public static void paintDaysWithEvents(JCalendar jCalendar,Vector<Date> datesWit
 					+ event.getDescription());
 		} catch (QuestionAlreadyExist e1) {
 			jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorQueryAlreadyExist"));
-		} catch (java.lang.NumberFormatException e1) {
+		} catch (NumberFormatException e1) {
 			jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorNumber"));
 		} catch (Exception e1) {
-
 			e1.printStackTrace();
-
 		}
 	}
 

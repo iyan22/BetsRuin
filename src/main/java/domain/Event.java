@@ -24,11 +24,22 @@ public class Event implements Serializable {
 	private Integer eventNumber;
 	private String description; 
 	private Date eventDate;
+	private boolean open;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
-	private Vector<Question> questions=new Vector<Question>();
+	private Vector<Question> questions = new Vector<Question>();
 
 	public Vector<Question> getQuestions() {
 		return questions;
+	}
+	
+	public Vector<Question> getOpenQuestions() {
+		Vector<Question> openQuestions = new Vector<Question>();
+		for (Question q: questions) {
+			if (q.isOpen()) {
+				openQuestions.add(q);
+			}
+		}
+		return openQuestions;
 	}
 
 	public void setQuestions(Vector<Question> questions) {
@@ -37,17 +48,20 @@ public class Event implements Serializable {
 
 	public Event() {
 		super();
+		this.open = true;
 	}
 
-	public Event(Integer eventNumber, String description,Date eventDate) {
+	public Event(Integer eventNumber, String description, Date eventDate) {
 		this.eventNumber = eventNumber;
 		this.description = description;
-		this.eventDate=eventDate;
+		this.eventDate = eventDate;
+		this.open = true;
 	}
 	
-	public Event( String description,Date eventDate) {
+	public Event(String description, Date eventDate) {
 		this.description = description;
 		this.eventDate=eventDate;
+		this.open = true;
 	}
 
 	public Integer getEventNumber() {
@@ -80,14 +94,14 @@ public class Event implements Serializable {
 	}
 	
 	/**
-	 * This method creates a bet with a question, minimum bet ammount and percentual profit
+	 * This method creates a bet with a question, minimum bet amount and percent profit
 	 * 
 	 * @param question to be added to the event
 	 * @param betMinimum of that question
 	 * @return Bet
 	 */
-	public Question addQuestion(String question, float betMinimum)  {
-        Question q=new Question(question,betMinimum, this);
+	public Question addQuestion(String question, float betMinimum, double betShare)  {
+        Question q = new Question(question, betMinimum, betShare, this);
         questions.add(q);
         return q;
 	}
@@ -99,7 +113,7 @@ public class Event implements Serializable {
 	 * @param question that needs to be checked if there exists
 	 * @return true if the question exists and false in other case
 	 */
-	public boolean DoesQuestionExists(String question)  {	
+	public boolean doesQuestionExists(String question)  {	
 		for (Question q:this.getQuestions()){
 			if (q.getQuestion().compareTo(question)==0)
 				return true;
@@ -107,6 +121,25 @@ public class Event implements Serializable {
 		return false;
 	}
 		
+	public boolean isOpen() {
+		return open;
+	}
+	
+	public void close() {
+		open = false;
+	}
+	
+	public boolean areAllQuestionsClosed() {
+		boolean res = true;
+		int i = 0;
+		while (i < questions.size() && res) {
+			if (questions.get(i).isOpen()) {
+				res = false;
+			}
+			i++;
+		}
+		return res;
+	}
 
 	
 	@Override

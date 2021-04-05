@@ -93,17 +93,17 @@ public class AddBetGUI extends JFrame {
 						}else {
 							if(amount>=q.getBetMinimum()) {
 								if(firstButton.isSelected()) {
-									facade.addBet(user,"first", amount, q);
+									facade.addBet(user,"1", amount, q);
 									user.betMade(amount);
 									submitted.setText("Bet submitted successfully!");
 									submitted.setForeground(Color.green);
 								}else if(secondButton.isSelected()) { 
-									facade.addBet(user,"second", amount, q);
+									facade.addBet(user,"2", amount, q);
 									user.betMade(amount);
 									submitted.setText("Bet submitted successfully!");
 									submitted.setForeground(Color.green);
 								}else if(tieButton.isSelected()) { 
-									facade.addBet(user,"tie", amount, q);
+									facade.addBet(user, "X", amount, q);
 									user.betMade(amount);
 									submitted.setText("Bet submitted successfully!");
 									submitted.setForeground(Color.green);

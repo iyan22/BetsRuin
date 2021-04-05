@@ -11,7 +11,7 @@ public class ObjectdbManagerServerAWS {
 
 	public static void main(String[] args) {
 
-		ConfigXML c=ConfigXML.getInstance();
+		ConfigXML c = ConfigXML.getInstance();
 		
 		if (c.isDatabaseLocal()) {
 			System.out.println("\nERROR, the database is configured as local");
@@ -20,7 +20,7 @@ public class ObjectdbManagerServerAWS {
 		try{
 
 			System.out.println("Lauching objectdb server");
-		    try { // Se va a ejecutar en máquina Linux: usar "/"
+		    try { // Se va a ejecutar en maquina Linux: usar "/"
 		    	String st="java -cp resources/objectdb.jar com.objectdb.Server -port "+ c.getDatabasePort()+" start";
 		    	System.out.println(st);
 		    	Runtime.getRuntime().exec(st);
