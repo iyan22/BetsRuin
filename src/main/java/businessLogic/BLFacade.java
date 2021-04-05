@@ -9,6 +9,7 @@ import domain.Question;
 import domain.User;
 import domain.Bet;
 import domain.Event;
+import domain.Prediction;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
@@ -88,7 +89,10 @@ public interface BLFacade  {
 	 * @return the created bet
 	 */
 	@WebMethod
-	public Bet addBet(User user,String win, float amount, Question question);
+	public Bet addBet(User user, float amount, Prediction pred);
+	
+	@WebMethod
+	public Prediction addPrediction(Question q, String answer, float mult, float minim);
 	
 	/**
 	 * This method find a question in the data base.
@@ -116,6 +120,14 @@ public interface BLFacade  {
 	 * @return list of bets
 	 */
 	public List<Bet> getBets(String username);
+	
+	/**
+	 * Method used to obtain all the predictions that have been made for a question
+	 * @param q 
+	 * @return list of predictions
+	 */
+	public List<Prediction> getPredictions(Question q);
+	
 	/**
 	 * Method used to add funds to user's account
 	 * @param user

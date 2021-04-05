@@ -10,32 +10,28 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 import businessLogic.BLFacade;
-import domain.Question;
+import domain.Prediction;
 import domain.User;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
 import javax.swing.JButton;
 
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import java.awt.Font;
-import javax.swing.ButtonGroup;
 
-public class AddBetGUI extends JFrame {
+public class PlaceBetGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField amountBet;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
-	
 
 	/**
 	 * Create the frame.
 	 */
-	public AddBetGUI(Question q, User user) {
+	public PlaceBetGUI(Prediction prediction, User user) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 506, 335);
 		contentPane = new JPanel();
@@ -44,32 +40,13 @@ public class AddBetGUI extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblAmount = new JLabel("Amount:");
-		lblAmount.setBounds(45, 108, 80, 13);
+		lblAmount.setBounds(45, 161, 80, 13);
 		contentPane.add(lblAmount);
 
 		amountBet = new JTextField();
-		amountBet.setBounds(135, 105, 96, 19);
+		amountBet.setBounds(135, 157, 96, 19);
 		contentPane.add(amountBet);
 		amountBet.setColumns(10);
-
-		JLabel lblBet = new JLabel("Bet:");
-		lblBet.setBounds(45, 151, 45, 13);
-		contentPane.add(lblBet);
-
-		JRadioButton firstButton = new JRadioButton("1");
-		buttonGroup.add(firstButton);
-		firstButton.setBounds(135, 147, 103, 21);
-		contentPane.add(firstButton);
-
-		JRadioButton tieButton = new JRadioButton("X");
-		buttonGroup.add(tieButton);
-		tieButton.setBounds(240, 147, 103, 21);
-		contentPane.add(tieButton);
-
-		JRadioButton secondButton = new JRadioButton("2");
-		buttonGroup.add(secondButton);
-		secondButton.setBounds(345, 147, 103, 21);
-		contentPane.add(secondButton);
 
 		JLabel submitted = new JLabel("");
 		submitted.setHorizontalAlignment(SwingConstants.CENTER);
@@ -87,30 +64,16 @@ public class AddBetGUI extends JFrame {
 						float amount = Float.parseFloat(amountBet.getText());
 						BLFacade facade = StartGUI.getBusinessLogic();
 						float userFunds=user.getFunds();
-						if(userFunds<q.getBetMinimum() || amount>userFunds) {
+						if(userFunds<prediction.getQuestion().getBetMinimum() || amount>userFunds) {
 							submitted.setText("Not enough funds!");
 							submitted.setForeground(Color.red);
 						}else {
-							if(amount>=q.getBetMinimum()) {
-								if(firstButton.isSelected()) {
-									facade.addBet(user,"first", amount, q);
-									user.betMade(amount);
-									submitted.setText("Bet submitted successfully!");
-									submitted.setForeground(Color.green);
-								}else if(secondButton.isSelected()) { 
-									facade.addBet(user,"second", amount, q);
-									user.betMade(amount);
-									submitted.setText("Bet submitted successfully!");
-									submitted.setForeground(Color.green);
-								}else if(tieButton.isSelected()) { 
-									facade.addBet(user,"tie", amount, q);
-									user.betMade(amount);
-									submitted.setText("Bet submitted successfully!");
-									submitted.setForeground(Color.green);
-								}else {
-									submitted.setText("Error!");
-									submitted.setForeground(Color.red);
-								}
+							if(amount>=prediction.getQuestion().getBetMinimum()) {
+								facade.addBet(user,  amount, prediction);
+								user.betMade(amount);
+								submitted.setText("Bet submitted successfully!");
+								submitted.setForeground(Color.green);
+								
 						
 							}else{
 								submitted.setText("Error!");
@@ -143,23 +106,39 @@ public class AddBetGUI extends JFrame {
 
 		JLabel questionDesc = new JLabel("");
 		questionDesc.setBounds(135, 85, 347, 13);
-		questionDesc.setText(q.getQuestion());
+		questionDesc.setText(prediction.getQuestion().getQuestion());
 		contentPane.add(questionDesc);
 
 		JTextPane textPane = new JTextPane();
 		textPane.setFont(new Font("Tahoma", Font.BOLD, 12));
 		textPane.setBounds(0, 185, 502, 19);
-		textPane.setText("Be careful! The amount you want to bet should be at least "+q.getBetMinimum());
+		textPane.setText("Be careful! The amount you want to bet should be at least "+prediction.getQuestion().getBetMinimum());
 		SimpleAttributeSet attribs = new SimpleAttributeSet();
 		StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_CENTER);
 		textPane.setParagraphAttributes(attribs, true);
 		textPane.setForeground(Color.red);
 		contentPane.add(textPane);
+		
+		JLabel lblPrediction = new JLabel("Prediction:");
+		lblPrediction.setBounds(45, 109, 80, 14);
+		contentPane.add(lblPrediction);
+		
+		JLabel predictionString = new JLabel("");
+		predictionString.setBounds(135, 109, 302, 14);
+		predictionString.setText(prediction.getAnswer());
+		contentPane.add(predictionString);
+		
+		JLabel lblMultiplier = new JLabel("Multiplier:");
+		lblMultiplier.setBounds(45, 134, 80, 14);
+		contentPane.add(lblMultiplier);
+		
+		JLabel multiplierField = new JLabel("");
+		multiplierField.setBounds(135, 132, 216, 14);
+		multiplierField.setText(Float.toString(prediction.getMultiplier()));
+		contentPane.add(multiplierField);
 	}
 
 	public void btnClose_actionPerformed(ActionEvent e, User u) {
-		FindQuestionsGUI f= new FindQuestionsGUI(u);
-		f.setVisible(true);
 		this.dispose();
 	}
 }

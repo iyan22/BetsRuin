@@ -2,61 +2,33 @@ package domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlIDREF;
 
 @Entity
 public class Bet {
 	@Id
 	private int id;
 	
-	private Question question;
+	@XmlIDREF
+	private Prediction pred;
 	
 	private String user;
 	private float amount;
-	private boolean first;
-	private boolean tie;
-	private boolean second;
 
-	public Bet(int id,String win, float amount, Question question){
+	public Bet(int id, float amount, User user, Prediction pred){
 		this.id=id;
-		this.question=question;
 		this.amount=amount;
-		if(win.equalsIgnoreCase("first")) {
-			tie=false;
-			second=false;
-			first=true;
-		}
-		else if(win.equalsIgnoreCase("tie")) {
-			first=false;
-			second=false;
-			tie=true;
-		}
-		else {
-			first=false;
-			tie=false;
-			second=true;
-		}
+		this.user=user.getUsername();
+		this.pred=pred;
 	}
 	
 	public void setUser(User user) {
 		this.user = user.getUsername();
 	}
 
-	public Question getQuestion() {
-		return this.question;
+	public Prediction getPrediction() {
+		return this.pred;
 	}
-
-	public boolean getFirst() {
-		return first;
-	}
-
-	public boolean getTie() {
-		return tie;
-	}
-
-	public boolean getSecond() {
-		return second;
-	}
-
 	public float getAmount() {
 		return amount;
 	}

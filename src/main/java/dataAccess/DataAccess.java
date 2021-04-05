@@ -18,6 +18,7 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Bet;
 import domain.Event;
+import domain.Prediction;
 import domain.Question;
 import domain.User;
 import exceptions.QuestionAlreadyExist;
@@ -173,13 +174,13 @@ public class DataAccess  {
 	 */
 	public Question createQuestion(Event event, String question, float betMinimum) throws  QuestionAlreadyExist {
 		System.out.println(">> DataAccess: createQuestion=> event= "+event+" question= "+question+" betMinimum="+betMinimum);
-		
+
 		Event ev = db.find(Event.class, event.getEventNumber());
 		System.out.println(event.getDescription());
 		if (ev.DoesQuestionExists(question)) throw new QuestionAlreadyExist(ResourceBundle.getBundle("Etiquetas").getString("ErrorQueryAlreadyExist"));
 		Question q = ev.addQuestion(question, betMinimum);
 		db.getTransaction().begin();
-		
+
 		//db.persist(q);
 		db.persist(ev); // db.persist(q) not required when CascadeType.PERSIST is added in questions property of Event class
 		// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
@@ -187,7 +188,7 @@ public class DataAccess  {
 		return q;
 
 	}
-	
+
 	/**
 	 * This method creates a user and stores it in the data base.
 	 * @param username that the user will identify
@@ -206,7 +207,7 @@ public class DataAccess  {
 		db.getTransaction().commit();
 		return usr;
 	}
-	
+
 	/**
 	 * This method checks if the user and the password coincide.
 	 * @param username of the user.
@@ -218,7 +219,7 @@ public class DataAccess  {
 		if(usr!=null && password.contentEquals(usr.getPassword())) return usr;
 		else return null;
 	}
-	
+
 	/**
 	 * This method creates an event and stores it in the data base.
 	 * @param description of the event.
@@ -254,7 +255,7 @@ public class DataAccess  {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * This method gets all the bets from a questions, not used for first iteration.
 	 * @param q question to get the bets.
@@ -273,6 +274,18 @@ public class DataAccess  {
 		return res;
 	}
 
+	
+	public Vector<Prediction> getPredictions(Question question){
+		Vector<Prediction> res = new Vector<Prediction>();
+		TypedQuery<Prediction> query = db.createQuery("SELECT p FROM Prediction p WHERE p.getQuestion().equals(question)", Prediction.class);
+		List<Prediction> preds = query.getResultList();
+		for(Prediction p: preds) {
+			res.add(p);
+			System.out.println(p.toString());
+		}
+		return res;
+	}
+
 	/**
 	 * Adds a bet to a question
 	 * @param amount to bet
@@ -281,14 +294,13 @@ public class DataAccess  {
 	 * @param second team winning bet
 	 * @param question to add the bet to
 	 * @return the created bet
-	 * @throws BetDenied if the probabilities of winning/tie ar over 100
 	 */
-	public Bet addBet(User user,String win, float amount, Question question) {
+	public Bet addBet(User user, float amount, Prediction pred) {
 		System.out.println(">> DataAccess: addBet");
 		int i=countBets();
-		Bet bet = new Bet(i,win, amount, question);
+		Bet bet = new Bet(i, amount, user, pred);
 		bet.setUser(user);
-		question.addBet(bet);
+		pred.addBet(bet);
 		System.out.println("Bet added!");
 		db.getTransaction().begin();
 		db.persist(bet);
@@ -296,13 +308,34 @@ public class DataAccess  {
 		betMade(user, amount);
 		return bet;
 	}
+
+
+	public Prediction addPrediction(Question q, String answer, float multiplier, float minim) {
+		int i = countPredictions();
+		Prediction pred = new Prediction(i, q, answer, multiplier, minim);
+		q.addPrediction(pred);
+		db.getTransaction().begin();
+		db.persist(pred);
+		db.getTransaction().commit();
+		return pred;
+	}
+
+	public int countPredictions() {
+		TypedQuery<Prediction> query= db.createQuery("SELECT p FROM Object p WHERE p instanceof Prediction", Prediction.class);
+		ArrayList<Prediction> resv= (ArrayList<Prediction>) query.getResultList();
+		int res=resv.size();
+		res++;
+		return res;
+
+	}
+
 	public int countBets() {
 		TypedQuery<Bet> query= db.createQuery("SELECT b FROM Bet b", Bet.class);
 		ArrayList<Bet> resv= (ArrayList<Bet>) query.getResultList();
 		int res=resv.size();
 		res++;
 		return res;
-		
+
 	}
 
 	/**
@@ -329,7 +362,7 @@ public class DataAccess  {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * This method  find a question in the data base with its number.
 	 * @param questionNumber to search in the data base.
@@ -339,7 +372,7 @@ public class DataAccess  {
 		Question qst = db.find(Question.class, questionNumber);
 		return qst;
 	}
-	
+
 	/**
 	 * This method opens the data base.
 	 * @param initializeMode
@@ -368,7 +401,7 @@ public class DataAccess  {
 		}
 
 	}
-	
+
 	/**
 	 * This method checks if the question in an event is already registered in the data base.
 	 * @param event of the question.
@@ -381,7 +414,7 @@ public class DataAccess  {
 		return ev.DoesQuestionExists(question);
 
 	}
-	
+
 	/**
 	 * This method checks if the user is stored at the data base as admin.
 	 * @param username to search.
@@ -395,7 +428,7 @@ public class DataAccess  {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * This method closes the data base.
 	 */
@@ -413,7 +446,7 @@ public class DataAccess  {
 		query.setParameter(1, username);
 		return  query.getResultList();
 	}
-	
+
 	/**
 	 * Method used to add funds to user's account
 	 * @param user
@@ -454,9 +487,9 @@ public class DataAccess  {
 	 */
 	public void betMade(User user, float amount) {
 		User u=db.find(User.class, user.getUsername());
-			db.getTransaction().begin();
-			u.betMade(amount);
-			db.getTransaction().commit();
+		db.getTransaction().begin();
+		u.betMade(amount);
+		db.getTransaction().commit();
 	}
 
 }

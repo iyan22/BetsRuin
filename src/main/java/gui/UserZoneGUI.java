@@ -119,7 +119,7 @@ public class UserZoneGUI extends JFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"Event", "Question", "Amount"
+					"Event", "Question", "Prediction", "Amount"
 				}
 			);
 		table = new JTable();
@@ -127,8 +127,9 @@ public class UserZoneGUI extends JFrame {
 		List<Bet> usrbetlist= facade.getBets(u.getUsername());
 		for(Bet b:usrbetlist) {
 			Vector<Object> row= new Vector<Object>();
-			row.add(b.getQuestion().getEvent().getDescription());
-			row.add(b.getQuestion().getQuestion());
+			row.add(b.getPrediction().getQuestion().getEvent().getDescription());
+			row.add(b.getPrediction().getQuestion().getQuestion());
+			row.add(b.getPrediction().getAnswer());
 			row.add(b.getAmount());
 			mod.addRow(row);
 		}

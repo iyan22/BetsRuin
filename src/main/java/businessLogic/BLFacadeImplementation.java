@@ -14,6 +14,7 @@ import domain.Question;
 import domain.User;
 import domain.Bet;
 import domain.Event;
+import domain.Prediction;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
@@ -183,16 +184,22 @@ public class BLFacadeImplementation  implements BLFacade {
 		return usr;
 	}
 	
+	public Prediction addPrediction(Question q, String answer, float mult, float minim) {
+		dbManager.open(false);
+		Prediction pred = dbManager.addPrediction(q, answer, mult, minim);
+		dbManager.close();
+		return pred;
+	}
+	
 	/**
-	 * Adds a bet to a question
+	 * Adds a bet to a prediction
 	 * @param amount to bet
-	 * @param win if the 'first'/'second' team wins or there is a 'tie'
-	 * @param question to add the bet to
+	 * @param prediction to add the bet to
 	 * @return the created bet
 	 */
-	public Bet addBet(User user,String win, float amount, Question question){
+	public Bet addBet(User user, float amount, Prediction pred){
 		dbManager.open(false);
-		Bet bet = dbManager.addBet(user,win, amount, question);
+		Bet bet = dbManager.addBet(user, amount, pred);
 		dbManager.close();
 		return bet;
 	}
@@ -227,6 +234,13 @@ public class BLFacadeImplementation  implements BLFacade {
 		List<Bet> l=dbManager.getBets(username);
 		dbManager.close();
 		return l;
+	}
+	
+	public List<Prediction> getPredictions(Question q){
+		dbManager.open(false);
+		List<Prediction> list = dbManager.getPredictions(q);
+		dbManager.close();
+		return list;
 	}
 	/**
 	 * Method used to add funds to user's account

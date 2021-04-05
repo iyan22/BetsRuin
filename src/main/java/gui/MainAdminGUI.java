@@ -26,6 +26,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton jButtonCreateEvent = null;
 	private JButton jButtonCreateQuery = null;
 	private JButton jButtonQueryQueries = null;
+	private JButton jButtonCreatePrediction = null;
 	protected JLabel jLabelSelectOption;
 	private JButton btnReturn;
 	private User u;
@@ -70,6 +71,7 @@ public class MainAdminGUI extends JFrame {
 			contentPane.add(getBoton2());
 			contentPane.add(getBoton4());
 			contentPane.add(getBoton3());
+			contentPane.add(getBoton5());
 			contentPane.add(getBtnReturn());
 		}
 		return contentPane;
@@ -89,7 +91,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton3() {
 		if (jButtonQueryQueries == null) {
 			jButtonQueryQueries = new JButton();
-			jButtonQueryQueries.setBounds(0, 78, 481, 49);
+			jButtonQueryQueries.setBounds(0, 70, 481, 37);
 			jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 			jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -105,7 +107,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton2() {
 		if (jButtonCreateQuery == null) {
 			jButtonCreateQuery = new JButton();
-			jButtonCreateQuery.setBounds(0, 125, 481, 49);
+			jButtonCreateQuery.setBounds(0, 172, 481, 37);
 			jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateQuery"));
 			jButtonCreateQuery.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -120,7 +122,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton4() {
 		if(jButtonCreateEvent == null) {
 			jButtonCreateEvent = new JButton();
-			jButtonCreateEvent.setBounds(0, 172, 481, 49);
+			jButtonCreateEvent.setBounds(0, 104, 481, 37);
 			jButtonCreateEvent.setText("Create Event");
 			jButtonCreateEvent.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -130,6 +132,22 @@ public class MainAdminGUI extends JFrame {
 			});
 		}
 		return jButtonCreateEvent;
+	}
+	
+	private JButton getBoton5() {
+		if(jButtonCreatePrediction == null) {
+			jButtonCreatePrediction = new JButton();
+			jButtonCreatePrediction.setBounds(0, 138, 481, 37);
+			jButtonCreatePrediction.setText("Create Prediction");
+			jButtonCreatePrediction.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					JFrame a = new CreatePredictionGUI();
+					a.setVisible(true);
+				}
+			});
+			
+		}
+		return jButtonCreatePrediction;
 	}
 	
 	private JButton getBtnReturn() {
