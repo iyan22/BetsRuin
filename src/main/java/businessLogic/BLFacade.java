@@ -162,4 +162,13 @@ public interface BLFacade  {
 	 * @param q
 	 */
 	public void closeQuestion(Question q);
+	
+	/**
+	 * This method invokes the data access to retrieve the dates a month for which there are events
+	 * 
+	 * @param date of the month for which days with events want to be retrieved 
+	 * @return collection of dates
+	 */
+	@WebMethod
+	public Vector<Date> getOpenEventsMonth(Date date);
 }

@@ -97,7 +97,7 @@ public class CloseEventsGUI extends JFrame {
 		
 		
 		BLFacade facade = StartGUI.getBusinessLogic();
-		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar.getDate());
+		datesWithEventsCurrentMonth = facade.getOpenEventsMonth(jCalendar.getDate());
 		paintDaysWithEvents(jCalendar,datesWithEventsCurrentMonth);
 		
 		

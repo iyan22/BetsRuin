@@ -480,11 +480,12 @@ public class DataAccess  {
 	}
 	
 	public void closeEvent(Event e) {
+		Event ef = db.find(Event.class, e.getEventNumber());
 		TypedQuery<Question> query = db.createQuery("SELECT q FROM Question q WHERE q.event=?1", Question.class);
 		query.setParameter(1, e);
 		ArrayList<Question> qlist = (ArrayList<Question>) query.getResultList();
 		db.getTransaction().begin();
-		e.close();
+		ef.close();
 		// Iterate all over the questions
 		for (Question q: qlist) {
 			// And all over the bets of each
@@ -497,8 +498,6 @@ public class DataAccess  {
 				}
 			}
 		}
-		// Remove the event from the database
-		db.remove(e);
 		db.getTransaction().commit();
 	}
 	
@@ -513,8 +512,34 @@ public class DataAccess  {
 	public void closeQuestion(Question q) {
 		Question qf = db.find(Question.class, q.getQuestionNumber());
 		db.getTransaction().begin();
-		q.close();
+		qf.close();
 		db.getTransaction().commit();
 	}
+	
+	/**
+	 * This method retrieves from the database the dates a month for which there are events
+	 * 
+	 * @param date of the month for which days with events want to be retrieved 
+	 * @return collection of dates
+	 */
+	public Vector<Date> getOpenEventsMonth(Date date) {
+		System.out.println(">> DataAccess: getEventsMonth");
+		Vector<Date> res = new Vector<Date>();	
+
+		Date firstDayMonthDate= UtilDate.firstDayMonth(date);
+		Date lastDayMonthDate= UtilDate.lastDayMonth(date);
+
+
+		TypedQuery<Date> query = db.createQuery("SELECT DISTINCT ev.eventDate FROM Event ev WHERE ev.eventDate BETWEEN ?1 and ?2 AND ev.isOpen()",Date.class);   
+		query.setParameter(1, firstDayMonthDate);
+		query.setParameter(2, lastDayMonthDate);
+		List<Date> dates = query.getResultList();
+		for (Date d : dates) {
+			System.out.println(d.toString());		 
+			res.add(d);
+		}
+		return res;
+	}
+
 
 }
