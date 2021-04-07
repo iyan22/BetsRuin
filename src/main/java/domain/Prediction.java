@@ -29,6 +29,15 @@ public class Prediction {
 		this.share = share;
 	}
 	
+
+	public int getPredictionId() {
+		return predictionId;
+	}
+
+	public void setWin(boolean win) {
+		this.win = win;
+	}
+
 	public boolean isWinner() {
 		return win;
 	}

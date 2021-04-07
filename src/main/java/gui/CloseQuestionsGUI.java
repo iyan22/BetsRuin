@@ -6,8 +6,6 @@ import configuration.UtilDate;
 import com.toedter.calendar.JCalendar;
 
 import domain.Question;
-import domain.User;
-import domain.Event;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +17,7 @@ import java.util.*;
 import javax.swing.table.DefaultTableModel;
 
 
-public class FindQuestionsGUI extends JFrame {
+public class CloseQuestionsGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
@@ -28,8 +26,7 @@ public class FindQuestionsGUI extends JFrame {
 
 	private JButton seePreds = new JButton("See Predictions"); //$NON-NLS-1$ //$NON-NLS-2$
 
-	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));	
-	private User u;
+	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 	// Code for JCalendar
 	private JCalendar jCalendar1 = new JCalendar();
 	private Calendar calendarAnt = null;
@@ -57,8 +54,7 @@ public class FindQuestionsGUI extends JFrame {
 			
 	};
 
-	public FindQuestionsGUI(User u) {
-		this.u=u;
+	public CloseQuestionsGUI() {
 		try {
 			jbInit();
 		}
@@ -83,7 +79,7 @@ public class FindQuestionsGUI extends JFrame {
 		this.getContentPane().add(jLabelQueries);
 		this.getContentPane().add(jLabelEvents);
 
-		jButtonClose.setBounds(new Rectangle(352, 423, 130, 30));
+		jButtonClose.setBounds(new Rectangle(352, 423, 153, 30));
 
 		jButtonClose.addActionListener(new ActionListener()
 		{
@@ -150,19 +146,21 @@ public class FindQuestionsGUI extends JFrame {
 
 						BLFacade facade=StartGUI.getBusinessLogic();
 
-						Vector<Event> events=facade.getEvents(firstDay);
+						Vector<domain.Event> events=facade.getEvents(firstDay);
 
 						if (events.isEmpty() ) jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("NoEvents")+ ": "+dateformat1.format(calendarAct.getTime()));
 						else jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events")+ ": "+dateformat1.format(calendarAct.getTime()));
-						for (Event ev:events){
-							Vector<Object> row = new Vector<Object>();
-
-							System.out.println("Events "+ev);
-
-							row.add(ev.getEventNumber());
-							row.add(ev.getDescription());
-							row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,2)
-							tableModelEvents.addRow(row);		
+						for (domain.Event ev:events){
+							if (ev.isOpen()) {
+								Vector<Object> row = new Vector<Object>();
+	
+								System.out.println("Events "+ev);
+	
+								row.add(ev.getEventNumber());
+								row.add(ev.getDescription());
+								row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,2)
+								tableModelEvents.addRow(row);	
+							}
 						}
 						tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
 						tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
@@ -191,22 +189,21 @@ public class FindQuestionsGUI extends JFrame {
 				tableModelQueries.setDataVector(null, columnNamesQueries);
 				tableModelQueries.setColumnCount(3);
 
-				if (queries.isEmpty())
-				{
+				if (queries.isEmpty()) {
 					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("NoQueries")+": "+ev.getDescription());
 					tableModelQueries.setRowCount(0);
 				}
-
-				else 
-				{
+				else {
 					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectedEvent")+" "+ev.getDescription());
-					for (Question q:queries){
-						Vector<Object> row = new Vector<Object>();
-
-						row.add(q.getQuestionNumber());
-						row.add(q.getQuestion());
-						row.add(q);
-						tableModelQueries.addRow(row);
+					for (Question q : queries){
+						if (q.isOpen()) {
+							Vector<Object> row = new Vector<Object>();
+	
+							row.add(q.getQuestionNumber());
+							row.add(q.getQuestion());
+							row.add(q);
+							tableModelQueries.addRow(row);
+							}
 						
 					}
 					tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
@@ -227,7 +224,7 @@ public class FindQuestionsGUI extends JFrame {
 				System.out.println(q.getQuestion());
 				seePreds.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						JFrame a = new SeePredictionsGUI(q, u);
+						JFrame a = new SetWinnerPredictionGUI(q);
 						a.setVisible(true);
 					}
 				});
@@ -252,9 +249,9 @@ public class FindQuestionsGUI extends JFrame {
 		this.getContentPane().add(scrollPaneEvents, null);
 		this.getContentPane().add(scrollPaneQueries, null);
 
-		seePreds = new JButton("See Predictions"); //$NON-NLS-1$ //$NON-NLS-2$
+		seePreds = new JButton(ResourceBundle.getBundle("Etiquetas").getString("CloseQuestionsGUI.seePreds.text")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-2$
 		seePreds.setBounds(new Rectangle(352, 423, 130, 30));
-		seePreds.setBounds(188, 423, 130, 30);
+		seePreds.setBounds(165, 423, 153, 30);
 		getContentPane().add(seePreds);
 		seePreds.setEnabled(false);
 

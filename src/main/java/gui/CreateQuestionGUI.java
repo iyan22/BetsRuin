@@ -44,7 +44,7 @@ public class CreateQuestionGUI extends JFrame {
 	
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
 
-	public CreateQuestionGUI(Vector<domain.Event> v) {
+	public CreateQuestionGUI(Vector<Event> v) {
 		try {
 			jbInit(v);
 		} catch (Exception e) {
@@ -52,7 +52,7 @@ public class CreateQuestionGUI extends JFrame {
 		}
 	}
 
-	private void jbInit(Vector<domain.Event> v) throws Exception {
+	private void jbInit(Vector<Event> v) throws Exception {
 
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(604, 370));
@@ -110,7 +110,7 @@ public class CreateQuestionGUI extends JFrame {
 		
 		
 		BLFacade facade = StartGUI.getBusinessLogic();
-		datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar.getDate());
+		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar.getDate());
 		paintDaysWithEvents(jCalendar,datesWithEventsCurrentMonth);
 		
 		
@@ -161,7 +161,7 @@ public class CreateQuestionGUI extends JFrame {
 					try {
 						BLFacade facade = StartGUI.getBusinessLogic();
 
-						Vector<domain.Event> events = facade.getEvents(firstDay);
+						Vector<Event> events = facade.getEvents(firstDay);
 
 						if (events.isEmpty())
 							jLabelListOfEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("NoEvents")
@@ -172,7 +172,7 @@ public class CreateQuestionGUI extends JFrame {
 						jComboBoxEvents.removeAllItems();
 						System.out.println("Events " + events);
 
-						for (domain.Event ev : events)
+						for (Event ev : events)
 							modelEvents.addElement(ev);
 						jComboBoxEvents.repaint();
 
@@ -240,7 +240,7 @@ public static void paintDaysWithEvents(JCalendar jCalendar,Vector<Date> datesWit
 	
 	 
 	private void jButtonCreate_actionPerformed(ActionEvent e) {
-		domain.Event event = ((domain.Event) jComboBoxEvents.getSelectedItem());
+		Event event = ((Event) jComboBoxEvents.getSelectedItem());
 
 		try {
 			jLabelError.setText("");
@@ -272,7 +272,7 @@ public static void paintDaysWithEvents(JCalendar jCalendar,Vector<Date> datesWit
 					+ event.getDescription());
 		} catch (QuestionAlreadyExist e1) {
 			jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorQueryAlreadyExist"));
-		} catch (java.lang.NumberFormatException e1) {
+		} catch (NumberFormatException e1) {
 			jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorNumber"));
 		} catch (Exception e1) {
 

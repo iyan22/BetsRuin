@@ -10,24 +10,21 @@ public class Bet {
 	@Id
 	private int id;
 	@XmlIDREF
-	private Prediction pred;
+	private Prediction prediction;
 	private String username;
 	private float amount;
 
-	public Bet(int id, float amount, User user, Prediction pred) {
+	public Bet(int id, float amount, User user, Prediction prediction) {
 		this.id = id;
 		this.amount = amount;
 		this.username = user.getUsername();
-		this.pred = pred;
+		this.prediction = prediction;
 	}
 	
 	public void setUsername(User username) {
 		this.username = username.getUsername();
 	}
 
-	public Prediction getPrediction() {
-		return this.pred;
-	}
 	public float getAmount() {
 		return amount;
 	}
@@ -38,6 +35,10 @@ public class Bet {
 
 	public void setUser(User user) {
 		this.username = user.getUsername();
+	}
+	
+	public Prediction getPrediction() {
+		return prediction;
 	}
 	
 }

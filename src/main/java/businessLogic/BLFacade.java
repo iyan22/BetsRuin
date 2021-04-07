@@ -1,8 +1,8 @@
 package businessLogic;
 
-import java.util.Vector;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 //import domain.Booking;
 import domain.Question;
@@ -152,4 +152,14 @@ public interface BLFacade  {
 	 * @param e
 	 */
 	public void closeEvent(Event e);
+	/**
+	 * Method used to set a prediction as winner
+	 * @param p
+	 */
+	public void setPredictionToWinner(Prediction p);
+	/**
+	 * Method used to close a question
+	 * @param q
+	 */
+	public void closeQuestion(Question q);
 }

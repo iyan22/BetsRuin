@@ -91,7 +91,7 @@ public class BLFacadeImplementation  implements BLFacade {
 	@WebMethod	
 	public Vector<Event> getEvents(Date date)  {
 		dbManager.open(false);
-		Vector<Event>  events=dbManager.getEvents(date);
+		Vector<Event>  events = dbManager.getEvents(date);
 		dbManager.close();
 		return events;
 	}
@@ -106,7 +106,7 @@ public class BLFacadeImplementation  implements BLFacade {
 	@WebMethod
 	public Vector<Date> getEventsMonth(Date date) {
 		dbManager.open(false);
-		Vector<Date>  dates=dbManager.getEventsMonth(date);
+		Vector<Date>  dates = dbManager.getEventsMonth(date);
 		dbManager.close();
 		return dates;
 	}
@@ -266,7 +266,7 @@ public class BLFacadeImplementation  implements BLFacade {
 		return res;
 	}
 	/**
-	 * Method used to subtract the amount betted
+	 * Method used to subtract the amount bet
 	 * @param user
 	 * @param amount
 	 */
@@ -284,6 +284,26 @@ public class BLFacadeImplementation  implements BLFacade {
 	public void closeEvent(Event e) {
 		dbManager.open(false);
 		dbManager.closeEvent(e);
+		dbManager.close();
+	}
+	
+	/**
+	 * Method used to set a prediction as winner
+	 * @param p
+	 */
+	public void setPredictionToWinner(Prediction p) {
+		dbManager.open(false);
+		dbManager.setWinner(p);
+		dbManager.close();
+	}
+	
+	/**
+	 * Method used to close a question
+	 * @param q
+	 */
+	public void closeQuestion(Question q) {
+		dbManager.open(false);
+		dbManager.closeQuestion(q);
 		dbManager.close();
 	}
 

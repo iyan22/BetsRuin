@@ -35,9 +35,8 @@ public class MainAdminGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MainAdminGUI(User u) {
-		
 		super();
-		this.u=u;
+		this.u = u;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -63,7 +62,7 @@ public class MainAdminGUI extends JFrame {
 	}
 	
 	public JPanel getJContentPane() {
-		if(contentPane==null) {
+		if (contentPane == null) {
 			contentPane = new JPanel();
 			contentPane.setLayout(null);
 			contentPane.add(getLblNewLabel());
@@ -82,17 +81,19 @@ public class MainAdminGUI extends JFrame {
 				}
 			});
 			btnCloseEvent.setText(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.btnCloseEvent.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			btnCloseEvent.setBounds(315, 111, 269, 37);
+			btnCloseEvent.setBounds(317, 116, 269, 37);
 			contentPane.add(btnCloseEvent);
 			
 			JButton btnCloseQuestion = new JButton();
 			btnCloseQuestion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					// TODO Close lo que haga falta
+					JFrame a = new CloseQuestionsGUI();
+
+					a.setVisible(true);
 				}
 			});
 			btnCloseQuestion.setText(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.btnCloseQuestion.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			btnCloseQuestion.setBounds(315, 194, 269, 37);
+			btnCloseQuestion.setBounds(317, 155, 269, 37);
 			contentPane.add(btnCloseQuestion);
 		}
 		return contentPane;
@@ -115,7 +116,7 @@ public class MainAdminGUI extends JFrame {
 			jButtonQueryQuestions.setBounds(36, 70, 548, 37);
 			jButtonQueryQuestions.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 			jButtonQueryQuestions.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
+				public void actionPerformed(ActionEvent e) {
 					JFrame a = new FindQuestionsGUI(u);
 
 					a.setVisible(true);
@@ -128,10 +129,10 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton2() {
 		if (jButtonCreateQuery == null) {
 			jButtonCreateQuery = new JButton();
-			jButtonCreateQuery.setBounds(36, 194, 269, 37);
+			jButtonCreateQuery.setBounds(36, 155, 269, 37);
 			jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateQuery"));
 			jButtonCreateQuery.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
+				public void actionPerformed(ActionEvent e) {
 					JFrame a = new CreateQuestionGUI(new Vector<Event>());
 					a.setVisible(true);
 				}
@@ -141,12 +142,12 @@ public class MainAdminGUI extends JFrame {
 	}
 	
 	private JButton getBoton4() {
-		if(jButtonCreateEvent == null) {
+		if (jButtonCreateEvent == null) {
 			jButtonCreateEvent = new JButton();
-			jButtonCreateEvent.setBounds(36, 111, 269, 37);
+			jButtonCreateEvent.setBounds(36, 116, 269, 37);
 			jButtonCreateEvent.setText("Create Event");
 			jButtonCreateEvent.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
+				public void actionPerformed(ActionEvent e) {
 					JFrame a = new CreateEventGUI();
 					a.setVisible(true);
 				}
@@ -158,10 +159,10 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton5() {
 		if(jButtonCreatePrediction == null) {
 			jButtonCreatePrediction = new JButton();
-			jButtonCreatePrediction.setBounds(36, 153, 269, 37);
+			jButtonCreatePrediction.setBounds(36, 194, 269, 37);
 			jButtonCreatePrediction.setText("Create Prediction");
 			jButtonCreatePrediction.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
+				public void actionPerformed(ActionEvent e) {
 					JFrame a = new CreatePredictionGUI();
 					a.setVisible(true);
 				}

@@ -245,15 +245,9 @@ public class DataAccess  {
 	 */
 	public Vector<Event> getEvents(Date date) {
 		System.out.println(">> DataAccess: getEvents");
-		Vector<Event> res = new Vector<Event>();	
 		TypedQuery<Event> query = db.createQuery("SELECT ev FROM Event ev WHERE ev.eventDate=?1",Event.class);   
 		query.setParameter(1, date);
-		List<Event> events = query.getResultList();
-		for (Event ev:events){
-			System.out.println(ev.toString());		 
-			res.add(ev);
-		}
-		return res;
+		return new Vector<Event>(query.getResultList());
 	}
 
 	/**
@@ -261,29 +255,18 @@ public class DataAccess  {
 	 * @param q question to get the bets.
 	 * @return a vector with all the bets related to that questions.
 	 */
-	public Vector<Bet> getBets(Question q){
+	public Vector<Bet> getBets(Prediction p) {
 		System.out.println(">> DataAccess: getBets");
-		Vector<Bet> res = new Vector<Bet>();
-		TypedQuery<Bet> query = db.createQuery("SELECT b FROM Bet b WHERE b.question=q", Bet.class);
-		List<Bet> bets = query.getResultList();
-		for(Bet b: bets)
-		{
-			res.add(b);
-			System.out.println(b.toString());
-		}
-		return res;
+		TypedQuery<Bet> query = db.createQuery("SELECT b FROM Bet b WHERE b.prediction=?1", Bet.class);
+		query.setParameter(1, p);
+		return new Vector<Bet>(query.getResultList());
 	}
 
 	
-	public Vector<Prediction> getPredictions(Question question){
-		Vector<Prediction> res = new Vector<Prediction>();
-		TypedQuery<Prediction> query = db.createQuery("SELECT p FROM Prediction p WHERE p.getQuestion().equals(question)", Prediction.class);
-		List<Prediction> preds = query.getResultList();
-		for(Prediction p: preds) {
-			res.add(p);
-			System.out.println(p.toString());
-		}
-		return res;
+	public Vector<Prediction> getPredictions(Question q) {
+		TypedQuery<Prediction> query = db.createQuery("SELECT p FROM Prediction p WHERE p.question=?1", Prediction.class);
+		query.setParameter(1, q);
+		return new Vector<Prediction>(query.getResultList());
 	}
 
 	/**
@@ -297,7 +280,7 @@ public class DataAccess  {
 	 */
 	public Bet addBet(User user, float amount, Prediction pred) {
 		System.out.println(">> DataAccess: addBet");
-		int i=countBets();
+		int i = countBets();
 		Bet bet = new Bet(i, amount, user, pred);
 		bet.setUser(user);
 		pred.addBet(bet);
@@ -442,7 +425,7 @@ public class DataAccess  {
 	 * @return list of bets
 	 */
 	public List<Bet> getBets(String username){
-		TypedQuery<Bet> query= db.createQuery("SELECT b FROM Bet b WHERE b.user=?1",Bet.class);
+		TypedQuery<Bet> query = db.createQuery("SELECT b FROM Bet b WHERE b.username=?1",Bet.class);
 		query.setParameter(1, username);
 		return  query.getResultList();
 	}
@@ -491,13 +474,13 @@ public class DataAccess  {
 	}
 	
 	public User getUser(String username) {
-		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.getUsername()=?1", User.class);
+		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.username=?1", User.class);
 		query.setParameter(1, username);
 		return query.getSingleResult();
 	}
 	
 	public void closeEvent(Event e) {
-		TypedQuery<Question> query = db.createQuery("SELECT q FROM Question q WHERE q.getEvent().equals(?1)", Question.class);
+		TypedQuery<Question> query = db.createQuery("SELECT q FROM Question q WHERE q.event=?1", Question.class);
 		query.setParameter(1, e);
 		ArrayList<Question> qlist = (ArrayList<Question>) query.getResultList();
 		db.getTransaction().begin();
@@ -516,6 +499,21 @@ public class DataAccess  {
 		}
 		// Remove the event from the database
 		db.remove(e);
+		db.getTransaction().commit();
+	}
+	
+	
+	public void setWinner(Prediction winner) {
+		Prediction pf = db.find(Prediction.class, winner.getPredictionId());
+		db.getTransaction().begin();
+		pf.setWinner();
+		db.getTransaction().commit();
+	}
+	
+	public void closeQuestion(Question q) {
+		Question qf = db.find(Question.class, q.getQuestionNumber());
+		db.getTransaction().begin();
+		q.close();
 		db.getTransaction().commit();
 	}
 
