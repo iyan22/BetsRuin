@@ -17,11 +17,11 @@ import javax.swing.table.DefaultTableModel;
 import businessLogic.BLFacade;
 import domain.Prediction;
 import domain.Question;
-import domain.User;
-
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
-public class SeePredictionsGUI extends JFrame {
+public class SetWinnerPredictionGUI extends JFrame {
 
 	/**
 	 * 
@@ -42,7 +42,7 @@ public class SeePredictionsGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SeePredictionsGUI(Question q, User u) {
+	public SetWinnerPredictionGUI(Question q) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -95,26 +95,37 @@ public class SeePredictionsGUI extends JFrame {
 				System.out.println(p.getAnswer());
 				btnPlaceBet.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						JFrame a = new PlaceBetGUI(p, u);
-						a.setVisible(true);
+						facade.setPredictionToWinner(p);
+						facade.closeQuestion(q);
 					}
 				});
 			}
 		});
 
 		btnClose = new JButton("Close");
-		btnClose.setBounds(226, 227, 89, 23);
+		btnClose.setBounds(226, 227, 114, 23);
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close(e);
+				JFrame a = new SetWinnerPredictionGUI(q);
+				a.setVisible(true);
+				dispose();
 			}
 		});
 		contentPane.add(btnClose);
 
-		btnPlaceBet = new JButton("Place Bet");
-		btnPlaceBet.setBounds(108, 227, 89, 23);
+		btnPlaceBet = new JButton("Select");
+		btnPlaceBet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnPlaceBet.setBounds(83, 227, 114, 23);
 		contentPane.add(btnPlaceBet);
 		btnPlaceBet.setEnabled(false);
+		
+		JLabel lblNewLabel = new JLabel("Set winner prediction");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(122, 24, 196, 16);
+		contentPane.add(lblNewLabel);
 		
 	}
 

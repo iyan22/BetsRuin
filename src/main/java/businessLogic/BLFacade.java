@@ -1,8 +1,8 @@
 package businessLogic;
 
-import java.util.Vector;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 //import domain.Booking;
 import domain.Question;
@@ -152,4 +152,23 @@ public interface BLFacade  {
 	 * @param e
 	 */
 	public void closeEvent(Event e);
+	/**
+	 * Method used to set a prediction as winner
+	 * @param p
+	 */
+	public void setPredictionToWinner(Prediction p);
+	/**
+	 * Method used to close a question
+	 * @param q
+	 */
+	public void closeQuestion(Question q);
+	
+	/**
+	 * This method invokes the data access to retrieve the dates a month for which there are events
+	 * 
+	 * @param date of the month for which days with events want to be retrieved 
+	 * @return collection of dates
+	 */
+	@WebMethod
+	public Vector<Date> getOpenEventsMonth(Date date);
 }

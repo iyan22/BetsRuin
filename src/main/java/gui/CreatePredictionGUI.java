@@ -245,7 +245,6 @@ public class CreatePredictionGUI extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						JFrame a = new AddPredictionGUI(q);
 						a.setVisible(true);
-						jButton2_actionPerformed(e);
 					}
 				});
 			}

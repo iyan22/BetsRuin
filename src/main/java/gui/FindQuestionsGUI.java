@@ -7,6 +7,7 @@ import com.toedter.calendar.JCalendar;
 
 import domain.Question;
 import domain.User;
+import domain.Event;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,22 +57,18 @@ public class FindQuestionsGUI extends JFrame {
 			
 	};
 
-	public FindQuestionsGUI(User u)
-	{
+	public FindQuestionsGUI(User u) {
 		this.u=u;
-		try
-		{
+		try {
 			jbInit();
 		}
-		catch(Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 
-	private void jbInit() throws Exception
-	{
+	private void jbInit() throws Exception {
 
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 500));
@@ -102,21 +99,17 @@ public class FindQuestionsGUI extends JFrame {
 		jCalendar1.setBounds(new Rectangle(40, 50, 225, 150));
 
 		BLFacade facade = StartGUI.getBusinessLogic();
-		datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate());
+		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
 		CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth);
 
 		// Code for JCalendar
-		this.jCalendar1.addPropertyChangeListener(new PropertyChangeListener()
-		{
-			public void propertyChange(PropertyChangeEvent propertychangeevent)
-			{
+		this.jCalendar1.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent propertychangeevent) {
 
-				if (propertychangeevent.getPropertyName().equals("locale"))
-				{
+				if (propertychangeevent.getPropertyName().equals("locale")) {
 					jCalendar1.setLocale((Locale) propertychangeevent.getNewValue());
 				}
-				else if (propertychangeevent.getPropertyName().equals("calendar"))
-				{
+				else if (propertychangeevent.getPropertyName().equals("calendar")) {
 					calendarAnt = (Calendar) propertychangeevent.getOldValue();
 					calendarAct = (Calendar) propertychangeevent.getNewValue();
 					tableModelQueries.setRowCount(0);
@@ -141,7 +134,7 @@ public class FindQuestionsGUI extends JFrame {
 
 						BLFacade facade = StartGUI.getBusinessLogic();
 
-						datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate());
+						datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
 					}
 
 
@@ -157,11 +150,11 @@ public class FindQuestionsGUI extends JFrame {
 
 						BLFacade facade=StartGUI.getBusinessLogic();
 
-						Vector<domain.Event> events=facade.getEvents(firstDay);
+						Vector<Event> events=facade.getEvents(firstDay);
 
 						if (events.isEmpty() ) jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("NoEvents")+ ": "+dateformat1.format(calendarAct.getTime()));
 						else jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events")+ ": "+dateformat1.format(calendarAct.getTime()));
-						for (domain.Event ev:events){
+						for (Event ev:events){
 							Vector<Object> row = new Vector<Object>();
 
 							System.out.println("Events "+ev);
@@ -207,7 +200,7 @@ public class FindQuestionsGUI extends JFrame {
 				else 
 				{
 					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectedEvent")+" "+ev.getDescription());
-					for (domain.Question q:queries){
+					for (Question q:queries){
 						Vector<Object> row = new Vector<Object>();
 
 						row.add(q.getQuestionNumber());
@@ -230,11 +223,11 @@ public class FindQuestionsGUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				seePreds.setEnabled(true);
 				int i = tableQueries.getSelectedRow();
-				Question q = (Question)tableModelQueries.getValueAt(i, 2);
+				Question q = (Question) tableModelQueries.getValueAt(i, 2);
 				System.out.println(q.getQuestion());
 				seePreds.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						JFrame a = new SeePredictionsGUI(q,u);
+						JFrame a = new SeePredictionsGUI(q, u);
 						a.setVisible(true);
 					}
 				});

@@ -21,7 +21,6 @@ public class Event implements Serializable {
 	private Integer eventNumber;
 	private String description; 
 	private Date eventDate;
-	private boolean open;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private Vector<Question> questions=new Vector<Question>();
 
@@ -105,14 +104,6 @@ public class Event implements Serializable {
 		return false;
 	}
 	
-	public boolean isOpen() {
-		return open;
-	}
-	
-	public void close() {
-		open = false;
-	}
-	
 	public boolean areAllQuestionsClosed() {
 		boolean res = true;
 		int i = 0;
@@ -123,6 +114,16 @@ public class Event implements Serializable {
 			i++;
 		}
 		return res;
+	}
+	
+	public Vector<Question> getOpenQuestions() {
+		Vector<Question> openQuestions = new Vector<Question>();
+		for (Question q: questions) {
+			if (q.isOpen()) {
+				openQuestions.add(q);
+			}
+		}
+		return openQuestions;
 	}
 		
 
