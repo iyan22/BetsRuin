@@ -74,27 +74,14 @@ public class MainAdminGUI extends JFrame {
 			
 			JButton btnCloseEvent = new JButton();
 			btnCloseEvent.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					JFrame a = new CloseEventsGUI();
-
-					a.setVisible(true);
-				}
-			});
-			btnCloseEvent.setText(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.btnCloseEvent.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			btnCloseEvent.setBounds(317, 116, 269, 37);
-			contentPane.add(btnCloseEvent);
-			
-			JButton btnCloseQuestion = new JButton();
-			btnCloseQuestion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					JFrame a = new CloseQuestionsGUI();
-
+					JFrame a = new CloseEventGUI();
 					a.setVisible(true);
 				}
 			});
-			btnCloseQuestion.setText(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.btnCloseQuestion.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			btnCloseQuestion.setBounds(317, 155, 269, 37);
-			contentPane.add(btnCloseQuestion);
+			btnCloseEvent.setText("Close Event"); 
+			btnCloseEvent.setBounds(36, 155, 548, 37);
+			contentPane.add(btnCloseEvent);
 		}
 		return contentPane;
 	}
@@ -129,7 +116,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton2() {
 		if (jButtonCreateQuery == null) {
 			jButtonCreateQuery = new JButton();
-			jButtonCreateQuery.setBounds(36, 155, 269, 37);
+			jButtonCreateQuery.setBounds(36, 195, 269, 37);
 			jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateQuery"));
 			jButtonCreateQuery.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -144,7 +131,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton4() {
 		if (jButtonCreateEvent == null) {
 			jButtonCreateEvent = new JButton();
-			jButtonCreateEvent.setBounds(36, 116, 269, 37);
+			jButtonCreateEvent.setBounds(36, 113, 548, 37);
 			jButtonCreateEvent.setText("Create Event");
 			jButtonCreateEvent.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -159,7 +146,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton5() {
 		if(jButtonCreatePrediction == null) {
 			jButtonCreatePrediction = new JButton();
-			jButtonCreatePrediction.setBounds(36, 194, 269, 37);
+			jButtonCreatePrediction.setBounds(315, 195, 269, 37);
 			jButtonCreatePrediction.setText("Create Prediction");
 			jButtonCreatePrediction.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(ActionEvent e) {

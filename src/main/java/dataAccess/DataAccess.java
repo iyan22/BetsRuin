@@ -485,7 +485,6 @@ public class DataAccess  {
 		query.setParameter(1, e);
 		ArrayList<Question> qlist = (ArrayList<Question>) query.getResultList();
 		db.getTransaction().begin();
-		ef.close();
 		// Iterate all over the questions
 		for (Question q: qlist) {
 			// And all over the bets of each
@@ -498,6 +497,7 @@ public class DataAccess  {
 				}
 			}
 		}
+		db.remove(ef);
 		db.getTransaction().commit();
 	}
 	
