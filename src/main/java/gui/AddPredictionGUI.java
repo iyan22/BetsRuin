@@ -30,7 +30,7 @@ public class AddPredictionGUI extends JFrame {
 	 */
 	public AddPredictionGUI(Question question) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 269);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -64,11 +64,11 @@ public class AddPredictionGUI extends JFrame {
 		shareField.setColumns(10);
 
 		JLabel submitted = new JLabel("");
-		submitted.setBounds(10, 202, 414, 14);
+		submitted.setBounds(49, 171, 355, 14);
 		contentPane.add(submitted);
 
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(104, 227, 89, 23);
+		btnSubmit.setBounds(102, 196, 89, 23);
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!answerField.getText().equals("")) {
@@ -93,7 +93,7 @@ public class AddPredictionGUI extends JFrame {
 		contentPane.add(btnSubmit);
 
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(209, 227, 89, 23);
+		btnCancel.setBounds(209, 196, 89, 23);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close(e);

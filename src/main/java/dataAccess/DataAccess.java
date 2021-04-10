@@ -292,7 +292,13 @@ public class DataAccess  {
 		return bet;
 	}
 
-
+	/**
+	 * This method adds a prediction to a selected question.
+	 * @param q: the question
+	 * @param answer: the prediction answer
+	 * @param share: how much is the winning multiplier
+	 * @return a prediction
+	 */
 	public Prediction addPrediction(Question q, String answer, float share) {
 		int i = countPredictions();
 		Prediction pred = new Prediction(i, q, answer, share);
@@ -302,7 +308,11 @@ public class DataAccess  {
 		db.getTransaction().commit();
 		return pred;
 	}
-
+	
+	/**
+	 * Method that calculates how many predictions are in the data base
+	 * @return number of predictions
+	 */
 	public int countPredictions() {
 		TypedQuery<Prediction> query= db.createQuery("SELECT p FROM Object p WHERE p instanceof Prediction", Prediction.class);
 		ArrayList<Prediction> resv= (ArrayList<Prediction>) query.getResultList();
@@ -311,7 +321,11 @@ public class DataAccess  {
 		return res;
 
 	}
-
+	
+	/**
+	 * Method that calculates how many bets are in the data base
+	 * @return number of bets.
+	 */
 	public int countBets() {
 		TypedQuery<Bet> query= db.createQuery("SELECT b FROM Bet b", Bet.class);
 		ArrayList<Bet> resv= (ArrayList<Bet>) query.getResultList();
@@ -473,12 +487,21 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 	
+	/**
+	 * Method to get a user from the database.
+	 * @param username
+	 * @return
+	 */
 	public User getUser(String username) {
 		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.username=?1", User.class);
 		query.setParameter(1, username);
 		return query.getSingleResult();
 	}
 	
+	/**
+	 * This method closes an event and returns the money to the users that made a bet in one of the questions.
+	 * @param e
+	 */
 	public void closeEvent(Event e) {
 		Event ef = db.find(Event.class, e.getEventNumber());
 		TypedQuery<Question> query = db.createQuery("SELECT q FROM Question q WHERE q.event=?1", Question.class);
@@ -501,7 +524,10 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 	
-	
+	/**
+	 * This method set a prediction as winner.
+	 * @param winner: the prediction
+	 */
 	public void setWinner(Prediction winner) {
 		Prediction pf = db.find(Prediction.class, winner.getPredictionId());
 		db.getTransaction().begin();
@@ -509,6 +535,10 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 	
+	/**
+	 * This method closes a question
+	 * @param q: the question
+	 */
 	public void closeQuestion(Question q) {
 		Question qf = db.find(Question.class, q.getQuestionNumber());
 		db.getTransaction().begin();

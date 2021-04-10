@@ -154,6 +154,7 @@ public class CloseEventGUI extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						JFrame a = new SetWinnerPredictionGUI(q);
 						a.setVisible(true);
+						dispose();
 					}
 				});
 			}
@@ -176,7 +177,7 @@ public class CloseEventGUI extends JFrame {
 		this.getContentPane().add(scrollPaneEvents, null);
 		this.getContentPane().add(scrollPaneQueries, null);
 
-		seePreds = new JButton(ResourceBundle.getBundle("Etiquetas").getString("CloseQuestionsGUI.seePreds.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		seePreds = new JButton("Close Question"); 
 		seePreds.setBounds(new Rectangle(352, 423, 130, 30));
 		seePreds.setBounds(273, 423, 153, 30);
 		getContentPane().add(seePreds);

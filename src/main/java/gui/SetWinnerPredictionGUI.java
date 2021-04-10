@@ -106,7 +106,9 @@ public class SetWinnerPredictionGUI extends JFrame {
 		btnClose.setBounds(226, 227, 114, 23);
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				close(e);
+				JFrame a = new SetWinnerPredictionGUI(q);
+				a.setVisible(true);
+				dispose();
 			}
 		});
 		contentPane.add(btnClose);

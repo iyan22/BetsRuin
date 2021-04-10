@@ -87,7 +87,7 @@ public class CreateQuestionGUI extends JFrame {
 		});
 
 		jLabelMsg.setBounds(new Rectangle(275, 182, 305, 20));
-		jLabelMsg.setForeground(Color.red);
+		jLabelMsg.setForeground(Color.green);
 		// jLabelMsg.setSize(new Dimension(305, 20));
 
 		jLabelError.setBounds(new Rectangle(175, 240, 305, 20));
