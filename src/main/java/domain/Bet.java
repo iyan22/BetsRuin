@@ -41,4 +41,8 @@ public class Bet {
 		return prediction;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 }

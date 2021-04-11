@@ -268,7 +268,7 @@ public class CreatePredictionGUI extends JFrame {
 		this.getContentPane().add(scrollPaneEvents, null);
 		this.getContentPane().add(scrollPaneQueries, null);
 
-		jAddPred = new JButton(ResourceBundle.getBundle("Etiquetas").getString("CreatePredictionGUI.jAddBet.text")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-2$
+		jAddPred = new JButton("Add Prediction"); 
 		jAddPred.setBounds(new Rectangle(352, 423, 130, 30));
 		jAddPred.setBounds(188, 423, 130, 30);
 		getContentPane().add(jAddPred);

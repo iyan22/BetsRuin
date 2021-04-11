@@ -504,6 +504,9 @@ public class DataAccess  {
 	 */
 	public void closeEvent(Event e) {
 		Event ef = db.find(Event.class, e.getEventNumber());
+		Question qf;
+		Prediction pf;
+		Bet bf;
 		TypedQuery<Question> query = db.createQuery("SELECT q FROM Question q WHERE q.event=?1", Question.class);
 		query.setParameter(1, e);
 		ArrayList<Question> qlist = (ArrayList<Question>) query.getResultList();
@@ -511,14 +514,26 @@ public class DataAccess  {
 		// Iterate all over the questions
 		for (Question q: qlist) {
 			// And all over the bets of each
-			for (Prediction p: q.getPredictions()) {
-				if (p.isWinner()) {
+			qf=db.find(Question.class, q.getQuestionNumber());
+			TypedQuery<Prediction> queryP = db.createQuery("SELECT p FROM Prediction p WHERE p.question=?2", Prediction.class);
+			queryP.setParameter(2, q);
+			ArrayList<Prediction> plist = (ArrayList<Prediction>) queryP.getResultList();
+			for (Prediction p: plist) {
+				pf=db.find(Prediction.class, p.getPredictionId());
+				TypedQuery<Bet> queryB = db.createQuery("SELECT b FROM Bet b WHERE b.prediction=?3", Bet.class);
+				queryB.setParameter(3, p);
+				ArrayList<Bet> blist = (ArrayList<Bet>) queryB.getResultList();
+				if (pf.isWinner()) {
 					// And now over the winner bets
-					for (Bet b: p.getBets()) {
-						getUser(b.getUsername()).addFunds((float) (b.getAmount()*p.getShare()));
+					for (Bet b: blist) {
+						bf=db.find(Bet.class, b.getId());
+						getUser(bf.getUsername()).addFunds((float) (bf.getAmount()*pf.getShare()));
+						db.remove(bf);
 					}
 				}
+				db.remove(pf);
 			}
+			db.remove(qf);
 		}
 		db.remove(ef);
 		db.getTransaction().commit();
