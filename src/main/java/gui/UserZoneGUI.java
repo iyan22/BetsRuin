@@ -119,7 +119,7 @@ public class UserZoneGUI extends JFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"Event", "Question", "Prediction", "Amount"
+					"Event", "Question", "Prediction", "Amount", "Share"
 				}
 			);
 		table = new JTable();
@@ -131,6 +131,7 @@ public class UserZoneGUI extends JFrame {
 			row.add(b.getPrediction().getQuestion().getQuestion());
 			row.add(b.getPrediction().getAnswer());
 			row.add(b.getAmount());
+			row.add(b.getPrediction().getShare());
 			mod.addRow(row);
 		}
 		table.getColumnModel().getColumn(0).setPreferredWidth(200);

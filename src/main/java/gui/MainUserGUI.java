@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import java.awt.event.ActionListener;
@@ -24,11 +23,7 @@ public class MainUserGUI extends JFrame {
 
 
 	protected JLabel jLabelSelectOption;
-	private JRadioButton rdbtnNewRadioButton;
-	private JRadioButton rdbtnNewRadioButton_1;
-	private JRadioButton rdbtnNewRadioButton_2;
 	private JPanel panel;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton btnReturn;
 	private User u;
 	private JButton UserZone;
@@ -127,58 +122,15 @@ public class MainUserGUI extends JFrame {
 		}
 		return jLabelSelectOption;
 	}
-
-	private JRadioButton getRdbtnNewRadioButton() {
-		if (rdbtnNewRadioButton == null) {
-			rdbtnNewRadioButton = new JRadioButton("English");
-			rdbtnNewRadioButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					Locale.setDefault(new Locale("en"));
-					System.out.println("Locale: "+Locale.getDefault());
-					redibujar();				}
-			});
-			buttonGroup.add(rdbtnNewRadioButton);
-		}
-		return rdbtnNewRadioButton;
-	}
-	private JRadioButton getRdbtnNewRadioButton_1() {
-		if (rdbtnNewRadioButton_1 == null) {
-			rdbtnNewRadioButton_1 = new JRadioButton("Euskara");
-			rdbtnNewRadioButton_1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					Locale.setDefault(new Locale("eus"));
-					System.out.println("Locale: "+Locale.getDefault());
-					redibujar();				}
-			});
-			buttonGroup.add(rdbtnNewRadioButton_1);
-		}
-		return rdbtnNewRadioButton_1;
-	}
-	private JRadioButton getRdbtnNewRadioButton_2() {
-		if (rdbtnNewRadioButton_2 == null) {
-			rdbtnNewRadioButton_2 = new JRadioButton("Castellano");
-			rdbtnNewRadioButton_2.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					Locale.setDefault(new Locale("es"));
-					System.out.println("Locale: "+Locale.getDefault());
-					redibujar();
-				}
-			});
-			buttonGroup.add(rdbtnNewRadioButton_2);
-		}
-		return rdbtnNewRadioButton_2;
-	}
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
 			panel.setBounds(0, 164, 481, 68);
-			panel.add(getRdbtnNewRadioButton_1());
-			panel.add(getRdbtnNewRadioButton_2());
-			panel.add(getRdbtnNewRadioButton());
 		}
 		return panel;
 	}
 
+	@SuppressWarnings("unused")
 	private void redibujar() {
 		jLabelSelectOption.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectOption"));
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));

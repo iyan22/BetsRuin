@@ -95,17 +95,15 @@ public class AddCardGUI extends JFrame {
 					int month=Integer.parseInt(monthc.getText());
 					int year=Integer.parseInt(yearc.getText());
 					int cvv=Integer.parseInt(cvV.getText());
-					if(cd1>9999 || cd2>9999 || cd3>9999 || cd4>9999) {
+					
+					if(cdN1.getText().length()!=4 || cdN2.getText().length()!=4 || cdN3.getText().length()!=4 || cdN4.getText().length()!=4) {
 						result.setText("Not valid format for the card number!");
 						result.setForeground(Color.red);
 					}else if(month <1 || month>12 || year<2021||year>2100) {
 						result.setText("Not valid format for the month or year!");
 						result.setForeground(Color.red);
-					}else if(cvv>999 || cvv <100) {
+					}else if(cvV.getText().length()!=3) {
 						result.setText("Not valid format for the cvv!");
-						result.setForeground(Color.red);
-					}else if(cd1<1000 || cd2<1000 || cd3<1000|| cd4<1000){
-						result.setText("Not valid format for the card number!");
 						result.setForeground(Color.red);
 					}else {
 						int[] card= {cd1,cd2,cd3,cd4,month,year,cvv};
