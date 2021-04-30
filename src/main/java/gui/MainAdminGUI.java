@@ -162,7 +162,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBtnReturn() {
 		if (btnReturn == null) {
 			btnReturn = new JButton();
-			btnReturn.setText("Return");
+			btnReturn.setText(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.btnReturn.text")); //$NON-NLS-1$ //$NON-NLS-2$
 			btnReturn.setBounds(264, 260, 85, 21);
 			btnReturn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
+import exceptions.NoReferralCodeFound;
 import exceptions.UserAlreadyExists;
 
 import javax.swing.JLabel;
@@ -31,6 +32,8 @@ public class RegisterGUI extends JFrame {
 	private JLabel lblCreateYourAccount;
 	private JTextField surname;
 	private JTextField name;
+	private JLabel lblReferralCode;
+	private JTextField referralField;
 
 	/**
 	 * Create the frame.
@@ -38,7 +41,7 @@ public class RegisterGUI extends JFrame {
 	public RegisterGUI() {
 		setTitle("Register");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 336);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -65,7 +68,7 @@ public class RegisterGUI extends JFrame {
 		contentPane.add(lblEmail);
 		
 		username = new JTextField();
-		username.setBounds(153, 31, 161, 19);
+		username.setBounds(153, 29, 161, 19);
 		contentPane.add(username);
 		username.setColumns(10);
 		
@@ -85,7 +88,7 @@ public class RegisterGUI extends JFrame {
 		
 		submitText = new JLabel("");
 		submitText.setHorizontalAlignment(SwingConstants.CENTER);
-		submitText.setBounds(0, 212, 436, 13);
+		submitText.setBounds(0, 241, 436, 13);
 		contentPane.add(submitText);
 		
 		JButton btnCreateAccount = new JButton("Submit");
@@ -94,12 +97,15 @@ public class RegisterGUI extends JFrame {
 				if(String.valueOf(pw1.getPassword()).contentEquals(String.copyValueOf(pw2.getPassword()))) {
 					BLFacade facade = StartGUI.getBusinessLogic();
 					try {
-						facade.createUser(username.getText(),name.getText(), surname.getText(), String.valueOf(pw1.getPassword()), email.getText());
+						facade.createUser(username.getText(),name.getText(), surname.getText(), String.valueOf(pw1.getPassword()), email.getText(), referralField.getText());
 						submitText.setText("Account created successfully!");
 						submitText.setForeground(Color.green);
 					} catch (UserAlreadyExists e1) {
 						submitText.setText("This user already exists! Try again!");
 						submitText.setForeground(Color.RED);
+					} catch (NoReferralCodeFound e2) {
+						submitText.setText("The referralCode doesn't exist!");
+						
 					}
 					
 				} else {
@@ -109,7 +115,7 @@ public class RegisterGUI extends JFrame {
 			}
 		});
 		btnCreateAccount.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnCreateAccount.setBounds(175, 181, 85, 21);
+		btnCreateAccount.setBounds(175, 209, 85, 21);
 		contentPane.add(btnCreateAccount);
 		
 		btnClose = new JButton("Close");
@@ -118,7 +124,7 @@ public class RegisterGUI extends JFrame {
 				btnClose_actionPerformed(e);
 			}
 		});
-		btnClose.setBounds(175, 232, 85, 21);
+		btnClose.setBounds(175, 265, 85, 21);
 		contentPane.add(btnClose);
 		
 		lblCreateYourAccount = new JLabel("Create your account");
@@ -146,6 +152,16 @@ public class RegisterGUI extends JFrame {
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblName.setBounds(27, 59, 116, 13);
 		contentPane.add(lblName);
+		
+		lblReferralCode = new JLabel("Referral Code:");
+		lblReferralCode.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblReferralCode.setBounds(27, 179, 116, 13);
+		contentPane.add(lblReferralCode);
+		
+		referralField = new JTextField();
+		referralField.setColumns(10);
+		referralField.setBounds(153, 177, 161, 19);
+		contentPane.add(referralField);
 		
 	}
 	

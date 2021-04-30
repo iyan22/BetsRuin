@@ -82,7 +82,7 @@ public class LoginGUI extends JFrame {
 		passwordField.setBounds(186, 92, 132, 19);
 		contentPane.add(passwordField);
 
-		JButton btnLogin = new JButton("Submit");
+		JButton btnLogin = new JButton("Log in");
 		btnLogin.setBounds(196, 194, 85, 21);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

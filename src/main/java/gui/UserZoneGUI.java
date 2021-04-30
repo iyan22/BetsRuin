@@ -155,6 +155,24 @@ public class UserZoneGUI extends JFrame {
 		btnNewButton.setBounds(620, 81, 140, 23);
 		showFunds.add(btnNewButton);
 		
+		JLabel lblReferralCode = new JLabel("Referral Code:");
+		lblReferralCode.setBounds(501, 135, 89, 14);
+		showFunds.add(lblReferralCode);
+		
+		JLabel ReferralCode = new JLabel("");
+		ReferralCode.setBounds(620, 135, 117, 14);
+		ReferralCode.setText(u.getRefCode());
+		showFunds.add(ReferralCode);
+		
+		JLabel lblNOfReferrals = new JLabel("N\u00BA of referrals");
+		lblNOfReferrals.setBounds(501, 172, 89, 14);
+		showFunds.add(lblNOfReferrals);
+		
+		JLabel numRef = new JLabel("");
+		numRef.setBounds(648, 172, 89, 14);
+		numRef.setText(u.getNumberRef().toString());
+		showFunds.add(numRef);
+		
 	
 		
 		

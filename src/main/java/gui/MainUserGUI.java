@@ -140,7 +140,7 @@ public class MainUserGUI extends JFrame {
 		if (btnReturn == null) {
 			btnReturn = new JButton(); //$NON-NLS-1$ //$NON-NLS-2$
 			btnReturn.setBounds(201, 243, 85, 21);
-			btnReturn.setText("Return");
+			btnReturn.setText(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.btnReturn.text")); //$NON-NLS-1$ //$NON-NLS-2$
 			btnReturn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					close(e);
