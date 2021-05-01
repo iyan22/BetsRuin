@@ -13,18 +13,23 @@ public class User {
 	private String password;
 	private String email;
 	private boolean admin;
+	private String referralCode;
+	private Integer referred=0;
+	private String referredBy;
 	
 	//addFunds
 	private boolean bankdata=false;
 	private int[] card; // 0,1,2,3-CARD NUMBER 4-MM 5-YYYY 6-CVV
 	private float funds=0;
 	
-	public User(String username, String name,String surname, String password, String email) {
+	public User(String username, String name,String surname, String password, String email, String ref, String refBy) {
 		this.username=username;
 		this.password=password;
 		this.name=name;
 		this.surname=surname;
 		this.email=email;
+		this.referralCode=ref;
+		this.referredBy=refBy;
 		this.admin=false;
 	}
 	public String getMail() {
@@ -72,6 +77,21 @@ public class User {
 	
 	public String getPassword() {
 		return password;
+	}
+	public String getRefCode() {
+		return referralCode;
+	}
+	public void setRefCode(String ref) {
+		this.referralCode=ref;
+	}
+	public Integer getNumberRef() {
+		return referred;
+	}
+	public void addRef() {
+		this.referred++;
+	}
+	public String getReferredBy() {
+		return referredBy;
 	}
 	
 }

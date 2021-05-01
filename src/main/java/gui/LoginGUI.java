@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class LoginGUI extends JFrame {
 
@@ -28,12 +29,13 @@ public class LoginGUI extends JFrame {
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JButton btnClose;
-	private JLabel lblLogin;
+	private JLabel lblLogo;
 	private JLabel lblMode;
 	private JLabel submittedBtn;
 	private JRadioButton userMode;
 	private JRadioButton adminMode;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JPanel panel;
 	/**
 	 * Launch the application.
 	 */
@@ -54,36 +56,23 @@ public class LoginGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginGUI() {
+		setResizable(false);
 
-		setTitle("Login");
+		setTitle("Bets&Ruin - Log in");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 515, 318);
+		setBounds(100, 100, 373, 435);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblUser = new JLabel("User:");
-		lblUser.setBounds(104, 59, 48, 29);
-		lblUser.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		contentPane.add(lblUser);
-
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(104, 98, 82, 13);
-		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		contentPane.add(lblPassword);
-
-		textField = new JTextField();
-		textField.setBounds(186, 64, 132, 19);
-		contentPane.add(textField);
-		textField.setColumns(10);
-
-		passwordField = new JPasswordField();
-		passwordField.setBounds(186, 92, 132, 19);
-		contentPane.add(passwordField);
-
-		JButton btnLogin = new JButton("Submit");
-		btnLogin.setBounds(196, 194, 85, 21);
+		JButton btnLogin = new JButton("Log in");
+		btnLogin.setBounds(65, 353, 101, 30);
+		btnLogin.setForeground(new Color(61, 45, 20));
+		btnLogin.setBackground(new Color(255, 189, 89));
+		btnLogin.setBorderPainted(false);
+		btnLogin.setOpaque(true);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = StartGUI.getBusinessLogic();
@@ -105,17 +94,23 @@ public class LoginGUI extends JFrame {
 							submittedBtn.setForeground(Color.red);
 						}
 					}
-				}else{
+				}
+				else{
 					submittedBtn.setText("Username or password are incorrect!");
 					submittedBtn.setForeground(Color.red);
 				}
 			}
 		});
-		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnLogin.setFont(new Font("PT Sans", Font.BOLD, 16));
 		contentPane.add(btnLogin);
 
 		btnClose = new JButton("Close");
-		btnClose.setBounds(196, 250, 85, 21);
+		btnClose.setFont(new Font("PT Sans", Font.BOLD, 16));
+		btnClose.setBackground(new Color(61, 45, 20));
+		btnClose.setForeground(new Color(255, 189, 89));
+		btnClose.setBounds(191, 353, 101, 30);
+		btnClose.setOpaque(true);
+		btnClose.setBorderPainted(false);
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close(e);
@@ -123,30 +118,61 @@ public class LoginGUI extends JFrame {
 		});
 		contentPane.add(btnClose);
 
-		lblLogin = new JLabel("Login");
-		lblLogin.setBounds(217, 24, 45, 13);
-		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 12));
-		contentPane.add(lblLogin);
-
-		lblMode = new JLabel("Mode:");
-		lblMode.setBounds(104, 137, 45, 13);
-		contentPane.add(lblMode);
-
-		userMode = new JRadioButton("User");
-		userMode.setSelected(true);
-		userMode.setBounds(186, 133, 76, 21);
-		buttonGroup.add(userMode);
-		contentPane.add(userMode);
-
+		lblLogo = new JLabel();
+		lblLogo.setIcon(new ImageIcon(LoginGUI.class.getResource("/img/LogoBetsRuinL.png")));
+		lblLogo.setBounds(104, 26, 164, 143);
+		lblLogo.setFont(new Font("PT Sans", Font.BOLD, 20));
+		contentPane.add(lblLogo);
+		
+		panel = new JPanel();
+		panel.setBackground(new Color(227, 227, 227));
+		panel.setBounds(36, 199, 301, 116);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setBounds(16, 47, 71, 22);
+		panel.add(lblPassword);
+		lblPassword.setFont(new Font("PT Sans", Font.BOLD, 16));
+			
 		adminMode = new JRadioButton("Admin");
-		adminMode.setBounds(264, 133, 103, 21);
+		adminMode.setFont(new Font("PT Sans", Font.BOLD, 14));
+		adminMode.setBounds(179, 79, 73, 23);
+		panel.add(adminMode);
 		buttonGroup.add(adminMode);
-		contentPane.add(adminMode);
-	
+						
+		userMode = new JRadioButton("User");
+		userMode.setFont(new Font("PT Sans", Font.BOLD, 14));
+		userMode.setBounds(99, 79, 60, 23);
+		panel.add(userMode);
+		userMode.setSelected(true);
+		buttonGroup.add(userMode);
+								
+		lblMode = new JLabel("Mode:");
+		lblMode.setBounds(16, 81, 43, 22);
+		panel.add(lblMode);
+		lblMode.setFont(new Font("PT Sans", Font.BOLD, 16));
+										
+		passwordField = new JPasswordField();
+		passwordField.setBounds(99, 44, 185, 26);
+		panel.add(passwordField);
+												
+		textField = new JTextField();
+		textField.setBounds(99, 14, 185, 26);
+		panel.add(textField);
+		textField.setColumns(10);
+														
+		JLabel lblUser = new JLabel("User:");
+		lblUser.setBounds(16, 17, 35, 22);
+		panel.add(lblUser);
+		lblUser.setFont(new Font("PT Sans", Font.BOLD, 16));
+																	
 		submittedBtn = new JLabel("");
-		submittedBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		submittedBtn.setBounds(0, 227, 501, 13);
+		submittedBtn.setFont(new Font("PT Sans", Font.BOLD, 16));
+		submittedBtn.setBounds(36, 328, 301, 17);
 		contentPane.add(submittedBtn);
+		submittedBtn.setHorizontalAlignment(SwingConstants.CENTER);
+		
 	}
 
 	public void close(ActionEvent e) {

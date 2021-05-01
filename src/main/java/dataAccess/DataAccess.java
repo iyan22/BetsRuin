@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.persistence.EntityManager;
@@ -21,6 +22,7 @@ import domain.Event;
 import domain.Prediction;
 import domain.Question;
 import domain.User;
+import exceptions.NoReferralCodeFound;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
 
@@ -121,7 +123,7 @@ public class DataAccess  {
 
 			}
 
-			User admin = new User("admin", "admin","admin","admin", "admin");
+			User admin = new User("admin", "admin","admin","admin", "admin", "", "");
 			admin.setAdmin();
 			db.persist(admin);
 
@@ -196,14 +198,26 @@ public class DataAccess  {
 	 * @param email of the new user
 	 * @return the created user or exception
 	 * @throws UserAlreadyExists if there is a user with the same username
+	 * @throw NoReferralCodeFound if the referral code was not found
 	 */
-	public User createUser(String username,String name, String surname, String password, String email) throws UserAlreadyExists {
-		System.out.println(">> DataAccess: createUser=> username= "+username+" email= "+email);
+	public User createUser(String username,String name, String surname, String password, String email, String referredBy) throws UserAlreadyExists, NoReferralCodeFound {
 		User usr = db.find(User.class, username);
-		if(usr!=null) throw new UserAlreadyExists(ResourceBundle.getBundle("Etiquetas").getString("ErrorUserAlreadyExist"));
-
+		if (usr != null) {
+			throw new UserAlreadyExists(ResourceBundle.getBundle("Etiquetas").getString("ErrorUserAlreadyExist"));
+		}
+		if (!referredBy.equals("")) {
+			User refU = getRefUser(referredBy);
+			if(refU == null) {
+				throw new NoReferralCodeFound();
+			}
+			db.getTransaction().begin();;
+			refU.addRef();
+			db.getTransaction().commit();
+		}
+		System.out.println(">> DataAccess: createUser=> username= "+username+" email= "+email);
+		String ref = refGen();
 		db.getTransaction().begin();
-		db.persist(new User(username,name,surname, password, email));
+		db.persist(new User(username,name,surname, password, email, ref, referredBy));
 		db.getTransaction().commit();
 		return usr;
 	}
@@ -451,6 +465,7 @@ public class DataAccess  {
 	 */
 	public boolean addFunds(User user, float amount) {
 		User u = db.find(User.class, user.getUsername());
+		addFundsRef(user.getReferredBy(), amount);
 		if (u != null) {
 			db.getTransaction().begin();
 			u.addFunds(amount);
@@ -584,6 +599,72 @@ public class DataAccess  {
 			res.add(d);
 		}
 		return res;
+	}
+	
+	/**
+	 * Method use to generate a referralCode
+	 * @return referralCode
+	 */
+	public String refGen() {
+		boolean done=false;
+		int leftLimit=48;
+		int rightLimit=90;
+		int targetStringLength=6;
+		Random random=new Random();
+		String generatedString="";
+		while(!done) {
+			generatedString=random.ints(leftLimit, rightLimit+1)
+					.filter(i->(i<=57 || i>=65))
+					.limit(targetStringLength)
+					.collect(StringBuilder::new,StringBuilder::appendCodePoint, StringBuilder::append)
+					.toString();
+			if(checkRef(generatedString)) done=true;
+		}
+		return generatedString;
+	}
+	/**
+	 * Method used to check if the referral code exists in the database
+	 * @param ref, referral code
+	 * @return boolean
+	 */
+	private boolean checkRef(String ref) {
+		TypedQuery<User> query=db.createQuery("SELECT u FROM User u WHERE u.referralCode=?1", User.class);
+		query.setParameter(1, ref);
+		List<User> l=query.getResultList();
+		if(l.isEmpty()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	/**
+	 * Method used to get the Referred User
+	 * @param ref, referral Code
+	 * @return user
+	 */
+	private User getRefUser(String ref) {
+		TypedQuery<User> query=db.createQuery("SELECT u FROM User u WHERE u.referralCode=?1", User.class);
+		query.setParameter(1, ref);
+		List<User> l= query.getResultList();
+		if(l.isEmpty()) {
+			return null;
+		}else {
+			return l.get(0);
+		}
+	}
+	/**
+	 * Method used to add 10% of the added funds to the referred user
+	 * @param ref, referral code
+	 * @param fund, total amount
+	 */
+	private void addFundsRef(String ref, float fund) {
+		TypedQuery<User> query=db.createQuery("SELECT u FROM User u WHERE u.referralCode=?1", User.class);
+		query.setParameter(1, ref);
+		User u=query.getSingleResult();
+		db.getTransaction().begin();
+		u.addFunds((float)(fund*0.1));
+		db.getTransaction().commit();
 	}
 
 

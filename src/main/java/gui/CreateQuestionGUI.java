@@ -228,7 +228,7 @@ public static void paintDaysWithEvents(JCalendar jCalendar,Vector<Date> datesWit
 //			    		  Component o=(Component) jCalendar.getDayChooser().getDayPanel().getComponent(i+offset);; 
 			Component o = (Component) jCalendar.getDayChooser().getDayPanel()
 					.getComponent(calendar.get(Calendar.DAY_OF_MONTH) + offset);
-			o.setBackground(Color.CYAN);
+			o.setBackground(new Color(255, 189, 89));
 	 	}
 	 	
  			calendar.set(Calendar.DAY_OF_MONTH, today);

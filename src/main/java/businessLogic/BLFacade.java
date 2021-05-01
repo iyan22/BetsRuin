@@ -11,6 +11,7 @@ import domain.Bet;
 import domain.Event;
 import domain.Prediction;
 import exceptions.EventFinished;
+import exceptions.NoReferralCodeFound;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
 
@@ -44,8 +45,9 @@ public interface BLFacade  {
 	 * @param email
 	 * @return the created user, or exception
 	 * @throws UserAlreadyExists if the same user already exists
+	 * @throws NoReferralCodeFound if the referralCode is not assigned to any user
 	 */
-	@WebMethod User createUser(String username,String name, String surname, String password, String email) throws UserAlreadyExists;
+	@WebMethod User createUser(String username,String name, String surname, String password, String email, String referredBy) throws UserAlreadyExists, NoReferralCodeFound;
 	
 	/**
 	 * This method checks if the login is correct
