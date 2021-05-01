@@ -68,4 +68,12 @@ public class Bet {
 	public void setUser(String user) {
 		this.user = user;
 	}
+<<<<<<< Updated upstream
+=======
+	
+	public int getId() {
+		return id;
+	}
+	
+>>>>>>> Stashed changes
 }
