@@ -22,6 +22,7 @@ import domain.Event;
 import domain.Prediction;
 import domain.Question;
 import domain.User;
+import exceptions.AlreadyFollowed;
 import exceptions.NoReferralCodeFound;
 import exceptions.QuestionAlreadyExist;
 import exceptions.UserAlreadyExists;
@@ -276,7 +277,6 @@ public class DataAccess  {
 		return new Vector<Bet>(query.getResultList());
 	}
 
-	
 	public Vector<Prediction> getPredictions(Question q) {
 		TypedQuery<Prediction> query = db.createQuery("SELECT p FROM Prediction p WHERE p.question=?1", Prediction.class);
 		query.setParameter(1, q);
@@ -666,6 +666,63 @@ public class DataAccess  {
 		u.addFunds((float)(fund*0.1));
 		db.getTransaction().commit();
 	}
+	
+	/**
+	 * Method used to add to the user's follow list a new team/player
+	 * 
+	 * @param user
+	 * @param team
+	 * @throws AlreadyFollowed 
+	 */
+	public void follow(User user, String team) throws AlreadyFollowed {
+		User u = db.find(User.class, user.getUsername());
+		db.getTransaction().begin();
+		u.addFollowed(team);
+		db.getTransaction().commit();
+	}
 
-
+	/**
+	 * Method used to obtain all the active events that include the teams that the user follow
+	 * 
+	 * @param user
+	 * @return collection of events
+	 */
+	public Vector<Event> activeFollowedEvents(User user){
+		User u = db.find(User.class, user.getUsername());
+		Vector<Event> result = new Vector<Event>();
+		
+		Vector<String> followed = u.getFollowed();
+		for(String team: followed) {
+			TypedQuery<Event> query = db.createQuery("SELECT e FROM Event e WHERE e.getDescription() LIKE '%"+team+"%'", Event.class);
+			List<Event> ev = query.getResultList();
+			for(Event e: ev) {
+				result.add(e);
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Method used to obtain all the questions created for an event
+	 * @param e
+	 * @return collection of questions
+	 */
+	public Vector<Question> getQuestions(Event e){
+		Event event = db.find(Event.class, e.getEventNumber());
+		TypedQuery<Question> query = db.createQuery("SELECT q FROM Question q WHERE q.getEvent().getEventNumber()=?1", Question.class);
+		query.setParameter(1, event.getEventNumber());
+		List<Question> result = query.getResultList();
+		return new Vector<Question>(result);
+	}
+	
+	public Vector<String> getFollowedTeams(User user) {
+		User u = db.find(User.class, user.getUsername());
+		Vector<String> result = new Vector<String>();
+		Vector<String> teams = u.getFollowed();
+		for(String t: teams) {
+			result.add(t);
+		}
+		return result;
+	}
+	
 }

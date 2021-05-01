@@ -29,7 +29,10 @@ public class FindQuestionsGUI extends JFrame {
 	private JButton seePreds = new JButton("See Predictions"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));	
+	private JButton btnSeguirEquipo = new JButton(ResourceBundle.getBundle("Etiquetas").getString("FindQuestionsGUI.btnSeguirEquipo.text")); //$NON-NLS-1$ //$NON-NLS-2$
+
 	private User u;
+	private Event evToFollow;
 	// Code for JCalendar
 	private JCalendar jCalendar1 = new JCalendar();
 	private Calendar calendarAnt = null;
@@ -54,7 +57,7 @@ public class FindQuestionsGUI extends JFrame {
 	private String[] columnNamesQueries = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("QueryN"), 
 			ResourceBundle.getBundle("Etiquetas").getString("Query")
-			
+
 	};
 	private final JPanel panelSeleccion = new JPanel();
 	private final JLabel jLabelQueryLogo = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
@@ -90,7 +93,7 @@ public class FindQuestionsGUI extends JFrame {
 		jButtonClose.setFont(new Font("PT Sans", Font.BOLD, 22));
 		jButtonClose.setOpaque(true);
 		jButtonClose.setBorderPainted(false);
-		jButtonClose.setBounds(new Rectangle(358, 627, 159, 43));
+		jButtonClose.setBounds(new Rectangle(458, 635, 159, 43));
 
 		jButtonClose.addActionListener(new ActionListener()
 		{
@@ -114,39 +117,39 @@ public class FindQuestionsGUI extends JFrame {
 		});
 		seePreds.setFont(new Font("PT Sans", Font.BOLD, 16));
 		seePreds.setBounds(new Rectangle(352, 423, 130, 30));
-		seePreds.setBounds(165, 629, 159, 43);
+		seePreds.setBounds(99, 637, 159, 43);
 		seePreds.setBackground(new Color(255, 189, 89));
 		seePreds.setForeground(new Color(61, 45, 20));
 		seePreds.setOpaque(true);
 		seePreds.setBorderPainted(false);
 		getContentPane().add(seePreds);
-		panelSeleccion.setBounds(31, 190, 666, 414);
-		
+		panelSeleccion.setBounds(31, 190, 666, 434);
+
 		getContentPane().add(panelSeleccion);
-		
-				tableQueries.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						seePreds.setEnabled(true);
-						
-						int i = tableQueries.getSelectedRow();
-						Question q = (Question) tableModelQueries.getValueAt(i, 2);
-						System.out.println(q.getQuestion());
-						seePreds.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								JFrame a = new SeePredictionsGUI(q, u);
-								a.setVisible(true);
-							}
-						});
+
+		tableQueries.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				seePreds.setEnabled(true);
+
+				int i = tableQueries.getSelectedRow();
+				Question q = (Question) tableModelQueries.getValueAt(i, 2);
+				System.out.println(q.getQuestion());
+				seePreds.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						JFrame a = new SeePredictionsGUI(q, u);
+						a.setVisible(true);
 					}
 				});
+			}
+		});
 		panelSeleccion.setLayout(null);
 		scrollPaneQueries.setBounds(182, 242, 447, 142);
 		panelSeleccion.add(scrollPaneQueries);
 
 
 		scrollPaneQueries.setViewportView(tableQueries);
-	
+
 		tableQueries.setModel(tableModelQueries);
 		jLabelQueries.setForeground(new Color(61, 45, 20));
 		jLabelQueries.setBounds(182, 218, 409, 22);
@@ -155,18 +158,23 @@ public class FindQuestionsGUI extends JFrame {
 		jLabelQueryLogo.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/QuestionLogoL.png")));
 		jLabelQueryLogo.setFont(new Font("PT Sans", Font.BOLD, 16));
 		jLabelQueryLogo.setBounds(21, 223, 151, 161);
-		
+
 		panelSeleccion.add(jLabelQueryLogo);
 		jLabelEvents.setBounds(261, 28, 343, 16);
 		panelSeleccion.add(jLabelEvents);
 		jLabelEvents.setForeground(new Color(61, 45, 20));
 		jLabelEvents.setFont(new Font("PT Sans", Font.BOLD, 16));
-								
+		
+
 		tableEvents.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int i = tableEvents.getSelectedRow();
 				Event ev = (Event) tableModelEvents.getValueAt(i,2); // obtain ev object
+				
+				evToFollow = ev;
+				if(ev!=null) btnSeguirEquipo.setEnabled(true);
+				
 				Vector<Question> queries = ev.getQuestions();
 
 				tableModelQueries.setDataVector(null, columnNamesQueries);
@@ -185,7 +193,7 @@ public class FindQuestionsGUI extends JFrame {
 						row.add(q.getQuestion());
 						row.add(q);
 						tableModelQueries.addRow(row);
-						
+
 					}
 					tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
 					tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268); 
@@ -197,7 +205,7 @@ public class FindQuestionsGUI extends JFrame {
 		panelSeleccion.add(scrollPaneEvents);
 
 		scrollPaneEvents.setViewportView(tableEvents);
-		
+
 		tableEvents.setModel(tableModelEvents);
 		jCalendar1.getDayChooser().getDayPanel().setBackground(Color.WHITE);
 		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
@@ -208,73 +216,79 @@ public class FindQuestionsGUI extends JFrame {
 		panelSeleccion.add(jLabelEventDate);
 		jLabelEventDate.setForeground(new Color(61, 45, 20));
 		jLabelEventDate.setFont(new Font("PT Sans", Font.BOLD, 16));
-		
+
+		JLabel jLabelFollow = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("FindQuestionsGUI.jLabelFollow.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		jLabelFollow.setForeground(new Color(61, 45, 20));
+		jLabelFollow.setFont(new Font("Dialog", Font.BOLD, 16));
+		jLabelFollow.setBounds(152, 401, 409, 22);
+		panelSeleccion.add(jLabelFollow);
+
 		JLabel lblLogo = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
 		lblLogo.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/LogoBetsRuinL.png")));
 		lblLogo.setBounds(31, 22, 174, 156);
 		getContentPane().add(lblLogo);
-		
+
 		JPanel panelIdiomas = new JPanel();
 		panelIdiomas.setLayout(null);
 		panelIdiomas.setBounds(397, 22, 300, 79);
 		getContentPane().add(panelIdiomas);
-		
+
 		JLabel lblEnglish = new JLabel("Do you understand us?");
 		lblEnglish.setForeground(new Color(61, 45, 20));
 		lblEnglish.setFont(new Font("PT Sans", Font.BOLD, 14));
 		lblEnglish.setBounds(43, 54, 142, 19);
 		panelIdiomas.add(lblEnglish);
-		
+
 		JLabel lblEuskara = new JLabel("Ulertzen?");
 		lblEuskara.setForeground(new Color(61, 45, 20));
 		lblEuskara.setFont(new Font("PT Sans", Font.BOLD, 14));
 		lblEuskara.setBounds(89, 31, 57, 19);
 		panelIdiomas.add(lblEuskara);
-		
+
 		JLabel lblEspanol = new JLabel("¿Nos entiendes?");
 		lblEspanol.setForeground(new Color(61, 45, 20));
 		lblEspanol.setFont(new Font("PT Sans", Font.BOLD, 14));
 		lblEspanol.setBounds(68, 7, 99, 19);
 		panelIdiomas.add(lblEspanol);
-		
+
 		JButton btnEspanol = new JButton();
 		btnEspanol.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/Spanish.png")));
 		btnEspanol.setBorderPainted(false);
 		btnEspanol.setBounds(231, 0, 40, 28);
 		panelIdiomas.add(btnEspanol);
-		
+
 		JButton btnEuskara = new JButton();
 		btnEuskara.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/Basque.png")));
 		btnEuskara.setBorderPainted(false);
 		btnEuskara.setBounds(231, 26, 40, 28);
 		panelIdiomas.add(btnEuskara);
-		
+
 		JButton btnEnglish = new JButton();
 		btnEnglish.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/English.png")));
 		btnEnglish.setBorderPainted(false);
 		btnEnglish.setBounds(231, 49, 40, 28);
 		panelIdiomas.add(btnEnglish);
 		panelInfo.setBounds(397, 113, 300, 65);
-		
+
 		getContentPane().add(panelInfo);
 		panelInfo.setLayout(null);
 		lblUser.setBounds(17, 9, 67, 19);
 		lblUser.setForeground(new Color(61, 45, 20));
 		lblUser.setFont(new Font("PT Sans", Font.BOLD, 14));
-		
+
 		panelInfo.add(lblUser);
 		lblSaldo.setBounds(17, 40, 67, 19);
 		lblSaldo.setForeground(new Color(61, 45, 20));
 		lblSaldo.setFont(new Font("PT Sans", Font.BOLD, 14));
-		
+
 		panelInfo.add(lblSaldo);
-		
+
 		JLabel lblUserVar = new JLabel(u.getUsername());
 		lblUserVar.setForeground(new Color(61, 45, 20));
 		lblUserVar.setFont(new Font("PT Sans", Font.BOLD, 14));
 		lblUserVar.setBounds(95, 9, 188, 19);
 		panelInfo.add(lblUserVar);
-		
+
 		JLabel lblSaldoVar = new JLabel(u.getFunds() + "€");
 		lblSaldoVar.setForeground(new Color(61, 45, 20));
 		lblSaldoVar.setFont(new Font("PT Sans", Font.BOLD, 14));
@@ -282,18 +296,34 @@ public class FindQuestionsGUI extends JFrame {
 		panelInfo.add(lblSaldoVar);
 		panelNormas.setLayout(null);
 		panelNormas.setBounds(200, 22, 189, 156);
-		
+
 		getContentPane().add(panelNormas);
 		lblNormas.setForeground(new Color(61, 45, 20));
 		lblNormas.setFont(new Font("PT Sans", Font.BOLD, 18));
 		lblNormas.setBounds(16, 20, 131, 19);
-		
+
 		panelNormas.add(lblNormas);
 		lbljuej.setForeground(new Color(61, 45, 20));
 		lbljuej.setFont(new Font("PT Sans", Font.BOLD, 14));
 		lbljuej.setBounds(16, 40, 163, 99);
-		
+
 		panelNormas.add(lbljuej);
+
+		btnSeguirEquipo.setOpaque(true);
+		btnSeguirEquipo.setEnabled(false);
+		btnSeguirEquipo.setForeground(new Color(61, 45, 20));
+		btnSeguirEquipo.setFont(new Font("Dialog", Font.BOLD, 16));
+		btnSeguirEquipo.setBounds(new Rectangle(352, 423, 130, 30));
+		btnSeguirEquipo.setBorderPainted(false);
+		btnSeguirEquipo.setBackground(new Color(255, 189, 89));
+		btnSeguirEquipo.setBounds(278, 637, 159, 43);
+		btnSeguirEquipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent a) {
+				JFrame followTeam = new FollowGUI(u, evToFollow);
+				followTeam.setVisible(true);
+			}
+		});
+		getContentPane().add(btnSeguirEquipo);
 
 		// Code for JCalendar
 		jCalendar1.addPropertyChangeListener(new PropertyChangeListener() {
@@ -308,10 +338,10 @@ public class FindQuestionsGUI extends JFrame {
 					DateFormat dateformat1 = DateFormat.getDateInstance(1, jCalendar1.getLocale());
 					//					jCalendar1.setCalendar(calendarAct);
 					Date firstDay=UtilDate.trim(new Date(jCalendar1.getCalendar().getTime().getTime()));
-	
+
 					int monthAnt = calendarAnt.get(Calendar.MONTH);
 					int monthAct = calendarAct.get(Calendar.MONTH);
-	
+
 					if (monthAct!=monthAnt) {
 						if (monthAct==monthAnt+2) {
 							// Si en JCalendar está 30 de enero y se avanza al mes siguiente, devolvería 2 de marzo (se toma como equivalente a 30 de febrero)
@@ -343,10 +373,10 @@ public class FindQuestionsGUI extends JFrame {
 						tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
 						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(2)); // not shown in JTable
 					} catch (Exception e1) {
-	
+
 						jLabelQueries.setText(e1.getMessage());
 					}
-	
+
 				}
 			} 
 		});
@@ -360,5 +390,7 @@ public class FindQuestionsGUI extends JFrame {
 
 	private void jButton2_actionPerformed(ActionEvent e) {
 		this.dispose();
+		JFrame main = new MainUserGUI(u);
+		main.setVisible(true);
 	}
 }
