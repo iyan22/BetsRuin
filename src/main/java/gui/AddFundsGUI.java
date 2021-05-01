@@ -27,43 +27,56 @@ public class AddFundsGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public AddFundsGUI(User u) {
+		setResizable(false);
+		setTitle("Bets&Ruin - Add Funds");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 254);
 		panelframe = new JPanel();
+		panelframe.setBackground(Color.WHITE);
 		panelframe.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelframe);
 		panelframe.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Insert how much money you want to add to your account");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel.setBounds(32, 11, 392, 14);
+		JLabel lblNewLabel = new JLabel("¿Con cuánto dinero quieres jugar?");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(32, 11, 392, 28);
 		panelframe.add(lblNewLabel);
-		
-		amountField = new JTextField();
-		amountField.setBounds(230, 108, 86, 20);
-		panelframe.add(amountField);
-		amountField.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("Amount:");
-		lblNewLabel_1.setBounds(148, 111, 46, 14);
-		panelframe.add(lblNewLabel_1);
 		
 	
 		
 		JLabel result = new JLabel("");
 		result.setHorizontalAlignment(SwingConstants.CENTER);
-		result.setBounds(32, 191, 392, 14);
+		result.setBounds(44, 177, 256, 28);
 		panelframe.add(result);
 		
 		JButton closeButton1 = new JButton("Return");
+		closeButton1.setForeground(new Color(255, 189, 89));
+		closeButton1.setBackground(new Color(61, 45, 20));
+		closeButton1.setFont(new Font("PT Sans", Font.BOLD, 16));
+		closeButton1.setBorderPainted(false);
+		closeButton1.setOpaque(true);
 		closeButton1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jButton2_actionPerformed(e,u);
 			}
 		});
-		closeButton1.setBounds(323, 216, 89, 23);
+		closeButton1.setBounds(323, 177, 101, 34);
 		panelframe.add(closeButton1);
-		JButton addButton = new JButton("Add");
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(227, 227, 227));
+		panel.setBounds(82, 57, 284, 97);
+		panelframe.add(panel);
+		panel.setLayout(null);
+		JButton addButton = new JButton("Ingresar");
+		addButton.setBounds(88, 55, 104, 30);
+		panel.add(addButton);
+		addButton.setBackground(new Color(255, 189, 89));
+		addButton.setForeground(new Color(61, 45, 20));
+		addButton.setFont(new Font("PT Sans", Font.BOLD, 16));
+		addButton.setBorderPainted(false);
+		addButton.setOpaque(true);
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -88,8 +101,24 @@ public class AddFundsGUI extends JFrame {
 				
 			}
 		});
-		addButton.setBounds(176, 157, 89, 23);
-		panelframe.add(addButton);
+		
+		amountField = new JTextField();
+		amountField.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		amountField.setBounds(122, 17, 113, 26);
+		panel.add(amountField);
+		amountField.setColumns(10);
+		
+		JLabel lblAmount = new JLabel("Cantidad:");
+		lblAmount.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAmount.setBounds(6, 19, 104, 22);
+		panel.add(lblAmount);
+		lblAmount.setFont(new Font("PT Sans", Font.BOLD, 16));
+		
+		JLabel lblCurrency = new JLabel("€");
+		lblCurrency.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCurrency.setFont(new Font("PT Sans", Font.BOLD, 16));
+		lblCurrency.setBounds(247, 21, 31, 22);
+		panel.add(lblCurrency);
 	}
 	private void jButton2_actionPerformed(ActionEvent e, User u) {
 		UserZoneGUI f= new UserZoneGUI(u);

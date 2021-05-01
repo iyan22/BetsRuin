@@ -1,5 +1,5 @@
 package businessLogic;
-//hola
+
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -17,6 +17,7 @@ import domain.Event;
 import domain.Prediction;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
+import exceptions.NoReferralCodeFound;
 import exceptions.UserAlreadyExists;
 
 /**
@@ -112,12 +113,12 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 
 	@WebMethod
-	public User createUser(String username,String name, String surname, String password, String email) throws UserAlreadyExists{
+	public User createUser(String username,String name, String surname, String password, String email, String referredBy) throws UserAlreadyExists, NoReferralCodeFound {
 
 		//The minimum bet must be greater than 0
 		dbManager.open(false);
 
-		User usr=dbManager.createUser(username,name,surname,password,email);		
+		User usr=dbManager.createUser(username, name, surname, password, email, referredBy);		
 
 		dbManager.close();
 

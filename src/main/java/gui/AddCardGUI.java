@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class AddCardGUI extends JFrame {
 
@@ -28,6 +30,8 @@ public class AddCardGUI extends JFrame {
 	private JTextField cdN3;
 	private JTextField cdN4;
 	private JButton closeButton1;
+	private JLabel lblVinculaTuTarjeta;
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -38,53 +42,107 @@ public class AddCardGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public AddCardGUI(User u) {
+		setResizable(false);
 		setForeground(SystemColor.activeCaption);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 522, 332);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(SystemColor.text);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel jlbl1 = new JLabel("Card number:");
-		jlbl1.setBounds(10, 71, 82, 14);
-		contentPane.add(jlbl1);
+		closeButton1 = new JButton("Atrás");
+		closeButton1.setForeground(new Color(255, 189, 89));
+		closeButton1.setBackground(new Color(61, 45, 20));
+		closeButton1.setFont(new Font("PT Sans", Font.BOLD, 16));
+		closeButton1.setBorderPainted(false);
+		closeButton1.setOpaque(true);
+		closeButton1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jButton2_actionPerformed(e,u);
+			}
+		});
+		closeButton1.setBounds(376, 249, 102, 35);
+		contentPane.add(closeButton1);
 		
-		JLabel lblNewLabel = new JLabel("Date:");
-		lblNewLabel.setBounds(10, 96, 46, 14);
-		contentPane.add(lblNewLabel);
+		lblVinculaTuTarjeta = new JLabel("Vincula tu tarjeta a Bets&Ruin");
+		lblVinculaTuTarjeta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblVinculaTuTarjeta.setFont(new Font("PT Sans", Font.BOLD, 16));
+		lblVinculaTuTarjeta.setBounds(68, 16, 375, 23);
+		contentPane.add(lblVinculaTuTarjeta);
 		
-		JLabel lblNewLabel_1 = new JLabel("/");
-		lblNewLabel_1.setBounds(164, 96, 46, 20);
-		contentPane.add(lblNewLabel_1);
-		
-		yearc = new JTextField();
-		yearc.setBounds(174, 96, 57, 20);
-		contentPane.add(yearc);
-		yearc.setColumns(10);
-		
-		monthc = new JTextField();
-		monthc.setColumns(10);
-		monthc.setBounds(113, 96, 41, 20);
-		contentPane.add(monthc);
-		
-		JLabel lblNewLabel_2 = new JLabel("CVV:");
-		lblNewLabel_2.setBounds(10, 130, 46, 14);
-		contentPane.add(lblNewLabel_2);
-		
-		cvV = new JTextField();
-		cvV.setBounds(113, 127, 41, 20);
-		contentPane.add(cvV);
-		cvV.setColumns(10);
+		panel = new JPanel();
+		panel.setBackground(new Color(227, 227, 227));
+		panel.setBounds(33, 51, 445, 185);
+		contentPane.add(panel);
+		panel.setLayout(null);
 		
 		cdN1 = new JTextField();
-		cdN1.setBounds(112, 68, 57, 20);
-		contentPane.add(cdN1);
+		cdN1.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		cdN1.setBounds(145, 32, 62, 26);
+		panel.add(cdN1);
 		cdN1.setColumns(10);
 		
-		JButton button = new JButton("AddCard");
-		button.addActionListener(new ActionListener() {
+		cdN2 = new JTextField();
+		cdN2.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		cdN2.setBounds(219, 32, 62, 26);
+		panel.add(cdN2);
+		cdN2.setColumns(10);
+		
+		cdN3 = new JTextField();
+		cdN3.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		cdN3.setBounds(293, 32, 62, 26);
+		panel.add(cdN3);
+		cdN3.setColumns(10);
+		
+		JLabel jlbl1 = new JLabel("N. tarjeta:");
+		jlbl1.setFont(new Font("PT Sans", Font.BOLD, 16));
+		jlbl1.setBounds(32, 36, 101, 16);
+		panel.add(jlbl1);
+		
+		monthc = new JTextField();
+		monthc.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		monthc.setBounds(145, 66, 41, 26);
+		panel.add(monthc);
+		monthc.setColumns(10);
+		
+		cdN4 = new JTextField();
+		cdN4.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		cdN4.setBounds(367, 32, 62, 26);
+		panel.add(cdN4);
+		cdN4.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("/");
+		lblNewLabel_1.setBounds(200, 70, 7, 16);
+		panel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel = new JLabel("F. caducidad:");
+		lblNewLabel.setFont(new Font("PT Sans", Font.BOLD, 16));
+		lblNewLabel.setBounds(32, 69, 101, 16);
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_2 = new JLabel("CVV:");
+		lblNewLabel_2.setFont(new Font("PT Sans", Font.BOLD, 16));
+		lblNewLabel_2.setBounds(32, 102, 102, 16);
+		panel.add(lblNewLabel_2);
+		
+		cvV = new JTextField();
+		cvV.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		cvV.setBounds(145, 98, 62, 26);
+		panel.add(cvV);
+		cvV.setColumns(10);
+		
+		JButton btnVincular = new JButton("Vincular");
+		btnVincular.setBackground(new Color(255, 189, 89));
+		btnVincular.setForeground(new Color(61, 45, 20));
+		btnVincular.setFont(new Font("PT Sans", Font.BOLD, 16));
+		btnVincular.setBorderPainted(false);
+		btnVincular.setOpaque(true);
+		btnVincular.setBounds(126, 140, 161, 30);
+		panel.add(btnVincular);
+		btnVincular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					BLFacade facade = StartGUI.getBusinessLogic();
@@ -127,36 +185,16 @@ public class AddCardGUI extends JFrame {
 				
 			}
 		});
-		button.setBounds(98, 172, 89, 23);
-		contentPane.add(button);
+		
+		yearc = new JTextField();
+		yearc.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		yearc.setBounds(219, 64, 62, 26);
+		panel.add(yearc);
+		yearc.setColumns(10);
 		
 		result = new JLabel("");
-		result.setBounds(113, 206, 219, 14);
-		contentPane.add(result);
-		
-		cdN2 = new JTextField();
-		cdN2.setColumns(10);
-		cdN2.setBounds(179, 68, 57, 20);
-		contentPane.add(cdN2);
-		
-		cdN3 = new JTextField();
-		cdN3.setColumns(10);
-		cdN3.setBounds(246, 68, 57, 20);
-		contentPane.add(cdN3);
-		
-		cdN4 = new JTextField();
-		cdN4.setColumns(10);
-		cdN4.setBounds(313, 68, 57, 20);
-		contentPane.add(cdN4);
-		
-		closeButton1 = new JButton("Close");
-		closeButton1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jButton2_actionPerformed(e,u);
-			}
-		});
-		closeButton1.setBounds(313, 227, 89, 23);
-		contentPane.add(closeButton1);
+		result.setBounds(210, 99, 219, 19);
+		panel.add(result);
 	}
 	private void jButton2_actionPerformed(ActionEvent e,User u) {
 		UserZoneGUI f= new UserZoneGUI(u);
