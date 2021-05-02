@@ -529,7 +529,7 @@ public class MainUserGUI extends JFrame {
 	private void redibujar() {
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("KnowEvents"));
-		btnReturn.setText(ResourceBundle.getBundle("Etiquetas").getString("Return"));
+		btnReturn.setText(ResourceBundle.getBundle("Etiquetas").getString("Logout"));
 		UserZone.setText(ResourceBundle.getBundle("Etiquetas").getString("UserZone"));
 		jLabelWelcome.setText(ResourceBundle.getBundle("Etiquetas").getString("Wellcome")); 
 		lblCategorias.setText(ResourceBundle.getBundle("Etiquetas").getString("Enjoy"));
