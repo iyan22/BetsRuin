@@ -51,8 +51,11 @@ public class CloseEventGUI extends JFrame {
 
 	};
 	private final JButton btnCloseEvent = new JButton("Close Event"); //$NON-NLS-1$ //$NON-NLS-2$
+	private final JPanel panel = new JPanel();
 
 	public CloseEventGUI() {
+		setResizable(false);
+		getContentPane().setBackground(Color.WHITE);
 		try {
 			jbInit();
 		} catch (Exception e) {
@@ -63,19 +66,16 @@ public class CloseEventGUI extends JFrame {
 	private void jbInit() throws Exception {
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(700, 500));
-		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
+		this.setSize(new Dimension(692, 500));
+		this.setTitle("Bets&Ruin - Close event");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
-		jLabelQueries.setBounds(138, 248, 406, 14);
-		jLabelEvents.setBounds(295, 19, 259, 16);
-
-		this.getContentPane().add(jLabelEventDate, null);
-		this.getContentPane().add(jLabelQueries);
-		this.getContentPane().add(jLabelEvents);
-
 		jButtonClose.setBounds(new Rectangle(436, 423, 153, 30));
+		jButtonClose.setFont(new Font("PT Sans", Font.BOLD, 16));
+		jButtonClose.setBackground(new Color(61, 45, 20));
+		jButtonClose.setForeground(new Color(255, 189, 89));
+		jButtonClose.setOpaque(true);
+		jButtonClose.setBorderPainted(false);
 
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -84,102 +84,18 @@ public class CloseEventGUI extends JFrame {
 		});
 		this.getContentPane().add(jButtonClose, null);
 
-		jCalendar1.setBounds(new Rectangle(40, 50, 225, 150));
-
 		BLFacade facade = StartGUI.getBusinessLogic();
-		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
-		CreateQuestionGUI.paintDaysWithEvents(jCalendar1, datesWithEventsCurrentMonth);
-
-		// Code for JCalendar
-		this.jCalendar1.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent propertychangeevent) {
-
-				if (propertychangeevent.getPropertyName().equals("locale")) {
-					jCalendar1.setLocale((Locale) propertychangeevent.getNewValue());
-				} else if (propertychangeevent.getPropertyName().equals("calendar")) {
-					calendarAnt = (Calendar) propertychangeevent.getOldValue();
-					calendarAct = (Calendar) propertychangeevent.getNewValue();
-					tableModelQueries.setRowCount(0);
-					DateFormat dateformat1 = DateFormat.getDateInstance(1, jCalendar1.getLocale());
-					// jCalendar1.setCalendar(calendarAct);
-					Date firstDay = UtilDate.trim(new Date(jCalendar1.getCalendar().getTime().getTime()));
-
-					int monthAnt = calendarAnt.get(Calendar.MONTH);
-					int monthAct = calendarAct.get(Calendar.MONTH);
-
-					if (monthAct != monthAnt) {
-						if (monthAct == monthAnt + 2) {
-							// Si en JCalendar está 30 de enero y se avanza al mes siguiente, devolvería 2
-							// de marzo (se toma como equivalente a 30 de febrero)
-							// Con este código se dejará como 1 de febrero en el JCalendar
-							calendarAct.set(Calendar.MONTH, monthAnt + 1);
-							calendarAct.set(Calendar.DAY_OF_MONTH, 1);
-						}
-
-						jCalendar1.setCalendar(calendarAct);
-
-						BLFacade facade = StartGUI.getBusinessLogic();
-
-						datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
-					}
-
-					CreateQuestionGUI.paintDaysWithEvents(jCalendar1, datesWithEventsCurrentMonth);
-
-					printTableEvent(firstDay,dateformat1);
-
-				}
-			}
-		});
-
-		this.getContentPane().add(jCalendar1, null);
-
-		scrollPaneEvents.setBounds(new Rectangle(292, 50, 346, 150));
-		scrollPaneQueries.setBounds(new Rectangle(138, 274, 406, 116));
-
-		tableEvents.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				printTableQuestion();
-			}
-		});
-
-		tableQueries.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				seePreds.setEnabled(true);
-				int i = tableQueries.getSelectedRow();
-				Question q = (Question) tableModelQueries.getValueAt(i, 2);
-				System.out.println(q.getQuestion());
-				seePreds.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						JFrame a = new SetWinnerPredictionGUI(q);
-						a.setVisible(true);
-						dispose();
-					}
-				});
-			}
-		});
-
-		scrollPaneEvents.setViewportView(tableEvents);
 		tableModelEvents = new DefaultTableModel(null, columnNamesEvents);
-
-		tableEvents.setModel(tableModelEvents);
-		tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
-		tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
-
-		scrollPaneQueries.setViewportView(tableQueries);
 		tableModelQueries = new DefaultTableModel(null, columnNamesQueries);
-
-		tableQueries.setModel(tableModelQueries);
-		tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
-		tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
-
-		this.getContentPane().add(scrollPaneEvents, null);
-		this.getContentPane().add(scrollPaneQueries, null);
 
 		seePreds = new JButton("Close Question"); 
 		seePreds.setBounds(new Rectangle(352, 423, 130, 30));
 		seePreds.setBounds(273, 423, 153, 30);
+		seePreds.setFont(new Font("PT Sans", Font.BOLD, 16));
+		seePreds.setForeground(new Color(61, 45, 20));
+		seePreds.setBackground(new Color(255, 189, 89));
+		seePreds.setOpaque(true);
+		seePreds.setBorderPainted(false);
 		getContentPane().add(seePreds);
 		seePreds.setEnabled(false);
 
@@ -199,7 +115,115 @@ public class CloseEventGUI extends JFrame {
 			}
 		});
 		btnCloseEvent.setBounds(112, 423, 153, 30);
+		btnCloseEvent.setFont(new Font("PT Sans", Font.BOLD, 16));
+		btnCloseEvent.setForeground(new Color(61, 45, 20));
+		btnCloseEvent.setBackground(new Color(255, 189, 89));
+		btnCloseEvent.setOpaque(true);
+		btnCloseEvent.setBorderPainted(false);
 		getContentPane().add(btnCloseEvent);
+		panel.setBackground(new Color(227, 227, 227));
+		panel.setBounds(18, 15, 654, 396);
+		
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		jLabelEventDate.setBounds(21, 6, 140, 25);
+		panel.add(jLabelEventDate);
+		jLabelEventDate.setForeground(new Color(61, 45, 20));
+		jLabelEventDate.setFont(new Font("PT Sans", Font.BOLD, 16));
+		jLabelEvents.setBounds(275, 10, 259, 16);
+		panel.add(jLabelEvents);
+		jLabelEvents.setForeground(new Color(61, 45, 20));
+		jLabelEvents.setFont(new Font("PT Sans", Font.BOLD, 16));
+		
+				tableEvents.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						printTableQuestion();
+					}
+				});
+						scrollPaneEvents.setBounds(275, 38, 346, 150);
+						panel.add(scrollPaneEvents);
+				
+						scrollPaneEvents.setViewportView(tableEvents);
+						
+								tableEvents.setModel(tableModelEvents);
+								
+										tableQueries.addMouseListener(new MouseAdapter() {
+											@Override
+											public void mouseClicked(MouseEvent e) {
+												seePreds.setEnabled(true);
+												int i = tableQueries.getSelectedRow();
+												Question q = (Question) tableModelQueries.getValueAt(i, 2);
+												System.out.println(q.getQuestion());
+												seePreds.addActionListener(new ActionListener() {
+													public void actionPerformed(ActionEvent e) {
+														JFrame a = new SetWinnerPredictionGUI(q);
+														a.setVisible(true);
+														dispose();
+													}
+												});
+											}
+										});
+												scrollPaneQueries.setBounds(119, 255, 406, 116);
+												panel.add(scrollPaneQueries);
+										
+												scrollPaneQueries.setViewportView(tableQueries);
+												
+														tableQueries.setModel(tableModelQueries);
+														jLabelQueries.setBounds(119, 234, 406, 14);
+														panel.add(jLabelQueries);
+														jLabelQueries.setForeground(new Color(61, 45, 20));
+														jLabelQueries.setFont(new Font("PT Sans", Font.BOLD, 16));
+														jCalendar1.getDayChooser().getDayPanel().setBackground(Color.WHITE);
+														datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
+														CreateQuestionGUI.paintDaysWithEvents(jCalendar1, datesWithEventsCurrentMonth);
+																jCalendar1.setBounds(21, 38, 225, 150);
+																panel.add(jCalendar1);
+														
+																// Code for JCalendar
+																this.jCalendar1.addPropertyChangeListener(new PropertyChangeListener() {
+																	public void propertyChange(PropertyChangeEvent propertychangeevent) {
+														
+																		if (propertychangeevent.getPropertyName().equals("locale")) {
+																			jCalendar1.setLocale((Locale) propertychangeevent.getNewValue());
+																		} else if (propertychangeevent.getPropertyName().equals("calendar")) {
+																			calendarAnt = (Calendar) propertychangeevent.getOldValue();
+																			calendarAct = (Calendar) propertychangeevent.getNewValue();
+																			tableModelQueries.setRowCount(0);
+																			DateFormat dateformat1 = DateFormat.getDateInstance(1, jCalendar1.getLocale());
+																			// jCalendar1.setCalendar(calendarAct);
+																			Date firstDay = UtilDate.trim(new Date(jCalendar1.getCalendar().getTime().getTime()));
+														
+																			int monthAnt = calendarAnt.get(Calendar.MONTH);
+																			int monthAct = calendarAct.get(Calendar.MONTH);
+														
+																			if (monthAct != monthAnt) {
+																				if (monthAct == monthAnt + 2) {
+																					// Si en JCalendar está 30 de enero y se avanza al mes siguiente, devolvería 2
+																					// de marzo (se toma como equivalente a 30 de febrero)
+																					// Con este código se dejará como 1 de febrero en el JCalendar
+																					calendarAct.set(Calendar.MONTH, monthAnt + 1);
+																					calendarAct.set(Calendar.DAY_OF_MONTH, 1);
+																				}
+														
+																				jCalendar1.setCalendar(calendarAct);
+														
+																				BLFacade facade = StartGUI.getBusinessLogic();
+														
+																				datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
+																			}
+														
+																			CreateQuestionGUI.paintDaysWithEvents(jCalendar1, datesWithEventsCurrentMonth);
+														
+																			printTableEvent(firstDay,dateformat1);
+														
+																		}
+																	}
+																});
+														tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
+														tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
+								tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
+								tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
 
 	}
 

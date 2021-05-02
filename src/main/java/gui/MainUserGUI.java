@@ -44,7 +44,6 @@ public class MainUserGUI extends JFrame {
 	private JPanel separador2;
 	private JPanel separador3;
 	private JPanel panelNotificaciones;
-	private JLabel lblUltimasApuestas;
 	private JLabel lblEventosInteres;
 	private JButton btnEspanol;
 	private JLabel lblEspanol;
@@ -147,10 +146,10 @@ public class MainUserGUI extends JFrame {
 			jButtonQueryQueries.setFont(new Font("PT Sans", Font.BOLD, 22));
 			jButtonQueryQueries.setBackground(new Color(61, 45, 20));
 			jButtonQueryQueries.setForeground(new Color(255, 189, 89));
-			jButtonQueryQueries.setBounds(26, 211, 647, 49);
 			jButtonQueryQueries.setOpaque(true);
 			jButtonQueryQueries.setBorderPainted(false);
-			jButtonQueryQueries.setText("Conoce los eventos");
+			jButtonQueryQueries.setBounds(26, 211, 647, 49);
+			jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.jButtonQueryQueries.text")); //$NON-NLS-1$ //$NON-NLS-2$
 			jButtonQueryQueries.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFrame a = new FindQuestionsGUI(u);
@@ -349,10 +348,9 @@ public class MainUserGUI extends JFrame {
 			panelNotificaciones.setLayout(null);
 			panelNotificaciones.setBackground(new Color(227, 227, 227));
 			panelNotificaciones.setBounds(699, 115, 300, 613);
-			panelNotificaciones.add(getLblUltimasApuestas());
 			panelNotificaciones.add(getLblEventosInteres());
 			
-			scrollPaneEvents.setBounds(10, 288, 280, 280);
+			scrollPaneEvents.setBounds(10, 62, 280, 496);
 			fillEvents(scrollPaneEvents);
 			panelNotificaciones.add(scrollPaneEvents);
 			panelNotificaciones.add(getBtnApostar());
@@ -362,6 +360,7 @@ public class MainUserGUI extends JFrame {
 	
 	private void fillEvents(JScrollPane scrollPane) {
 		tableModelEvents = new DefaultTableModel(null, columnNamesEvents);
+		tableEvents.setFont(new Font("PT Sans", Font.PLAIN, 16));
 		scrollPane.setViewportView(tableEvents);
 		tableEvents.setModel(tableModelEvents);
 		try {
@@ -390,29 +389,19 @@ public class MainUserGUI extends JFrame {
 			
 		}
 	}
-	
-	private JLabel getLblUltimasApuestas() {
-		if (lblUltimasApuestas == null) {
-			lblUltimasApuestas = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblTusltimasApuestas.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			lblUltimasApuestas.setBounds(17, 6, 277, 32);
-			lblUltimasApuestas.setForeground(new Color(61, 45, 20));
-			lblUltimasApuestas.setFont(new Font("PT Sans", Font.BOLD, 24));
-		}
-		return lblUltimasApuestas;
-	}
 	private JLabel getLblEventosInteres() {
 		if (lblEventosInteres == null) {
 			lblEventosInteres = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblEventosInteres.text")); //$NON-NLS-1$ //$NON-NLS-2$
 			lblEventosInteres.setForeground(new Color(61, 45, 20));
 			lblEventosInteres.setFont(new Font("PT Sans", Font.BOLD, 24));
-			lblEventosInteres.setBounds(17, 243, 277, 44);
+			lblEventosInteres.setBounds(13, 6, 277, 44);
 		}
 		return lblEventosInteres;
 	}
 	private JButton getBtnEspanol() {
 		if (btnEspanol == null) {
 			btnEspanol = new JButton(); //$NON-NLS-1$ //$NON-NLS-2$
-			btnEspanol.setBounds(231, 0, 40, 28);
+			btnEspanol.setBounds(254, 6, 31, 20);
 			btnEspanol.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 				}
@@ -425,7 +414,8 @@ public class MainUserGUI extends JFrame {
 	private JLabel getLblEspanol() {
 		if (lblEspanol == null) {
 			lblEspanol = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblnosEntiendes.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			lblEspanol.setBounds(68, 7, 99, 19);
+			lblEspanol.setHorizontalAlignment(SwingConstants.CENTER);
+			lblEspanol.setBounds(6, 6, 236, 20);
 			lblEspanol.setForeground(new Color(61, 45, 20));
 			lblEspanol.setFont(new Font("PT Sans", Font.BOLD, 14));
 		}
@@ -434,7 +424,8 @@ public class MainUserGUI extends JFrame {
 	private JLabel getLblEuskara() {
 		if (lblEuskara == null) {
 			lblEuskara = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblUlertzen.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			lblEuskara.setBounds(89, 31, 57, 19);
+			lblEuskara.setHorizontalAlignment(SwingConstants.CENTER);
+			lblEuskara.setBounds(6, 30, 236, 20);
 			lblEuskara.setForeground(new Color(61, 45, 20));
 			lblEuskara.setFont(new Font("PT Sans", Font.BOLD, 14));
 		}
@@ -443,7 +434,8 @@ public class MainUserGUI extends JFrame {
 	private JLabel getLblEnglish() {
 		if (lblEnglish == null) {
 			lblEnglish = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblDoYouUnderstand.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			lblEnglish.setBounds(43, 54, 142, 19);
+			lblEnglish.setHorizontalAlignment(SwingConstants.CENTER);
+			lblEnglish.setBounds(6, 53, 236, 20);
 			lblEnglish.setForeground(new Color(61, 45, 20));
 			lblEnglish.setFont(new Font("PT Sans", Font.BOLD, 14));
 		}
@@ -452,7 +444,7 @@ public class MainUserGUI extends JFrame {
 	private JPanel getPanelIdiomas() {
 		if (panelIdiomas == null) {
 			panelIdiomas = new JPanel();
-			panelIdiomas.setBounds(699, 24, 300, 79);
+			panelIdiomas.setBounds(699, 26, 300, 77);
 			panelIdiomas.setLayout(null);
 			panelIdiomas.add(getLblEnglish());
 			panelIdiomas.add(getLblEuskara());
@@ -467,7 +459,7 @@ public class MainUserGUI extends JFrame {
 		if (btnEuskara == null) {
 			btnEuskara = new JButton();
 			btnEuskara.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/Basque.png")));
-			btnEuskara.setBounds(231, 22, 40, 28);
+			btnEuskara.setBounds(254, 30, 31, 20);
 			btnEuskara.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 				}
@@ -486,14 +478,19 @@ public class MainUserGUI extends JFrame {
 				}
 			});
 			btnEnglish.setBorderPainted(false);
-			btnEnglish.setBounds(231, 49, 40, 28);
+			btnEnglish.setBounds(254, 51, 31, 22);
 		}
 		return btnEnglish;
 	}
 	private JButton getBtnApostar() {
 		if (btnApostar == null) {
 			btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.btnApostar.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnApostar.setFont(new Font("PT Sans", Font.BOLD, 14));
 			btnApostar.setEnabled(false);
+			btnApostar.setForeground(new Color(61, 45, 20));
+			btnApostar.setBackground(new Color(255, 189, 89));
+			btnApostar.setOpaque(true);
+			btnApostar.setBorderPainted(false);
 			
 			tableEvents.addMouseListener(new MouseAdapter() {
 				@Override
@@ -511,7 +508,7 @@ public class MainUserGUI extends JFrame {
 					a.setVisible(true);
 				}
 			});
-			btnApostar.setBounds(104, 579, 89, 23);
+			btnApostar.setBounds(10, 570, 280, 32);
 		}
 		return btnApostar;
 	}

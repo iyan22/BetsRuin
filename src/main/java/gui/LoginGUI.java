@@ -131,39 +131,39 @@ public class LoginGUI extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(16, 47, 71, 22);
+		lblPassword.setBounds(16, 47, 105, 22);
 		panel.add(lblPassword);
 		lblPassword.setFont(new Font("PT Sans", Font.BOLD, 16));
 			
 		adminMode = new JRadioButton("Admin");
 		adminMode.setFont(new Font("PT Sans", Font.BOLD, 14));
-		adminMode.setBounds(179, 79, 73, 23);
+		adminMode.setBounds(211, 79, 73, 23);
 		panel.add(adminMode);
 		buttonGroup.add(adminMode);
 						
 		userMode = new JRadioButton("User");
 		userMode.setFont(new Font("PT Sans", Font.BOLD, 14));
-		userMode.setBounds(99, 79, 60, 23);
+		userMode.setBounds(124, 79, 60, 23);
 		panel.add(userMode);
 		userMode.setSelected(true);
 		buttonGroup.add(userMode);
 								
 		lblMode = new JLabel("Mode:");
-		lblMode.setBounds(16, 81, 43, 22);
+		lblMode.setBounds(16, 81, 105, 22);
 		panel.add(lblMode);
 		lblMode.setFont(new Font("PT Sans", Font.BOLD, 16));
 										
 		passwordField = new JPasswordField();
-		passwordField.setBounds(99, 44, 185, 26);
+		passwordField.setBounds(124, 44, 160, 26);
 		panel.add(passwordField);
 												
 		textField = new JTextField();
-		textField.setBounds(99, 14, 185, 26);
+		textField.setBounds(124, 14, 160, 26);
 		panel.add(textField);
 		textField.setColumns(10);
 														
 		JLabel lblUser = new JLabel("User:");
-		lblUser.setBounds(16, 17, 35, 22);
+		lblUser.setBounds(16, 17, 105, 22);
 		panel.add(lblUser);
 		lblUser.setFont(new Font("PT Sans", Font.BOLD, 16));
 																	

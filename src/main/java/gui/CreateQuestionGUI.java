@@ -43,8 +43,12 @@ public class CreateQuestionGUI extends JFrame {
 	private JLabel jLabelError = new JLabel();
 	
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
+	private final JPanel panel = new JPanel();
 
 	public CreateQuestionGUI(Vector<Event> v) {
+		setResizable(false);
+		getContentPane().setBackground(Color.WHITE);
+		setBackground(Color.WHITE);
 		try {
 			jbInit(v);
 		} catch (Exception e) {
@@ -55,23 +59,20 @@ public class CreateQuestionGUI extends JFrame {
 	private void jbInit(Vector<Event> v) throws Exception {
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(604, 370));
-		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("CreateQuery"));
+		this.setSize(new Dimension(597, 383));
+		this.setTitle("Bets&Ruin - Create Question");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-		jComboBoxEvents.setModel(modelEvents);
-		jComboBoxEvents.setBounds(new Rectangle(275, 47, 250, 20));
-		jLabelListOfEvents.setBounds(new Rectangle(290, 18, 277, 20));
-		jLabelQuery.setBounds(new Rectangle(25, 211, 75, 20));
-		jTextFieldQuery.setBounds(new Rectangle(100, 211, 429, 20));
-		jLabelMinBet.setBounds(new Rectangle(25, 243, 75, 20));
-		jTextFieldPrice.setBounds(new Rectangle(100, 243, 60, 20));
-
-		jCalendar.setBounds(new Rectangle(40, 50, 225, 150));
+		jTextFieldQuery.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		jTextFieldQuery.setBounds(new Rectangle(117, 211, 435, 20));
 		scrollPaneEvents.setBounds(new Rectangle(25, 44, 346, 116));
 
-		jButtonCreate.setBounds(new Rectangle(100, 275, 130, 30));
+		jButtonCreate.setBounds(new Rectangle(85, 293, 172, 43));
 		jButtonCreate.setEnabled(false);
+		jButtonCreate.setFont(new Font("PT Sans", Font.BOLD, 16));
+		jButtonCreate.setForeground(new Color(61, 45, 20));
+		jButtonCreate.setBackground(new Color(255, 189, 89));
+		jButtonCreate.setOpaque(true);
+		jButtonCreate.setBorderPainted(false);
 
 		jButtonCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -79,7 +80,12 @@ public class CreateQuestionGUI extends JFrame {
 			}
 		});
 		
-		jButtonClose.setBounds(new Rectangle(275, 275, 130, 30));
+		jButtonClose.setBounds(new Rectangle(302, 293, 178, 43));
+		jButtonClose.setFont(new Font("PT Sans", Font.BOLD, 16));
+		jButtonClose.setBackground(new Color(61, 45, 20));
+		jButtonClose.setForeground(new Color(255, 189, 89));
+		jButtonClose.setOpaque(true);
+		jButtonClose.setBorderPainted(false);
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jButtonClose_actionPerformed(e);
@@ -99,25 +105,42 @@ public class CreateQuestionGUI extends JFrame {
 		this.getContentPane().add(jButtonClose, null);
 		this.getContentPane().add(jButtonCreate, null);
 		this.getContentPane().add(jTextFieldQuery, null);
-		this.getContentPane().add(jLabelQuery, null);
-		this.getContentPane().add(jTextFieldPrice, null);
-
-		this.getContentPane().add(jLabelMinBet, null);
-		this.getContentPane().add(jLabelListOfEvents, null);
-		this.getContentPane().add(jComboBoxEvents, null);
-
-		this.getContentPane().add(jCalendar, null);
 		
 		
 		BLFacade facade = StartGUI.getBusinessLogic();
+		panel.setBounds(18, 18, 562, 259);
+		
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		jLabelEventDate.setBounds(20, 6, 140, 25);
+		panel.add(jLabelEventDate);
+		jLabelEventDate.setFont(new Font("PT Sans", Font.BOLD, 14));
 		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar.getDate());
 		paintDaysWithEvents(jCalendar,datesWithEventsCurrentMonth);
+		jCalendar.getMonthChooser().getSpinner().setFont(new Font("PT Sans", Font.PLAIN, 14));
+		jCalendar.getYearChooser().getSpinner().setFont(new Font("PT Sans", Font.PLAIN, 14));
+		jCalendar.getDayChooser().getDayPanel().setBackground(Color.WHITE);
+		jCalendar.getMonthChooser().getSpinner().setBackground(Color.WHITE);
+		jCalendar.setBounds(20, 43, 236, 141);
+		panel.add(jCalendar);
+				jComboBoxEvents.setBackground(Color.WHITE);
+				jComboBoxEvents.setFont(new Font("PT Sans", Font.PLAIN, 14));
+				jComboBoxEvents.setBounds(273, 40, 260, 20);
+				panel.add(jComboBoxEvents);
 		
-		
-
-		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
-		jLabelEventDate.setBounds(40, 16, 140, 25);
-		getContentPane().add(jLabelEventDate);
+				jComboBoxEvents.setModel(modelEvents);
+				jLabelListOfEvents.setBounds(273, 8, 277, 20);
+				panel.add(jLabelListOfEvents);
+				jLabelListOfEvents.setFont(new Font("PT Sans", Font.BOLD, 14));
+				jLabelQuery.setBounds(20, 193, 75, 20);
+				panel.add(jLabelQuery);
+				jLabelQuery.setFont(new Font("PT Sans", Font.BOLD, 14));
+				jTextFieldPrice.setFont(new Font("PT Sans", Font.PLAIN, 14));
+				jTextFieldPrice.setBounds(100, 220, 60, 20);
+				panel.add(jTextFieldPrice);
+				jLabelMinBet.setBounds(20, 221, 75, 20);
+				panel.add(jLabelMinBet);
+				jLabelMinBet.setFont(new Font("PT Sans", Font.BOLD, 14));
 
 		
 		// Code for JCalendar

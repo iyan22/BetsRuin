@@ -18,6 +18,7 @@ import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 
 public class UserZoneGUI extends JFrame {
@@ -35,7 +36,7 @@ public class UserZoneGUI extends JFrame {
 		this.user=u;
 		BLFacade facade = StartGUI.getBusinessLogic();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 675, 539);
+		setBounds(100, 100, 675, 553);
 		showFunds = new JPanel();
 		showFunds.setBackground(Color.WHITE);
 		showFunds.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -45,8 +46,9 @@ public class UserZoneGUI extends JFrame {
 	
 		
 		JLabel NoCreditCard = new JLabel("");
+		NoCreditCard.setHorizontalAlignment(SwingConstants.CENTER);
 		NoCreditCard.setFont(new Font("PT Sans", Font.BOLD, 16));
-		NoCreditCard.setBounds(157, 218, 178, 23);
+		NoCreditCard.setBounds(48, 476, 577, 23);
 		showFunds.add(NoCreditCard);
 		
 		JLabel lblCurrentBets = new JLabel("Current Bets");
@@ -101,25 +103,25 @@ public class UserZoneGUI extends JFrame {
 		
 		JLabel lblUsernameVar = new JLabel("");
 		lblUsernameVar.setFont(new Font("PT Sans", Font.PLAIN, 16));
-		lblUsernameVar.setBounds(120, 16, 150, 14);
+		lblUsernameVar.setBounds(120, 6, 150, 24);
 		panelPersonal.add(lblUsernameVar);
 		lblUsernameVar.setText(user.getUsername());
 		
 		JLabel lblNameVar = new JLabel("");
 		lblNameVar.setFont(new Font("PT Sans", Font.PLAIN, 16));
-		lblNameVar.setBounds(120, 42, 150, 14);
+		lblNameVar.setBounds(120, 32, 150, 24);
 		panelPersonal.add(lblNameVar);
 		lblNameVar.setText(user.getName());
 		
 		JLabel lblSurnameVar = new JLabel("");
 		lblSurnameVar.setFont(new Font("PT Sans", Font.PLAIN, 16));
-		lblSurnameVar.setBounds(120, 68, 150, 14);
+		lblSurnameVar.setBounds(120, 58, 150, 24);
 		panelPersonal.add(lblSurnameVar);
 		lblSurnameVar.setText(user.getSurname());
 		
 		JLabel lblEmailVar = new JLabel("");
 		lblEmailVar.setFont(new Font("PT Sans", Font.PLAIN, 16));
-		lblEmailVar.setBounds(120, 94, 150, 14);
+		lblEmailVar.setBounds(120, 84, 150, 24);
 		panelPersonal.add(lblEmailVar);
 		lblEmailVar.setText(user.getMail());
 		
@@ -168,35 +170,35 @@ public class UserZoneGUI extends JFrame {
 		
 		JLabel lblReferralCode = new JLabel("Referral Code:");
 		lblReferralCode.setFont(new Font("PT Sans", Font.BOLD, 16));
-		lblReferralCode.setBounds(16, 43, 106, 14);
+		lblReferralCode.setBounds(16, 32, 106, 25);
 		panelFinancial.add(lblReferralCode);
 		
 		JLabel lblFunds = new JLabel("Funds:");
 		lblFunds.setFont(new Font("PT Sans", Font.BOLD, 16));
-		lblFunds.setBounds(18, 17, 104, 14);
+		lblFunds.setBounds(18, 6, 104, 25);
 		panelFinancial.add(lblFunds);
 		
 				JLabel lblReferralCodeVar = new JLabel("");
 				lblReferralCodeVar.setFont(new Font("PT Sans", Font.PLAIN, 16));
-				lblReferralCodeVar.setBounds(134, 43, 117, 14);
+				lblReferralCodeVar.setBounds(134, 32, 117, 25);
 				panelFinancial.add(lblReferralCodeVar);
 				lblReferralCodeVar.setText(u.getRefCode());
 				
 						JLabel lblNumRefVar = new JLabel("");
 						lblNumRefVar.setFont(new Font("PT Sans", Font.PLAIN, 16));
-						lblNumRefVar.setBounds(134, 69, 89, 14);
+						lblNumRefVar.setBounds(134, 58, 89, 25);
 						panelFinancial.add(lblNumRefVar);
 						lblNumRefVar.setText(u.getNumberRef().toString());
 						
 						JLabel lblFundsVar = new JLabel("");
 						lblFundsVar.setFont(new Font("PT Sans", Font.PLAIN, 16));
-						lblFundsVar.setBounds(134, 17, 106, 14);
+						lblFundsVar.setBounds(134, 6, 89, 25);
 						panelFinancial.add(lblFundsVar);
 						lblFundsVar.setText(s);
 						
 								JLabel lblNumRef = new JLabel("N. of referrals:");
 								lblNumRef.setFont(new Font("PT Sans", Font.BOLD, 16));
-								lblNumRef.setBounds(16, 69, 106, 14);
+								lblNumRef.setBounds(16, 58, 106, 25);
 								panelFinancial.add(lblNumRef);
 								
 								JButton btnAddFunds = new JButton("Add funds");
@@ -207,11 +209,6 @@ public class UserZoneGUI extends JFrame {
 								btnAddFunds.setBorderPainted(false);
 								btnAddFunds.setBounds(6, 89, 259, 30);
 								panelFinancial.add(btnAddFunds);
-								
-								JLabel lblFundsCurr = new JLabel("€");
-								lblFundsCurr.setFont(new Font("PT Sans", Font.PLAIN, 16));
-								lblFundsCurr.setBounds(235, 17, 30, 14);
-								panelFinancial.add(lblFundsCurr);
 								btnAddFunds.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent e) {
 										if(user.getBank()) {

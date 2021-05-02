@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.Color;
 
 public class DirectAccessEventGUI extends JFrame {
 
@@ -34,7 +36,7 @@ public class DirectAccessEventGUI extends JFrame {
 	private JFrame bet;
 
 	private JLabel lbltuEquipoFavorito = new JLabel();
-	private JLabel lblhazUnaApuesta = new JLabel("\u00A1Haz una apuesta!");
+	private JLabel lblhazUnaApuesta = new JLabel("¡Haz tu apuesta!");
 	private JLabel lblQuestions = new JLabel("Questions");
 	private	JLabel lblPredictions = new JLabel("Predictions");
 	private JButton btnApostar = new JButton("Apostar");
@@ -56,15 +58,18 @@ public class DirectAccessEventGUI extends JFrame {
 			ResourceBundle.getBundle("Etiquetas").getString("Event"), 
 			ResourceBundle.getBundle("Etiquetas").getString("Query")
 	};
+	private final JPanel panel = new JPanel();
 
 
 	/**
 	 * Create the frame.
 	 */
 	public DirectAccessEventGUI(Event e, User u) {
+		setTitle("Bets&Ruin - Place bet favourite team");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 628, 481);
+		setBounds(100, 100, 628, 519);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -86,12 +91,12 @@ public class DirectAccessEventGUI extends JFrame {
 			fol=events[1];
 			alt=events[0];
 		}
+		lbltuEquipoFavorito.setForeground(new Color(61, 45, 20));
+		lbltuEquipoFavorito.setFont(new Font("PT Sans", Font.BOLD, 20));
 
-		lbltuEquipoFavorito.setText("Tu equipo favorito " + fol + " compite contra "+alt);
+		lbltuEquipoFavorito.setText("Tu equipo favorito compite contra ");
 
 		tableModelQuestions = new DefaultTableModel(null, columnNamesQuestions);
-		scrollPaneQuestions.setViewportView(tableQuestions);
-		tableQuestions.setModel(tableModelQuestions);
 		try {
 			tableModelQuestions.setDataVector(null, columnNamesQuestions);
 			tableModelQuestions.setColumnCount(3); // another column added to allocate question objects
@@ -104,47 +109,25 @@ public class DirectAccessEventGUI extends JFrame {
 				row.add(q); // question object added in order to obtain it with tableModelQuestions.getValueAt(i,2)
 				tableModelQuestions.addRow(row);		
 			}
-			tableQuestions.getColumnModel().getColumn(0).setPreferredWidth(25);
-			tableQuestions.getColumnModel().getColumn(1).setPreferredWidth(268);
-			tableQuestions.getColumnModel().removeColumn(tableQuestions.getColumnModel().getColumn(2)); // not shown in JTable
 		} catch (Exception e1) {
 
 		}
 
 		lbltuEquipoFavorito.setHorizontalAlignment(SwingConstants.CENTER);
-		lbltuEquipoFavorito.setBounds(10, 34, 592, 14);
+		lbltuEquipoFavorito.setBounds(10, 18, 592, 30);
 		contentPane.add(lbltuEquipoFavorito);
+		lblhazUnaApuesta.setForeground(new Color(255, 189, 89));
+		lblhazUnaApuesta.setFont(new Font("PT Sans", Font.BOLD, 20));
 
 		lblhazUnaApuesta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblhazUnaApuesta.setBounds(10, 59, 592, 14);
+		lblhazUnaApuesta.setBounds(10, 49, 592, 29);
 		contentPane.add(lblhazUnaApuesta);
-
-		lblQuestions.setBounds(21, 103, 120, 14);
-		contentPane.add(lblQuestions);
-
-		scrollPaneQuestions.setBounds(20, 125, 582, 105);
-		contentPane.add(scrollPaneQuestions);
-
-		lblPredictions.setBounds(21, 265, 284, 14);
-		contentPane.add(lblPredictions);
-
-		scrollPanePredictions.setBounds(21, 290, 581, 105);
-		contentPane.add(scrollPanePredictions);
-
-
-
-		tablePredictions.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int i = tablePredictions.getSelectedRow();
-				prediction = (Prediction) tableModelPredictions.getValueAt(i,1); // obtain prediction object
-				if(prediction!=null) {
-					btnApostar.setEnabled(true);
-				}
-			}
-		});
-
-		btnApostar.setBounds(200, 408, 89, 23);
+		btnApostar.setFont(new Font("PT Sans", Font.BOLD, 16));
+		btnApostar.setForeground(new Color(61, 45, 20));
+		btnApostar.setBackground(new Color(255, 189, 89));
+		btnApostar.setOpaque(true);
+		btnApostar.setBorderPainted(false);
+		btnApostar.setBounds(155, 444, 135, 41);
 		contentPane.add(btnApostar);
 		btnApostar.setEnabled(false);
 		btnApostar.addActionListener(new ActionListener() {
@@ -153,18 +136,59 @@ public class DirectAccessEventGUI extends JFrame {
 				bet.setVisible(true);
 			}
 		});
-
-		btnVolver.setBounds(299, 408, 89, 23);
+		btnVolver.setFont(new Font("PT Sans", Font.BOLD, 16));
+		btnVolver.setBackground(new Color(61, 45, 20));
+		btnVolver.setForeground(new Color(255, 189, 89));
+		btnVolver.setOpaque(true);
+		btnVolver.setBorderPainted(false);
+		btnVolver.setBounds(300, 444, 135, 41);
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close(e);
 			}
 		});
 		contentPane.add(btnVolver);
-
-		scrollPanePredictions.setViewportView(tablePredictions);
 		tableModelPredictions = new DefaultTableModel(null, columnNamePrediction);
-		tablePredictions.setModel(tableModelPredictions);
+		panel.setBackground(new Color(227, 227, 227));
+		panel.setBounds(20, 90, 582, 342);
+		
+		contentPane.add(panel);
+		panel.setLayout(null);
+		lblQuestions.setForeground(new Color(61, 45, 20));
+		lblQuestions.setBounds(16, 6, 560, 23);
+		panel.add(lblQuestions);
+		lblQuestions.setFont(new Font("PT Sans", Font.BOLD, 16));
+		lblPredictions.setForeground(new Color(61, 45, 20));
+		lblPredictions.setBounds(16, 177, 560, 23);
+		panel.add(lblPredictions);
+		lblPredictions.setFont(new Font("PT Sans", Font.BOLD, 16));
+		tablePredictions.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		
+		
+		
+				tablePredictions.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						int i = tablePredictions.getSelectedRow();
+						prediction = (Prediction) tableModelPredictions.getValueAt(i,1); // obtain prediction object
+						if(prediction!=null) {
+							btnApostar.setEnabled(true);
+						}
+					}
+				});
+						scrollPanePredictions.setBounds(16, 204, 546, 121);
+						panel.add(scrollPanePredictions);
+				
+						scrollPanePredictions.setViewportView(tablePredictions);
+						tablePredictions.setModel(tableModelPredictions);
+		tableQuestions.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		scrollPaneQuestions.setBounds(16, 36, 545, 129);
+		panel.add(scrollPaneQuestions);
+		scrollPaneQuestions.setViewportView(tableQuestions);
+		tableQuestions.setModel(tableModelQuestions);
+		tableQuestions.getColumnModel().getColumn(0).setPreferredWidth(25);
+		tableQuestions.getColumnModel().getColumn(1).setPreferredWidth(268);
+		tableQuestions.getColumnModel().removeColumn(tableQuestions.getColumnModel().getColumn(2));
 
 		tableQuestions.addMouseListener(new MouseAdapter() {
 			@Override

@@ -18,6 +18,7 @@ import domain.Event;
 import domain.User;
 
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class MainAdminGUI extends JFrame {
 
@@ -36,6 +37,7 @@ public class MainAdminGUI extends JFrame {
 	 */
 	public MainAdminGUI(User u) {
 		super();
+		setResizable(false);
 		this.u = u;
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -54,9 +56,9 @@ public class MainAdminGUI extends JFrame {
 
 	public void initialize() {
 		
-		this.setSize(635, 337);
+		this.setSize(635, 525);
 		this.setContentPane(getJContentPane());
-		this.setTitle("Main Admin");
+		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.this.title")); //$NON-NLS-1$ //$NON-NLS-2$
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
@@ -64,6 +66,7 @@ public class MainAdminGUI extends JFrame {
 	public JPanel getJContentPane() {
 		if (contentPane == null) {
 			contentPane = new JPanel();
+			contentPane.setBackground(Color.WHITE);
 			contentPane.setLayout(null);
 			contentPane.add(getLblNewLabel());
 			contentPane.add(getBoton2());
@@ -80,18 +83,31 @@ public class MainAdminGUI extends JFrame {
 				}
 			});
 			btnCloseEvent.setText("Close Event"); 
-			btnCloseEvent.setBounds(36, 155, 548, 37);
+			btnCloseEvent.setBounds(36, 323, 548, 37);
+			btnCloseEvent.setFont(new Font("PT Sans", Font.BOLD, 16));
+			btnCloseEvent.setForeground(new Color(61, 45, 20));
+			btnCloseEvent.setBackground(new Color(255, 189, 89));
+			btnCloseEvent.setOpaque(true);
+			btnCloseEvent.setBorderPainted(false);
 			contentPane.add(btnCloseEvent);
+			
+			JLabel jLabelLogo = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
+			jLabelLogo.setIcon(new ImageIcon(MainAdminGUI.class.getResource("/img/LogoBetsRuinL.png")));
+			jLabelLogo.setHorizontalAlignment(SwingConstants.CENTER);
+			jLabelLogo.setForeground(Color.BLACK);
+			jLabelLogo.setFont(new Font("PT Sans", Font.BOLD, 16));
+			jLabelLogo.setBounds(36, 36, 194, 159);
+			contentPane.add(jLabelLogo);
 		}
 		return contentPane;
 	}
 	
 	private JLabel getLblNewLabel() {
 		if (jLabelSelectOption == null) {
-			jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("SelectOption"));
-			jLabelSelectOption.setBounds(75, 6, 481, 55);
-			jLabelSelectOption.setFont(new Font("Tahoma", Font.BOLD, 13));
-			jLabelSelectOption.setForeground(Color.BLACK);
+			jLabelSelectOption = new JLabel("<html>ADMIN ZONE</html>");
+			jLabelSelectOption.setBounds(269, 36, 315, 159);
+			jLabelSelectOption.setFont(new Font("PT Sans", Font.BOLD, 70));
+			jLabelSelectOption.setForeground(new Color(61, 45, 20));
 			jLabelSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return jLabelSelectOption;
@@ -100,8 +116,13 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton3() {
 		if (jButtonQueryQuestions == null) {
 			jButtonQueryQuestions = new JButton();
-			jButtonQueryQuestions.setBounds(36, 70, 548, 37);
-			jButtonQueryQuestions.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
+			jButtonQueryQuestions.setBounds(36, 225, 548, 37);
+			jButtonQueryQuestions.setFont(new Font("PT Sans", Font.BOLD, 16));
+			jButtonQueryQuestions.setForeground(new Color(61, 45, 20));
+			jButtonQueryQuestions.setBackground(new Color(255, 189, 89));
+			jButtonQueryQuestions.setOpaque(true);
+			jButtonQueryQuestions.setBorderPainted(false);
+			jButtonQueryQuestions.setText("Query Queries");
 			jButtonQueryQuestions.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFrame a = new FindQuestionsGUI(u);
@@ -116,8 +137,13 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton2() {
 		if (jButtonCreateQuery == null) {
 			jButtonCreateQuery = new JButton();
-			jButtonCreateQuery.setBounds(36, 195, 269, 37);
+			jButtonCreateQuery.setBounds(36, 372, 269, 37);
 			jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateQuery"));
+			jButtonCreateQuery.setFont(new Font("PT Sans", Font.BOLD, 16));
+			jButtonCreateQuery.setForeground(new Color(61, 45, 20));
+			jButtonCreateQuery.setBackground(new Color(255, 189, 89));
+			jButtonCreateQuery.setOpaque(true);
+			jButtonCreateQuery.setBorderPainted(false);
 			jButtonCreateQuery.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFrame a = new CreateQuestionGUI(new Vector<Event>());
@@ -131,8 +157,13 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton4() {
 		if (jButtonCreateEvent == null) {
 			jButtonCreateEvent = new JButton();
-			jButtonCreateEvent.setBounds(36, 113, 548, 37);
+			jButtonCreateEvent.setBounds(36, 274, 548, 37);
 			jButtonCreateEvent.setText("Create Event");
+			jButtonCreateEvent.setFont(new Font("PT Sans", Font.BOLD, 16));
+			jButtonCreateEvent.setForeground(new Color(61, 45, 20));
+			jButtonCreateEvent.setBackground(new Color(255, 189, 89));
+			jButtonCreateEvent.setOpaque(true);
+			jButtonCreateEvent.setBorderPainted(false);
 			jButtonCreateEvent.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFrame a = new CreateEventGUI();
@@ -146,8 +177,13 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton5() {
 		if(jButtonCreatePrediction == null) {
 			jButtonCreatePrediction = new JButton();
-			jButtonCreatePrediction.setBounds(315, 195, 269, 37);
+			jButtonCreatePrediction.setBounds(317, 372, 267, 37);
 			jButtonCreatePrediction.setText("Create Prediction");
+			jButtonCreatePrediction.setFont(new Font("PT Sans", Font.BOLD, 16));
+			jButtonCreatePrediction.setForeground(new Color(61, 45, 20));
+			jButtonCreatePrediction.setBackground(new Color(255, 189, 89));
+			jButtonCreatePrediction.setOpaque(true);
+			jButtonCreatePrediction.setBorderPainted(false);
 			jButtonCreatePrediction.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFrame a = new CreatePredictionGUI();
@@ -163,7 +199,12 @@ public class MainAdminGUI extends JFrame {
 		if (btnReturn == null) {
 			btnReturn = new JButton();
 			btnReturn.setText("Return");
-			btnReturn.setBounds(264, 260, 85, 21);
+			btnReturn.setFont(new Font("PT Sans", Font.BOLD, 16));
+			btnReturn.setForeground(new Color(255, 189, 89));
+			btnReturn.setBackground(new Color(61, 45, 20));
+			btnReturn.setOpaque(true);
+			btnReturn.setBorderPainted(false);
+			btnReturn.setBounds(36, 421, 548, 42);
 			btnReturn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					close(e);

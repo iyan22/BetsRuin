@@ -218,9 +218,10 @@ public class FindQuestionsGUI extends JFrame {
 		jLabelEventDate.setFont(new Font("PT Sans", Font.BOLD, 16));
 
 		JLabel jLabelFollow = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("FindQuestionsGUI.jLabelFollow.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		jLabelFollow.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabelFollow.setForeground(new Color(61, 45, 20));
 		jLabelFollow.setFont(new Font("Dialog", Font.BOLD, 16));
-		jLabelFollow.setBounds(152, 401, 409, 22);
+		jLabelFollow.setBounds(21, 396, 608, 27);
 		panelSeleccion.add(jLabelFollow);
 
 		JLabel lblLogo = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
@@ -289,7 +290,7 @@ public class FindQuestionsGUI extends JFrame {
 		lblUserVar.setBounds(95, 9, 188, 19);
 		panelInfo.add(lblUserVar);
 
-		JLabel lblSaldoVar = new JLabel(u.getFunds() + "€");
+		JLabel lblSaldoVar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("FindQuestionsGUI.lblSaldoVar.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lblSaldoVar.setForeground(new Color(61, 45, 20));
 		lblSaldoVar.setFont(new Font("PT Sans", Font.BOLD, 14));
 		lblSaldoVar.setBounds(96, 40, 187, 19);
@@ -312,7 +313,7 @@ public class FindQuestionsGUI extends JFrame {
 		btnSeguirEquipo.setOpaque(true);
 		btnSeguirEquipo.setEnabled(false);
 		btnSeguirEquipo.setForeground(new Color(61, 45, 20));
-		btnSeguirEquipo.setFont(new Font("Dialog", Font.BOLD, 16));
+		btnSeguirEquipo.setFont(new Font("PT Sans", Font.BOLD, 16));
 		btnSeguirEquipo.setBounds(new Rectangle(352, 423, 130, 30));
 		btnSeguirEquipo.setBorderPainted(false);
 		btnSeguirEquipo.setBackground(new Color(255, 189, 89));

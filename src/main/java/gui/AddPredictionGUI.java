@@ -29,46 +29,27 @@ public class AddPredictionGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public AddPredictionGUI(Question question) {
+		setTitle("Bets&Ruin - Add prediction");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 269);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JLabel lblQuestion = new JLabel("Question:");
-		lblQuestion.setBounds(49, 77, 67, 14);
-		contentPane.add(lblQuestion);
-
-		JLabel lblAnswer = new JLabel("Answer:");
-		lblAnswer.setBounds(49, 105, 67, 14);
-		contentPane.add(lblAnswer);
-
-		JLabel questionString = new JLabel("");
-		questionString.setBounds(139, 77, 274, 14);
-		questionString.setText(question.getQuestion());
-		contentPane.add(questionString);
-
-		answerField = new JTextField();
-		answerField.setBounds(139, 102, 159, 20);
-		contentPane.add(answerField);
-		answerField.setColumns(10);
-
-		JLabel lblMultiplier = new JLabel("Share:");
-		lblMultiplier.setBounds(49, 137, 67, 14);
-		contentPane.add(lblMultiplier);
-
-		shareField = new JTextField();
-		shareField.setBounds(139, 134, 89, 20);
-		contentPane.add(shareField);
-		shareField.setColumns(10);
 
 		JLabel submitted = new JLabel("");
 		submitted.setBounds(49, 171, 355, 14);
 		contentPane.add(submitted);
 
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(102, 196, 89, 23);
+		btnSubmit.setBounds(93, 182, 113, 35);
+		btnSubmit.setFont(new Font("PT Sans", Font.BOLD, 16));
+		btnSubmit.setForeground(new Color(61, 45, 20));
+		btnSubmit.setBackground(new Color(255, 189, 89));
+		btnSubmit.setOpaque(true);
+		btnSubmit.setBorderPainted(false);
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!answerField.getText().equals("")) {
@@ -93,7 +74,12 @@ public class AddPredictionGUI extends JFrame {
 		contentPane.add(btnSubmit);
 
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(209, 196, 89, 23);
+		btnCancel.setBounds(240, 182, 113, 35);
+		btnCancel.setFont(new Font("PT Sans", Font.BOLD, 16));
+		btnCancel.setBackground(new Color(61, 45, 20));
+		btnCancel.setForeground(new Color(255, 189, 89));
+		btnCancel.setOpaque(true);
+		btnCancel.setBorderPainted(false);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close(e);
@@ -102,19 +88,65 @@ public class AddPredictionGUI extends JFrame {
 		contentPane.add(btnCancel);
 
 		JLabel lblAddPrediction = new JLabel("Add Prediction");
+		lblAddPrediction.setForeground(new Color(61, 45, 20));
 		lblAddPrediction.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAddPrediction.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblAddPrediction.setBounds(10, 11, 414, 23);
+		lblAddPrediction.setFont(new Font("PT Sans", Font.BOLD, 16));
+		lblAddPrediction.setBounds(33, 11, 391, 24);
 		contentPane.add(lblAddPrediction);
 		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(227, 227, 227));
+		panel.setBounds(33, 47, 391, 123);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
 		JLabel lblEvent = new JLabel("Event:");
-		lblEvent.setBounds(49, 51, 46, 14);
-		contentPane.add(lblEvent);
+		lblEvent.setForeground(new Color(61, 45, 20));
+		lblEvent.setBounds(19, 17, 89, 14);
+		panel.add(lblEvent);
+		lblEvent.setFont(new Font("PT Sans", Font.BOLD, 16));
+		
+		JLabel lblQuestion = new JLabel("Question:");
+		lblQuestion.setForeground(new Color(61, 45, 20));
+		lblQuestion.setBounds(19, 43, 89, 14);
+		panel.add(lblQuestion);
+		lblQuestion.setFont(new Font("PT Sans", Font.BOLD, 16));
+		
+		JLabel lblAnswer = new JLabel("Answer:");
+		lblAnswer.setForeground(new Color(61, 45, 20));
+		lblAnswer.setBounds(19, 69, 89, 14);
+		panel.add(lblAnswer);
+		lblAnswer.setFont(new Font("PT Sans", Font.BOLD, 16));
+		
+		JLabel lblMultiplier = new JLabel("Share:");
+		lblMultiplier.setForeground(new Color(61, 45, 20));
+		lblMultiplier.setBounds(19, 92, 89, 14);
+		panel.add(lblMultiplier);
+		lblMultiplier.setFont(new Font("PT Sans", Font.BOLD, 16));
+				
+		shareField = new JTextField();
+		shareField.setBounds(120, 89, 89, 20);
+		panel.add(shareField);
+		shareField.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		shareField.setColumns(10);
+		
+		answerField = new JTextField();
+		answerField.setBounds(120, 66, 247, 20);
+		panel.add(answerField);
+		answerField.setFont(new Font("PT Sans", Font.PLAIN, 14));
+		answerField.setColumns(10);
+		
+		JLabel questionString = new JLabel("");
+		questionString.setBounds(120, 43, 247, 14);
+		panel.add(questionString);
+		questionString.setFont(new Font("PT Sans", Font.PLAIN, 16));
+		questionString.setText(question.getQuestion());
 		
 		JLabel eventDesc = new JLabel("");
-		eventDesc.setBounds(139, 51, 159, 14);
+		eventDesc.setBounds(120, 19, 247, 14);
+		panel.add(eventDesc);
+		eventDesc.setFont(new Font("PT Sans", Font.PLAIN, 16));
 		eventDesc.setText(question.getEvent().getDescription());
-		contentPane.add(eventDesc);
 	}
 
 	public void close(ActionEvent e) {

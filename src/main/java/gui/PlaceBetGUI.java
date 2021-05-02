@@ -32,6 +32,7 @@ public class PlaceBetGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public PlaceBetGUI(Prediction prediction, User user) {
+		setResizable(false);
 		setTitle("Bets&Ruin - Place Bet");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 487, 362);
@@ -164,12 +165,7 @@ public class PlaceBetGUI extends JFrame {
 		textPane.setFont(new Font("PT Sans", Font.BOLD, 14));
 		textPane.setText("Be careful! The amount you want to bet should be at least "+prediction.getQuestion().getBetMinimum());
 		textPane.setParagraphAttributes(attribs, true);
-		textPane.setForeground(Color.red);
-		
-		JLabel currency = new JLabel("€");
-		currency.setFont(new Font("PT Sans", Font.PLAIN, 16));
-		currency.setBounds(216, 108, 37, 19);
-		panel.add(currency);
+		textPane.setForeground(Color.RED);
 		
 		JLabel lblHoraDeApostar = new JLabel("Hora de apostar!!!");
 		lblHoraDeApostar.setForeground(new Color(61, 45, 20));
