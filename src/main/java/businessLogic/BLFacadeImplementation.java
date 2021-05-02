@@ -159,10 +159,10 @@ public class BLFacadeImplementation  implements BLFacade {
 	 * @param date of the event
 	 * @return the created event
 	 */
-	public Event createEvent(String description, Date date) {
+	public Event createEvent(String description, Date date, String type) {
 		dbManager.open(false);
 		
-		Event event = dbManager.createEvent(description, date);
+		Event event = dbManager.createEvent(description, date, type);
 		
 		dbManager.close();
 		

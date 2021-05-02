@@ -28,6 +28,8 @@ import com.toedter.calendar.JCalendar;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 import domain.Event;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class CreateEventGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -52,6 +54,13 @@ public class CreateEventGUI extends JFrame {
 	private JLabel jLabelError = new JLabel();
 	
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
+	
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JRadioButton rdbtnNewRadioButton = new JRadioButton();
+	private JRadioButton rdbtnNewRadioButton_1 = new JRadioButton();
+	private JRadioButton rdbtnNewRadioButton_2 = new JRadioButton();
+	private JRadioButton rdbtnNewRadioButton_3 = new JRadioButton();
+	
 
 	/**
 	 * Create the frame.
@@ -67,7 +76,7 @@ public class CreateEventGUI extends JFrame {
 	private void jbInit() throws Exception {
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(604, 370));
+		this.setSize(new Dimension(604, 422));
 		this.setTitle("Create Event");
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -81,7 +90,7 @@ public class CreateEventGUI extends JFrame {
 		scrollPaneEvents.setBounds(new Rectangle(25, 44, 346, 116));
 		jButtonCreate.setText("Create Event"); //$NON-NLS-1$ //$NON-NLS-2$
 
-		jButtonCreate.setBounds(new Rectangle(100, 275, 130, 30));
+		jButtonCreate.setBounds(new Rectangle(135, 342, 130, 30));
 		jButtonCreate.setEnabled(false);
 
 		jLabelEvent.setText("Description:");
@@ -91,7 +100,7 @@ public class CreateEventGUI extends JFrame {
 			}
 		});
 		
-		jButtonClose.setBounds(new Rectangle(275, 275, 130, 30));
+		jButtonClose.setBounds(new Rectangle(275, 342, 130, 30));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jButtonClose_actionPerformed(e);
@@ -104,6 +113,24 @@ public class CreateEventGUI extends JFrame {
 
 		jLabelError.setBounds(new Rectangle(175, 240, 305, 20));
 		jLabelError.setForeground(Color.red);
+		
+		rdbtnNewRadioButton.setText("Futbol");
+		buttonGroup.add(rdbtnNewRadioButton);
+		rdbtnNewRadioButton.setBounds(109, 247, 109, 23);
+		
+		rdbtnNewRadioButton_1.setText("Baloncesto"); 
+		buttonGroup.add(rdbtnNewRadioButton_1);
+		rdbtnNewRadioButton_1.setBounds(109, 287, 109, 23);
+		
+		rdbtnNewRadioButton_2.setText("Tenis"); 
+		buttonGroup.add(rdbtnNewRadioButton_2);
+		rdbtnNewRadioButton_2.setBounds(275, 247, 109, 23);
+		
+		rdbtnNewRadioButton_3.setText("E-Sport"); 
+		buttonGroup.add(rdbtnNewRadioButton_3);
+		rdbtnNewRadioButton_3.setBounds(275, 287, 109, 23);
+		
+		
 
 		this.getContentPane().add(jLabelMsg, null);
 		this.getContentPane().add(jLabelError, null);
@@ -117,6 +144,11 @@ public class CreateEventGUI extends JFrame {
 
 		this.getContentPane().add(jCalendar, null);
 		
+		getContentPane().add(rdbtnNewRadioButton);
+		getContentPane().add(rdbtnNewRadioButton_1);
+		getContentPane().add(rdbtnNewRadioButton_2);
+		getContentPane().add(rdbtnNewRadioButton_3);
+		
 		
 		BLFacade facade = StartGUI.getBusinessLogic();
 		datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar.getDate());
@@ -127,6 +159,13 @@ public class CreateEventGUI extends JFrame {
 		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
 		jLabelEventDate.setBounds(40, 16, 140, 25);
 		getContentPane().add(jLabelEventDate);
+		
+		
+		
+		
+		JLabel jLabelType = new JLabel("Type"); //$NON-NLS-1$ //$NON-NLS-2$
+		jLabelType.setBounds(25, 251, 46, 14);
+		getContentPane().add(jLabelType);
 
 		
 		// Code for JCalendar
@@ -269,9 +308,27 @@ public class CreateEventGUI extends JFrame {
 				}
 			}
 			if(!found) {
-				jLabelMsg.setText("Event created successfully!");
-				jLabelMsg.setForeground(Color.green);
-				facade.createEvent(inputQuery, firstDay);
+				if(rdbtnNewRadioButton.isSelected()==true) {
+					jLabelMsg.setText("Event created successfully!");
+					jLabelMsg.setForeground(Color.green);
+					facade.createEvent(inputQuery, firstDay,rdbtnNewRadioButton.getText());
+				}else if(rdbtnNewRadioButton_1.isSelected()==true) {
+					jLabelMsg.setText("Event created successfully!");
+					jLabelMsg.setForeground(Color.green);
+					facade.createEvent(inputQuery, firstDay,rdbtnNewRadioButton.getText());
+				}else if(rdbtnNewRadioButton_2.isSelected()==true) {
+					jLabelMsg.setText("Event created successfully!");
+					jLabelMsg.setForeground(Color.green);
+					facade.createEvent(inputQuery, firstDay,rdbtnNewRadioButton.getText());
+				}else if(rdbtnNewRadioButton_3.isSelected()==true) {
+					jLabelMsg.setText("Event created successfully!");
+					jLabelMsg.setForeground(Color.green);
+					facade.createEvent(inputQuery, firstDay,rdbtnNewRadioButton.getText());
+				}else {
+					jLabelMsg.setText("Choose the event type!");
+					jLabelMsg.setForeground(Color.red);
+				}
+				
 			}
 
 		} catch (Exception e1) {

@@ -23,6 +23,7 @@ public class Event implements Serializable {
 	private Date eventDate;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private Vector<Question> questions=new Vector<Question>();
+	private String type;
 
 	public Vector<Question> getQuestions() {
 		return questions;
@@ -36,10 +37,11 @@ public class Event implements Serializable {
 		super();
 	}
 
-	public Event(Integer eventNumber, String description,Date eventDate) {
+	public Event(Integer eventNumber, String description,Date eventDate, String type) {
 		this.eventNumber = eventNumber;
 		this.description = description;
 		this.eventDate=eventDate;
+		this.type=type;
 	}
 	
 	public Event( String description,Date eventDate) {
@@ -150,7 +152,13 @@ public class Event implements Serializable {
 		return true;
 	}
 	
+	public String getType() {
+		return type;
+	}
 	
+	public void setType(String t) {
+		type=t;
+	}
 	
 	
 

@@ -65,7 +65,7 @@ public interface BLFacade  {
 	 * @param date of the event
 	 * @return the created event
 	 */
-	@WebMethod Event createEvent(String description, Date date) ;
+	@WebMethod Event createEvent(String description, Date date,String type) ;
 	
 	/**
 	 * This method retrieves the events of a given date 
