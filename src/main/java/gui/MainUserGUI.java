@@ -534,6 +534,7 @@ public class MainUserGUI extends JFrame {
 		jLabelWelcome.setText(ResourceBundle.getBundle("Etiquetas").getString("Wellcome")); 
 		lblCategorias.setText(ResourceBundle.getBundle("Etiquetas").getString("Enjoy"));
 		lblEventosInteres.setText(ResourceBundle.getBundle("Etiquetas").getString("Interesting"));
+		btnApostar.setText(ResourceBundle.getBundle("Etiquetas").getString("Bet"));
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"
 
