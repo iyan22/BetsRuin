@@ -15,6 +15,7 @@ import domain.User;
 import domain.Bet;
 import domain.Event;
 import domain.Prediction;
+import exceptions.AlreadyFollowed;
 import exceptions.EventFinished;
 import exceptions.QuestionAlreadyExist;
 import exceptions.NoReferralCodeFound;
@@ -321,7 +322,52 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return dates;
 	}
+	
+	
+	/**
+	 * Method used to add to the user's follow list a new team/player
+	 * 
+	 * @param user
+	 * @param team
+	 * @throws AlreadyFollowed 
+	 */
+	@WebMethod
+	public void follow(User user, String team) throws AlreadyFollowed {
+		dbManager.open(false);
+		dbManager.follow(user, team);
+		dbManager.close();
+	}
+	
+	/**
+	 * Method used to obtain all the active events that include the teams that the user follow
+	 * 
+	 * @param user
+	 * @return collection of events
+	 */
+	public Vector<Event> activeFollowedEvents(User user){
+		dbManager.open(false);
+		Vector<Event> events = dbManager.activeFollowedEvents(user);
+		dbManager.close();
+		return events;
+	}
+	
+	/**
+	 * Method used to obtain all the questions created for an event
+	 * @param e
+	 * @return collection of questions
+	 */
+	public Vector<Question> getQuestions(Event e){
+		dbManager.open(false);
+		Vector<Question> questions = dbManager.getQuestions(e);
+		dbManager.close();
+		return questions;
+	}
 
-
+	public Vector<String> getFollowedTeams(User user) {
+		dbManager.open(false);
+		Vector<String> teams = dbManager.getFollowedTeams(user);
+		dbManager.close();
+		return teams;
+	}
 }
 

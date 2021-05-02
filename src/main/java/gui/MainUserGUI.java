@@ -1,16 +1,23 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
+import businessLogic.BLFacade;
+import domain.Event;
 import domain.User;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
-
+import java.util.Vector;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class MainUserGUI extends JFrame {
@@ -24,6 +31,7 @@ public class MainUserGUI extends JFrame {
 	protected JLabel jLabelLogo;
 	private JButton btnReturn;
 	private User u;
+	private Event event;
 	private JButton UserZone;
 	private JButton btnBaloncesto;
 	private JButton btnTenis;
@@ -45,6 +53,16 @@ public class MainUserGUI extends JFrame {
 	private JPanel panelIdiomas;
 	private JButton btnEuskara;
 	private JButton btnEnglish;
+	
+	private JScrollPane scrollPaneEvents = new JScrollPane();
+	private DefaultTableModel tableModelEvents;
+	private JTable tableEvents = new JTable();
+	private String[] columnNamesEvents = new String[] {
+			"#", 
+			ResourceBundle.getBundle("Etiquetas").getString("Event"), "Date"
+
+	};
+	private JButton btnApostar;
 
 	/**
 	 * This is the default constructor
@@ -137,10 +155,15 @@ public class MainUserGUI extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					JFrame a = new FindQuestionsGUI(u);
 					a.setVisible(true);
+					dispose(e);
 				}
 			});
 		}
 		return jButtonQueryQueries;
+	}
+	
+	public void dispose(ActionEvent e) {
+		this.dispose();
 	}
 
 
@@ -328,9 +351,46 @@ public class MainUserGUI extends JFrame {
 			panelNotificaciones.setBounds(699, 115, 300, 613);
 			panelNotificaciones.add(getLblUltimasApuestas());
 			panelNotificaciones.add(getLblEventosInteres());
+			
+			scrollPaneEvents.setBounds(10, 288, 280, 280);
+			fillEvents(scrollPaneEvents);
+			panelNotificaciones.add(scrollPaneEvents);
+			panelNotificaciones.add(getBtnApostar());
 		}
 		return panelNotificaciones;
 	}
+	
+	private void fillEvents(JScrollPane scrollPane) {
+		tableModelEvents = new DefaultTableModel(null, columnNamesEvents);
+		scrollPane.setViewportView(tableEvents);
+		tableEvents.setModel(tableModelEvents);
+		try {
+			tableModelEvents.setDataVector(null, columnNamesEvents);
+			tableModelEvents.setColumnCount(4); // another column added to allocate ev objects
+			BLFacade facade = StartGUI.getBusinessLogic();
+			Vector<Event> events = facade.activeFollowedEvents(u);
+			for (Event ev:events){
+				Vector<Object> row = new Vector<Object>();
+				System.out.println("Events "+ev);
+				row.add(ev.getEventNumber());
+				row.add(ev.getDescription());
+				
+				Date date = ev.getEventDate();
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				String formatted = format.format(date);
+				
+				row.add(formatted);
+				row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,2)
+				tableModelEvents.addRow(row);		
+			}
+			tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
+			tableEvents.getColumnModel().getColumn(1).setPreferredWidth(200);
+			tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(3)); // not shown in JTable
+		} catch (Exception e1) {
+			
+		}
+	}
+	
 	private JLabel getLblUltimasApuestas() {
 		if (lblUltimasApuestas == null) {
 			lblUltimasApuestas = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblTusltimasApuestas.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -429,6 +489,31 @@ public class MainUserGUI extends JFrame {
 			btnEnglish.setBounds(231, 49, 40, 28);
 		}
 		return btnEnglish;
+	}
+	private JButton getBtnApostar() {
+		if (btnApostar == null) {
+			btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.btnApostar.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnApostar.setEnabled(false);
+			
+			tableEvents.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					int i = tableEvents.getSelectedRow();
+					Event ev = (Event) tableModelEvents.getValueAt(i,3); // obtain ev object
+					event=ev;
+					if(event!=null) btnApostar.setEnabled(true);
+				}
+			});
+			
+			btnApostar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JFrame a = new DirectAccessEventGUI(event, u);
+					a.setVisible(true);
+				}
+			});
+			btnApostar.setBounds(104, 579, 89, 23);
+		}
+		return btnApostar;
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"
 

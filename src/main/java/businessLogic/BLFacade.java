@@ -10,6 +10,7 @@ import domain.User;
 import domain.Bet;
 import domain.Event;
 import domain.Prediction;
+import exceptions.AlreadyFollowed;
 import exceptions.EventFinished;
 import exceptions.NoReferralCodeFound;
 import exceptions.QuestionAlreadyExist;
@@ -173,4 +174,30 @@ public interface BLFacade  {
 	 */
 	@WebMethod
 	public Vector<Date> getOpenEventsMonth(Date date);
+	
+	/**
+	 * Method used to add to the user's follow list a new team/player
+	 * 
+	 * @param user
+	 * @param team
+	 */
+	@WebMethod
+	public void follow(User user, String team) throws AlreadyFollowed;
+	
+	/**
+	 * Method used to obtain all the active events that include the teams that the user follow
+	 * 
+	 * @param user
+	 * @return collection of events
+	 */
+	public Vector<Event> activeFollowedEvents(User user);
+	
+	/**
+	 * Method used to obtain all the questions created for an event
+	 * @param e
+	 * @return collection of questions
+	 */
+	public Vector<Question> getQuestions(Event e);
+	
+	public Vector<String> getFollowedTeams(User user);
 }

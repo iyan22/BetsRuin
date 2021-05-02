@@ -1,7 +1,11 @@
 package domain;
 
+import java.util.Vector;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import exceptions.AlreadyFollowed;
 
 @Entity
 public class User {
@@ -16,6 +20,7 @@ public class User {
 	private String referralCode;
 	private Integer referred=0;
 	private String referredBy;
+	private Vector<String> followed;
 	
 	//addFunds
 	private boolean bankdata=false;
@@ -31,6 +36,7 @@ public class User {
 		this.referralCode=ref;
 		this.referredBy=refBy;
 		this.admin=false;
+		this.followed = new Vector<String>();
 	}
 	public String getMail() {
 		return email;
@@ -93,5 +99,12 @@ public class User {
 	public String getReferredBy() {
 		return referredBy;
 	}
+	public void addFollowed(String f) throws AlreadyFollowed {
+		if(followed.contains(f)) throw new AlreadyFollowed();
+		else followed.add(f);
+	}
 	
+	public Vector<String> getFollowed(){
+		return followed;
+	}
 }

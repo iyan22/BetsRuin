@@ -28,6 +28,7 @@ public class ApplicationLauncher {
 		
 		StartGUI a=new StartGUI();
 		a.setVisible(true);
+		
 
 
 		try {
