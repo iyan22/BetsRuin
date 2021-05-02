@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -50,25 +51,25 @@ public class RegisterGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnCreateAccount = new JButton("Registrarse");
+		JButton btnCreateAccount = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Register"));
 		btnCreateAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(String.valueOf(pw1.getPassword()).contentEquals(String.copyValueOf(pw2.getPassword()))) {
 					BLFacade facade = StartGUI.getBusinessLogic();
 					try {
 						facade.createUser(username.getText(),name.getText(), surname.getText(), String.valueOf(pw1.getPassword()), email.getText(), referralField.getText());
-						submitText.setText("Account created successfully!");
+						submitText.setText(ResourceBundle.getBundle("Etiquetas").getString("AccountCreated"));
 						submitText.setForeground(Color.green);
 					} catch (UserAlreadyExists e1) {
-						submitText.setText("This user already exists! Try again!");
+						submitText.setText(ResourceBundle.getBundle("Etiquetas").getString("UserExists"));
 						submitText.setForeground(Color.RED);
 					}
 					catch (NoReferralCodeFound e2) {
-						submitText.setText("The referralCode doesn't exist!");
+						submitText.setText(ResourceBundle.getBundle("Etiquetas").getString("ReferralError"));
 					}
 					
 				} else {
-					submitText.setText("Unable to create the user. Try again!");
+					submitText.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorUser"));
 					submitText.setForeground(Color.RED);
 				}
 			}
@@ -81,7 +82,7 @@ public class RegisterGUI extends JFrame {
 		btnCreateAccount.setBounds(83, 453, 123, 35);
 		contentPane.add(btnCreateAccount);
 		
-		btnClose = new JButton("Atrás");
+		btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Return"));
 		btnClose.setFont(new Font("PT Sans", Font.BOLD, 16));
 		btnClose.setForeground(new Color(61, 45, 20));
 		btnClose.setBackground(new Color(255, 189, 89));
@@ -113,12 +114,12 @@ public class RegisterGUI extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblName = new JLabel("Nombre:");
+		JLabel lblName = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Name") + ":");
 		lblName.setBounds(15, 18, 136, 15);
 		panel.add(lblName);
 		lblName.setFont(new Font("PT Sans", Font.BOLD, 16));
 		
-		JLabel lblSurname = new JLabel("Apellidos:");
+		JLabel lblSurname = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Surname") + ":");
 		lblSurname.setBounds(15, 45, 136, 15);
 		panel.add(lblSurname);
 		lblSurname.setFont(new Font("PT Sans", Font.BOLD, 16));
@@ -152,22 +153,22 @@ public class RegisterGUI extends JFrame {
 		panel.add(email);
 		email.setColumns(10);
 		
-		JLabel lblEmail = new JLabel("E-mail:");
+		JLabel lblEmail = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Email") + ":");
 		lblEmail.setBounds(15, 153, 136, 15);
 		panel.add(lblEmail);
 		lblEmail.setFont(new Font("PT Sans", Font.BOLD, 16));
 		
-		JLabel lblConfirmPassword = new JLabel("Conf. contraseña:");
+		JLabel lblConfirmPassword = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ConfirmPassword") + ":");
 		lblConfirmPassword.setBounds(15, 126, 136, 15);
 		panel.add(lblConfirmPassword);
 		lblConfirmPassword.setFont(new Font("PT Sans", Font.BOLD, 16));
 		
-		JLabel lblPassword = new JLabel("Contraseña:");
+		JLabel lblPassword = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Password") + ":");
 		lblPassword.setBounds(15, 99, 136, 15);
 		panel.add(lblPassword);
 		lblPassword.setFont(new Font("PT Sans", Font.BOLD, 16));
 		
-		JLabel lblInsert = new JLabel("Usuario:");
+		JLabel lblInsert = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("User") + ":");
 		lblInsert.setBounds(15, 72, 136, 15);
 		panel.add(lblInsert);
 		lblInsert.setFont(new Font("PT Sans", Font.BOLD, 16));
@@ -184,7 +185,7 @@ public class RegisterGUI extends JFrame {
 				panel.add(referralField);
 				referralField.setColumns(10);
 		
-		lblReferralCode = new JLabel("Código referido:");
+		lblReferralCode = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ReferralCode") + ":");
 		lblReferralCode.setBounds(15, 183, 116, 15);
 		panel.add(lblReferralCode);
 		lblReferralCode.setFont(new Font("PT Sans", Font.BOLD, 16));

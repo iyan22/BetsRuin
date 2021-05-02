@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
@@ -67,7 +68,7 @@ public class LoginGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JButton btnLogin = new JButton("Log in");
+		JButton btnLogin = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Login"));
 		btnLogin.setBounds(65, 353, 101, 30);
 		btnLogin.setForeground(new Color(61, 45, 20));
 		btnLogin.setBackground(new Color(255, 189, 89));
@@ -90,13 +91,13 @@ public class LoginGUI extends JFrame {
 							closeWindow(e);
 							a.setVisible(true);
 						} else {
-							submittedBtn.setText("You don't have permission to access as admin!");
+							submittedBtn.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorAdmin"));
 							submittedBtn.setForeground(Color.red);
 						}
 					}
 				}
 				else{
-					submittedBtn.setText("Username or password are incorrect!");
+					submittedBtn.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorLogin"));
 					submittedBtn.setForeground(Color.red);
 				}
 			}
@@ -104,7 +105,7 @@ public class LoginGUI extends JFrame {
 		btnLogin.setFont(new Font("PT Sans", Font.BOLD, 16));
 		contentPane.add(btnLogin);
 
-		btnClose = new JButton("Close");
+		btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 		btnClose.setFont(new Font("PT Sans", Font.BOLD, 16));
 		btnClose.setBackground(new Color(61, 45, 20));
 		btnClose.setForeground(new Color(255, 189, 89));
@@ -130,25 +131,25 @@ public class LoginGUI extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblPassword = new JLabel("Password:");
+		JLabel lblPassword = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Password") + ":");
 		lblPassword.setBounds(16, 47, 71, 22);
 		panel.add(lblPassword);
 		lblPassword.setFont(new Font("PT Sans", Font.BOLD, 16));
 			
-		adminMode = new JRadioButton("Admin");
+		adminMode = new JRadioButton(ResourceBundle.getBundle("Etiquetas").getString("Admin"));
 		adminMode.setFont(new Font("PT Sans", Font.BOLD, 14));
 		adminMode.setBounds(179, 79, 73, 23);
 		panel.add(adminMode);
 		buttonGroup.add(adminMode);
 						
-		userMode = new JRadioButton("User");
+		userMode = new JRadioButton(ResourceBundle.getBundle("Etiquetas").getString("User"));
 		userMode.setFont(new Font("PT Sans", Font.BOLD, 14));
 		userMode.setBounds(99, 79, 60, 23);
 		panel.add(userMode);
 		userMode.setSelected(true);
 		buttonGroup.add(userMode);
 								
-		lblMode = new JLabel("Mode:");
+		lblMode = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Mode") + ":");
 		lblMode.setBounds(16, 81, 43, 22);
 		panel.add(lblMode);
 		lblMode.setFont(new Font("PT Sans", Font.BOLD, 16));
@@ -162,7 +163,7 @@ public class LoginGUI extends JFrame {
 		panel.add(textField);
 		textField.setColumns(10);
 														
-		JLabel lblUser = new JLabel("User:");
+		JLabel lblUser = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("User") + ":");
 		lblUser.setBounds(16, 17, 35, 22);
 		panel.add(lblUser);
 		lblUser.setFont(new Font("PT Sans", Font.BOLD, 16));

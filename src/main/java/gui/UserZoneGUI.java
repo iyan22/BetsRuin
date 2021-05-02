@@ -14,6 +14,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
@@ -49,7 +50,7 @@ public class UserZoneGUI extends JFrame {
 		NoCreditCard.setBounds(157, 218, 178, 23);
 		showFunds.add(NoCreditCard);
 		
-		JLabel lblCurrentBets = new JLabel("Current Bets");
+		JLabel lblCurrentBets = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CurrentBets"));
 		lblCurrentBets.setForeground(new Color(61, 45, 20));
 		lblCurrentBets.setFont(new Font("PT Sans", Font.BOLD, 18));
 		lblCurrentBets.setBounds(48, 218, 148, 23);
@@ -58,7 +59,7 @@ public class UserZoneGUI extends JFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"Event", "Question", "Prediction", "Amount", "Share"
+						ResourceBundle.getBundle("Etiquetas").getString("Event"), ResourceBundle.getBundle("Etiquetas").getString("Query"), ResourceBundle.getBundle("Etiquetas").getString("Prediction"), ResourceBundle.getBundle("Etiquetas").getString("Amount"), ResourceBundle.getBundle("Etiquetas").getString("Share")
 				}
 			);
 		List<Bet> usrbetlist= facade.getBets(u.getUsername());
@@ -79,22 +80,22 @@ public class UserZoneGUI extends JFrame {
 		showFunds.add(panelPersonal);
 		panelPersonal.setLayout(null);
 		
-		JLabel lblUsername = new JLabel("Username:");
+		JLabel lblUsername = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("UserName") + ":");
 		lblUsername.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblUsername.setBounds(12, 16, 96, 14);
 		panelPersonal.add(lblUsername);
 		
-		JLabel lblName = new JLabel("Name: ");
+		JLabel lblName = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Name") + ":");
 		lblName.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblName.setBounds(12, 42, 96, 14);
 		panelPersonal.add(lblName);
 		
-		JLabel lblSurname = new JLabel("Surname: ");
+		JLabel lblSurname = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Surname") + ":");
 		lblSurname.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblSurname.setBounds(12, 68, 96, 14);
 		panelPersonal.add(lblSurname);
 		
-		JLabel lblEmail = new JLabel("Email:");
+		JLabel lblEmail = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Email") + ":");
 		lblEmail.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblEmail.setBounds(12, 94, 96, 14);
 		panelPersonal.add(lblEmail);
@@ -123,13 +124,13 @@ public class UserZoneGUI extends JFrame {
 		panelPersonal.add(lblEmailVar);
 		lblEmailVar.setText(user.getMail());
 		
-		JLabel lblPersonalInfo = new JLabel("Personal information");
+		JLabel lblPersonalInfo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("PersonalInfo"));
 		lblPersonalInfo.setForeground(new Color(61, 45, 20));
 		lblPersonalInfo.setFont(new Font("PT Sans", Font.BOLD, 18));
 		lblPersonalInfo.setBounds(48, 46, 281, 23);
 		showFunds.add(lblPersonalInfo);
 		
-		JLabel lblFinancialInformation = new JLabel("Financial information");
+		JLabel lblFinancialInformation = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("FinalcialInfo"));
 		lblFinancialInformation.setForeground(new Color(61, 45, 20));
 		lblFinancialInformation.setFont(new Font("PT Sans", Font.BOLD, 18));
 		lblFinancialInformation.setBounds(344, 46, 281, 23);
@@ -157,7 +158,7 @@ public class UserZoneGUI extends JFrame {
 		panelFinancial.setBounds(347, 81, 271, 160);
 		showFunds.add(panelFinancial);
 		
-		JButton btnAddCard = new JButton("Add Credit Card");
+		JButton btnAddCard = new JButton(ResourceBundle.getBundle("Etiquetas").getString("AddCreditCard"));
 		btnAddCard.setFont(new Font("PT Sans", Font.BOLD, 16));
 		btnAddCard.setForeground(new Color(255, 189, 89));
 		btnAddCard.setBackground(new Color(61, 45, 20));
@@ -166,12 +167,12 @@ public class UserZoneGUI extends JFrame {
 		btnAddCard.setBounds(6, 124, 259, 30);
 		panelFinancial.add(btnAddCard);
 		
-		JLabel lblReferralCode = new JLabel("Referral Code:");
+		JLabel lblReferralCode = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ReferralCode") + ": ");
 		lblReferralCode.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblReferralCode.setBounds(16, 43, 106, 14);
 		panelFinancial.add(lblReferralCode);
 		
-		JLabel lblFunds = new JLabel("Funds:");
+		JLabel lblFunds = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Founds") + ": ");
 		lblFunds.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblFunds.setBounds(18, 17, 104, 14);
 		panelFinancial.add(lblFunds);
@@ -194,12 +195,12 @@ public class UserZoneGUI extends JFrame {
 						panelFinancial.add(lblFundsVar);
 						lblFundsVar.setText(s);
 						
-								JLabel lblNumRef = new JLabel("N. of referrals:");
+								JLabel lblNumRef = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("NReferrals") + ": ");
 								lblNumRef.setFont(new Font("PT Sans", Font.BOLD, 16));
 								lblNumRef.setBounds(16, 69, 106, 14);
 								panelFinancial.add(lblNumRef);
 								
-								JButton btnAddFunds = new JButton("Add funds");
+								JButton btnAddFunds = new JButton(ResourceBundle.getBundle("Etiquetas").getString("AddFunds"));
 								btnAddFunds.setFont(new Font("PT Sans", Font.BOLD, 16));
 								btnAddFunds.setBackground(new Color(255, 189, 89));
 								btnAddFunds.setForeground(new Color(61, 45, 20));
@@ -208,7 +209,7 @@ public class UserZoneGUI extends JFrame {
 								btnAddFunds.setBounds(6, 89, 259, 30);
 								panelFinancial.add(btnAddFunds);
 								
-								JLabel lblFundsCurr = new JLabel("â‚¬");
+								JLabel lblFundsCurr = new JLabel("€");
 								lblFundsCurr.setFont(new Font("PT Sans", Font.PLAIN, 16));
 								lblFundsCurr.setBounds(235, 17, 30, 14);
 								panelFinancial.add(lblFundsCurr);
@@ -219,7 +220,7 @@ public class UserZoneGUI extends JFrame {
 											f.setVisible(true);
 											close(e);
 										}else {
-											NoCreditCard.setText("Ninguna tarjeta de credito registrada");
+											NoCreditCard.setText(ResourceBundle.getBundle("Etiquetas").getString("NoCard"));
 											NoCreditCard.setForeground(Color.red);
 										}
 									}

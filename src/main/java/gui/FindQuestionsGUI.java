@@ -59,11 +59,11 @@ public class FindQuestionsGUI extends JFrame {
 	private final JPanel panelSeleccion = new JPanel();
 	private final JLabel jLabelQueryLogo = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JPanel panelInfo = new JPanel();
-	private final JLabel lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("FindQuestionsGUI.lblSaldo.text")); //$NON-NLS-1$ //$NON-NLS-2$
-	private final JLabel lblUser = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("FindQuestionsGUI.lblUser.text")); //$NON-NLS-1$ //$NON-NLS-2$
+	private final JLabel lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Founds")); //$NON-NLS-1$ //$NON-NLS-2$
+	private final JLabel lblUser = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("User")); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JPanel panelNormas = new JPanel();
-	private final JLabel lblNormas = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("FindQuestionsGUI.lblNormas.text")); //$NON-NLS-1$ //$NON-NLS-2$
-	private final JLabel lbljuej = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("FindQuestionsGUI.lbljuej.text")); //$NON-NLS-1$ //$NON-NLS-2$
+	private final JLabel lblNormas = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules")); //$NON-NLS-1$ //$NON-NLS-2$
+	private final JLabel lbljuej = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules2")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	public FindQuestionsGUI(User u) {
 		setResizable(false);
@@ -106,7 +106,7 @@ public class FindQuestionsGUI extends JFrame {
 		tableModelEvents = new DefaultTableModel(null, columnNamesEvents);
 		tableModelQueries = new DefaultTableModel(null, columnNamesQueries);
 
-		seePreds = new JButton(ResourceBundle.getBundle("Etiquetas").getString("FindQuestionsGUI.seePreds.text"));
+		seePreds = new JButton(ResourceBundle.getBundle("Etiquetas").getString("SeePrediction"));
 		seePreds.setEnabled(false);
 		seePreds.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -231,25 +231,46 @@ public class FindQuestionsGUI extends JFrame {
 		lblEuskara.setBounds(89, 31, 57, 19);
 		panelIdiomas.add(lblEuskara);
 		
-		JLabel lblEspanol = new JLabel("Â¿Nos entiendes?");
+		JLabel lblEspanol = new JLabel("¿Nos entiendes?"); //$NON-NLS-1$ //$NON-NLS-2$
 		lblEspanol.setForeground(new Color(61, 45, 20));
 		lblEspanol.setFont(new Font("PT Sans", Font.BOLD, 14));
 		lblEspanol.setBounds(68, 7, 99, 19);
 		panelIdiomas.add(lblEspanol);
 		
 		JButton btnEspanol = new JButton();
+		btnEspanol.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Locale.setDefault(new Locale("es"));
+				System.out.println("Locale: "+Locale.getDefault());
+				redibujar();
+			}
+		});
 		btnEspanol.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/Spanish.png")));
 		btnEspanol.setBorderPainted(false);
 		btnEspanol.setBounds(231, 0, 40, 28);
 		panelIdiomas.add(btnEspanol);
 		
 		JButton btnEuskara = new JButton();
+		btnEuskara.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Locale.setDefault(new Locale("eus"));
+				System.out.println("Locale: "+Locale.getDefault());
+				redibujar();	
+			}
+		});
 		btnEuskara.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/Basque.png")));
 		btnEuskara.setBorderPainted(false);
 		btnEuskara.setBounds(231, 26, 40, 28);
 		panelIdiomas.add(btnEuskara);
 		
 		JButton btnEnglish = new JButton();
+		btnEnglish.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Locale.setDefault(new Locale("en"));
+				System.out.println("Locale: "+Locale.getDefault());
+				redibujar();	
+			}
+		});
 		btnEnglish.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/English.png")));
 		btnEnglish.setBorderPainted(false);
 		btnEnglish.setBounds(231, 49, 40, 28);
@@ -275,7 +296,7 @@ public class FindQuestionsGUI extends JFrame {
 		lblUserVar.setBounds(95, 9, 188, 19);
 		panelInfo.add(lblUserVar);
 		
-		JLabel lblSaldoVar = new JLabel(u.getFunds() + "â‚¬");
+		JLabel lblSaldoVar = new JLabel(u.getFunds() + "€");
 		lblSaldoVar.setForeground(new Color(61, 45, 20));
 		lblSaldoVar.setFont(new Font("PT Sans", Font.BOLD, 14));
 		lblSaldoVar.setBounds(96, 40, 187, 19);
@@ -360,5 +381,22 @@ public class FindQuestionsGUI extends JFrame {
 
 	private void jButton2_actionPerformed(ActionEvent e) {
 		this.dispose();
+	}
+	
+	private void redibujar() {
+		jLabelEventDate.setText(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
+		jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("Queries")); 
+		jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events")); 
+		jButtonClose.setText(ResourceBundle.getBundle("Etiquetas").getString("Close"));
+		ResourceBundle.getBundle("Etiquetas").getString("EventN"); 
+		ResourceBundle.getBundle("Etiquetas").getString("Event"); 
+		ResourceBundle.getBundle("Etiquetas").getString("QueryN"); 
+		ResourceBundle.getBundle("Etiquetas").getString("Query");	
+		lblSaldo.setText(ResourceBundle.getBundle("Etiquetas").getString("Founds")); //$NON-NLS-1$ //$NON-NLS-2$
+		lblUser.setText(ResourceBundle.getBundle("Etiquetas").getString("User"));
+		lblNormas.setText(ResourceBundle.getBundle("Etiquetas").getString("Rules")); //$NON-NLS-1$ //$NON-NLS-2$
+		lbljuej.setText(ResourceBundle.getBundle("Etiquetas").getString("Rules2"));
+		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
+		seePreds.setText(ResourceBundle.getBundle("Etiquetas").getString("SeePrediction"));
 	}
 }

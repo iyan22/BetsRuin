@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -39,7 +40,7 @@ public class SeePredictionsGUI extends JFrame {
 	private JScrollPane scrollPane = new JScrollPane();
 
 	private String[] columnNamesPredictions = new String[] {
-            "Event","Question","Prediction"
+			ResourceBundle.getBundle("Etiquetas").getString("Event"),ResourceBundle.getBundle("Etiquetas").getString("Query"), ResourceBundle.getBundle("Etiquetas").getString("Prediction")
 
     };
 	private JPanel panel;
@@ -84,7 +85,7 @@ public class SeePredictionsGUI extends JFrame {
 			table.getColumnModel().getColumn(1).setPreferredWidth(150);
 		}
 
-		btnClose = new JButton("Atrás");
+		btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Return"));
 		btnClose.setFont(new Font("PT Sans Caption", Font.BOLD, 16));
 		btnClose.setForeground(new Color(255, 189, 89));
 		btnClose.setBackground(new Color(61, 45, 20));
@@ -98,7 +99,7 @@ public class SeePredictionsGUI extends JFrame {
 		});
 		contentPane.add(btnClose);
 
-		btnPlaceBet = new JButton("Vamos a apostar");
+		btnPlaceBet = new JButton(ResourceBundle.getBundle("Etiquetas").getString("LetsBet"));
 		btnPlaceBet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -129,7 +130,7 @@ public class SeePredictionsGUI extends JFrame {
 		scrollPane.setViewportView(table);
 		table.setModel(mod);
 		
-		lblNewLabel = new JLabel("¿Cuál es tu mejor opción?");
+		lblNewLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("BestOp"));
 		lblNewLabel.setForeground(new Color(61, 45, 20));
 		lblNewLabel.setFont(new Font("PT Sans", Font.BOLD, 20));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);

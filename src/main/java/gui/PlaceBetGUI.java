@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -47,7 +48,7 @@ public class PlaceBetGUI extends JFrame {
 		submitted.setBounds(42, 249, 409, 20);
 		contentPane.add(submitted);
 
-		JButton btnSubmit = new JButton("Apostar");
+		JButton btnSubmit = new JButton(ResourceBundle.getBundle("Etiquetas").getString("PlaceBet"));
 		btnSubmit.setFont(new Font("PT Sans", Font.BOLD, 16));
 		btnSubmit.setBounds(108, 281, 126, 30);
 		btnSubmit.setBackground(new Color(255, 189, 89));
@@ -63,26 +64,26 @@ public class PlaceBetGUI extends JFrame {
 						BLFacade facade = StartGUI.getBusinessLogic();
 						float userFunds=user.getFunds();
 						if(userFunds<prediction.getQuestion().getBetMinimum() || amount>userFunds) {
-							submitted.setText("Not enough funds!");
+							submitted.setText(ResourceBundle.getBundle("Etiquetas").getString("NotEnought"));
 							submitted.setForeground(Color.red);
 						}
 						else {
 							if (amount>=prediction.getQuestion().getBetMinimum()) {
 								facade.addBet(user,  amount, prediction);
 								user.betMade(amount);
-								submitted.setText("Bet submitted successfully!");
+								submitted.setText(ResourceBundle.getBundle("Etiquetas").getString("BetSummit"));
 								submitted.setForeground(Color.green);
 								
 						
 							}
 							else{
-								submitted.setText("Error!");
+								submitted.setText(ResourceBundle.getBundle("Etiquetas").getString("Error"));
 								submitted.setForeground(Color.red);
 							}
 					}
 				
 					} catch (NumberFormatException ex) {
-						submitted.setText("Not valid format for the amount!");
+						submitted.setText(ResourceBundle.getBundle("Etiquetas").getString("NotValid"));
 						submitted.setForeground(Color.red);
 					}
 					
@@ -90,7 +91,7 @@ public class PlaceBetGUI extends JFrame {
 			}
 		});
 
-		JButton btnReturn = new JButton("Atrás");
+		JButton btnReturn = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Return"));
 		btnReturn.setFont(new Font("PT Sans", Font.BOLD, 16));
 		btnReturn.setForeground(new Color(255, 189, 89));
 		btnReturn.setBackground(new Color(61, 45, 20));
@@ -113,7 +114,7 @@ public class PlaceBetGUI extends JFrame {
 		panel.setLayout(null);
 		
 
-		JLabel lblQuestion = new JLabel("Pregunta:");
+		JLabel lblQuestion = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Query") + ":");
 		lblQuestion.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblQuestion.setBounds(16, 21, 80, 19);
 		panel.add(lblQuestion);
@@ -124,7 +125,7 @@ public class PlaceBetGUI extends JFrame {
 		panel.add(questionDesc);
 		questionDesc.setText(prediction.getQuestion().getQuestion());
 		
-		JLabel lblPrediction = new JLabel("Predicción:");
+		JLabel lblPrediction = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Prediction") + ":");
 		lblPrediction.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblPrediction.setBounds(16, 51, 80, 19);
 		panel.add(lblPrediction);
@@ -135,7 +136,7 @@ public class PlaceBetGUI extends JFrame {
 		panel.add(predictionString);
 		predictionString.setText(prediction.getAnswer());
 		
-		JLabel lblMultiplier = new JLabel("Cuota:");
+		JLabel lblMultiplier = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Share") + ":");
 		lblMultiplier.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblMultiplier.setBounds(16, 82, 80, 14);
 		panel.add(lblMultiplier);
@@ -145,7 +146,7 @@ public class PlaceBetGUI extends JFrame {
 		panel.add(multiplierField);
 		multiplierField.setText(Float.toString(prediction.getShare()));
 		
-		JLabel lblAmount = new JLabel("Cantidad:");
+		JLabel lblAmount = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Amount") + ":");
 		lblAmount.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblAmount.setBounds(16, 109, 80, 17);
 		panel.add(lblAmount);
@@ -162,16 +163,16 @@ public class PlaceBetGUI extends JFrame {
 		textPane.setEditable(false);
 		textPane.setBackground(new Color(227, 227, 227));
 		textPane.setFont(new Font("PT Sans", Font.BOLD, 14));
-		textPane.setText("Be careful! The amount you want to bet should be at least "+prediction.getQuestion().getBetMinimum());
+		textPane.setText(ResourceBundle.getBundle("Etiquetas").getString("AmountError")+prediction.getQuestion().getBetMinimum());
 		textPane.setParagraphAttributes(attribs, true);
 		textPane.setForeground(Color.red);
 		
-		JLabel currency = new JLabel("€");
+		JLabel currency = new JLabel("�");
 		currency.setFont(new Font("PT Sans", Font.PLAIN, 16));
 		currency.setBounds(216, 108, 37, 19);
 		panel.add(currency);
 		
-		JLabel lblHoraDeApostar = new JLabel("Hora de apostar!!!");
+		JLabel lblHoraDeApostar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Bet"));
 		lblHoraDeApostar.setForeground(new Color(61, 45, 20));
 		lblHoraDeApostar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHoraDeApostar.setFont(new Font("PT Sans", Font.BOLD, 20));
