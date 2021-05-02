@@ -18,17 +18,16 @@ import java.util.*;
 
 import javax.swing.table.DefaultTableModel;
 
-
-public class FindQuestionsGUI extends JFrame {
+public class FindEventTypeGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
-	private final JLabel jLabelQueries = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Queries")); 
-	private final JLabel jLabelEvents = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Events")); 
+	private final JLabel jLabelQueries = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Queries"));
+	private final JLabel jLabelEvents = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Events"));
 
 	private JButton seePreds = new JButton("See Predictions"); //$NON-NLS-1$ //$NON-NLS-2$
 
-	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));	
+	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 	private JButton btnSeguirEquipo = new JButton(ResourceBundle.getBundle("Etiquetas").getString("FollowTeam")); //$NON-NLS-1$ //$NON-NLS-2$
 	private JLabel jLabelFollow = new JLabel();
 
@@ -43,44 +42,42 @@ public class FindQuestionsGUI extends JFrame {
 
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
 
-	private JTable tableEvents= new JTable();
+	private JTable tableEvents = new JTable();
 	private JTable tableQueries = new JTable();
 
 	private DefaultTableModel tableModelEvents;
 	private DefaultTableModel tableModelQueries;
 
-
-	private String[] columnNamesEvents = new String[] {
-			ResourceBundle.getBundle("Etiquetas").getString("EventN"), 
-			ResourceBundle.getBundle("Etiquetas").getString("Event"), 
+	private String[] columnNamesEvents = new String[] { ResourceBundle.getBundle("Etiquetas").getString("EventN"),
+			ResourceBundle.getBundle("Etiquetas").getString("Event"),
 
 	};
-	private String[] columnNamesQueries = new String[] {
-			ResourceBundle.getBundle("Etiquetas").getString("QueryN"), 
+	private String[] columnNamesQueries = new String[] { ResourceBundle.getBundle("Etiquetas").getString("QueryN"),
 			ResourceBundle.getBundle("Etiquetas").getString("Query")
 
 	};
 	private final JPanel panelSeleccion = new JPanel();
-	private final JLabel jLabelQueryLogo = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
+	private final JLabel jLabelQueryLogo = new JLabel(); // $NON-NLS-1$ //$NON-NLS-2$
 	private final JPanel panelInfo = new JPanel();
 	private final JLabel lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Founds")); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JLabel lblUser = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("User")); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JPanel panelNormas = new JPanel();
 	private final JLabel lblNormas = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules")); //$NON-NLS-1$ //$NON-NLS-2$
-	private final JLabel lbljuej = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules2"));  //$NON-NLS-1$ //$NON-NLS-2$
+	private final JLabel lbljuej = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules2")); //$NON-NLS-1$ //$NON-NLS-2$
 
-	public FindQuestionsGUI(User u) {
+	private String type;
+
+	public FindEventTypeGUI(User u, String t) {
 		setResizable(false);
 		getContentPane().setBackground(Color.WHITE);
-		this.u=u;
+		this.u = u;
+		type = t;
 		try {
 			jbInit();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 
 	private void jbInit() throws Exception {
 
@@ -96,10 +93,8 @@ public class FindQuestionsGUI extends JFrame {
 		jButtonClose.setBorderPainted(false);
 		jButtonClose.setBounds(new Rectangle(458, 635, 159, 43));
 
-		jButtonClose.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
+		jButtonClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				jButton2_actionPerformed(e);
 			}
 		});
@@ -148,7 +143,6 @@ public class FindQuestionsGUI extends JFrame {
 		scrollPaneQueries.setBounds(182, 242, 447, 142);
 		panelSeleccion.add(scrollPaneQueries);
 
-
 		scrollPaneQueries.setViewportView(tableQueries);
 
 		tableQueries.setModel(tableModelQueries);
@@ -156,7 +150,7 @@ public class FindQuestionsGUI extends JFrame {
 		jLabelQueries.setBounds(182, 218, 409, 22);
 		panelSeleccion.add(jLabelQueries);
 		jLabelQueries.setFont(new Font("PT Sans", Font.BOLD, 16));
-		jLabelQueryLogo.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/QuestionLogoL.png")));
+		jLabelQueryLogo.setIcon(new ImageIcon(FindEventTypeGUI.class.getResource("/img/QuestionLogoL.png")));
 		jLabelQueryLogo.setFont(new Font("PT Sans", Font.BOLD, 16));
 		jLabelQueryLogo.setBounds(21, 223, 151, 161);
 
@@ -165,29 +159,30 @@ public class FindQuestionsGUI extends JFrame {
 		panelSeleccion.add(jLabelEvents);
 		jLabelEvents.setForeground(new Color(61, 45, 20));
 		jLabelEvents.setFont(new Font("PT Sans", Font.BOLD, 16));
-		
 
 		tableEvents.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int i = tableEvents.getSelectedRow();
-				Event ev = (Event) tableModelEvents.getValueAt(i,2); // obtain ev object
-				
+				Event ev = (Event) tableModelEvents.getValueAt(i, 2); // obtain ev object
+
 				evToFollow = ev;
-				if(ev!=null) btnSeguirEquipo.setEnabled(true);
-				
+				if (ev != null)
+					btnSeguirEquipo.setEnabled(true);
+
 				Vector<Question> queries = ev.getQuestions();
 
 				tableModelQueries.setDataVector(null, columnNamesQueries);
 				tableModelQueries.setColumnCount(3);
 
 				if (queries.isEmpty()) {
-					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("NoQueries")+": "+ev.getDescription());
+					jLabelQueries.setText(
+							ResourceBundle.getBundle("Etiquetas").getString("NoQueries") + ": " + ev.getDescription());
 					tableModelQueries.setRowCount(0);
-				}
-				else {
-					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectedEvent")+" "+ev.getDescription());
-					for (Question q:queries){
+				} else {
+					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectedEvent") + " "
+							+ ev.getDescription());
+					for (Question q : queries) {
 						Vector<Object> row = new Vector<Object>();
 
 						row.add(q.getQuestionNumber());
@@ -197,9 +192,10 @@ public class FindQuestionsGUI extends JFrame {
 
 					}
 					tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
-					tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268); 
+					tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
 				}
-				tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(2)); // not shown in JTable
+				tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(2)); // not shown in
+																										// JTable
 			}
 		});
 		scrollPaneEvents.setBounds(258, 51, 371, 145);
@@ -210,7 +206,7 @@ public class FindQuestionsGUI extends JFrame {
 		tableEvents.setModel(tableModelEvents);
 		jCalendar1.getDayChooser().getDayPanel().setBackground(Color.WHITE);
 		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
-		CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth);
+		CreateQuestionGUI.paintDaysWithEvents(jCalendar1, datesWithEventsCurrentMonth);
 		jCalendar1.setBounds(21, 51, 215, 145);
 		panelSeleccion.add(jCalendar1);
 		jLabelEventDate.setBounds(21, 24, 225, 25);
@@ -218,15 +214,15 @@ public class FindQuestionsGUI extends JFrame {
 		jLabelEventDate.setForeground(new Color(61, 45, 20));
 		jLabelEventDate.setFont(new Font("PT Sans", Font.BOLD, 16));
 
-		jLabelFollow.setText(ResourceBundle.getBundle("Etiquetas").getString("FollowText")); 
+		jLabelFollow.setText(ResourceBundle.getBundle("Etiquetas").getString("FollowText"));
 		jLabelFollow.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabelFollow.setForeground(new Color(61, 45, 20));
 		jLabelFollow.setFont(new Font("Dialog", Font.BOLD, 16));
 		jLabelFollow.setBounds(21, 396, 608, 27);
 		panelSeleccion.add(jLabelFollow);
 
-		JLabel lblLogo = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
-		lblLogo.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/LogoBetsRuinL.png")));
+		JLabel lblLogo = new JLabel(); // $NON-NLS-1$ //$NON-NLS-2$
+		lblLogo.setIcon(new ImageIcon(FindEventTypeGUI.class.getResource("/img/LogoBetsRuinL.png")));
 		lblLogo.setBounds(31, 22, 174, 156);
 		getContentPane().add(lblLogo);
 
@@ -257,37 +253,37 @@ public class FindQuestionsGUI extends JFrame {
 		btnEspanol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Locale.setDefault(new Locale("es"));
-				System.out.println("Locale: "+Locale.getDefault());
+				System.out.println("Locale: " + Locale.getDefault());
 				redibujar();
 			}
 		});
-		btnEspanol.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/Spanish.png")));
+		btnEspanol.setIcon(new ImageIcon(FindEventTypeGUI.class.getResource("/img/Spanish.png")));
 		btnEspanol.setBorderPainted(false);
 		btnEspanol.setBounds(231, 0, 40, 28);
 		panelIdiomas.add(btnEspanol);
-		
+
 		JButton btnEuskara = new JButton();
 		btnEuskara.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Locale.setDefault(new Locale("eus"));
-				System.out.println("Locale: "+Locale.getDefault());
-				redibujar();	
+				System.out.println("Locale: " + Locale.getDefault());
+				redibujar();
 			}
 		});
-		btnEuskara.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/Basque.png")));
+		btnEuskara.setIcon(new ImageIcon(FindEventTypeGUI.class.getResource("/img/Basque.png")));
 		btnEuskara.setBorderPainted(false);
 		btnEuskara.setBounds(231, 26, 40, 28);
 		panelIdiomas.add(btnEuskara);
-		
+
 		JButton btnEnglish = new JButton();
 		btnEnglish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Locale.setDefault(new Locale("en"));
-				System.out.println("Locale: "+Locale.getDefault());
-				redibujar();	
+				System.out.println("Locale: " + Locale.getDefault());
+				redibujar();
 			}
 		});
-		btnEnglish.setIcon(new ImageIcon(FindQuestionsGUI.class.getResource("/img/English.png")));
+		btnEnglish.setIcon(new ImageIcon(FindEventTypeGUI.class.getResource("/img/English.png")));
 		btnEnglish.setBorderPainted(false);
 		btnEnglish.setBounds(231, 49, 40, 28);
 		panelIdiomas.add(btnEnglish);
@@ -353,61 +349,67 @@ public class FindQuestionsGUI extends JFrame {
 			public void propertyChange(PropertyChangeEvent propertychangeevent) {
 				if (propertychangeevent.getPropertyName().equals("locale")) {
 					jCalendar1.setLocale((Locale) propertychangeevent.getNewValue());
-				}
-				else if (propertychangeevent.getPropertyName().equals("calendar")) {
+				} else if (propertychangeevent.getPropertyName().equals("calendar")) {
 					calendarAnt = (Calendar) propertychangeevent.getOldValue();
 					calendarAct = (Calendar) propertychangeevent.getNewValue();
 					tableModelQueries.setRowCount(0);
 					DateFormat dateformat1 = DateFormat.getDateInstance(1, jCalendar1.getLocale());
-					//					jCalendar1.setCalendar(calendarAct);
-					Date firstDay=UtilDate.trim(new Date(jCalendar1.getCalendar().getTime().getTime()));
+					// jCalendar1.setCalendar(calendarAct);
+					Date firstDay = UtilDate.trim(new Date(jCalendar1.getCalendar().getTime().getTime()));
 
 					int monthAnt = calendarAnt.get(Calendar.MONTH);
 					int monthAct = calendarAct.get(Calendar.MONTH);
 
-					if (monthAct!=monthAnt) {
-						if (monthAct==monthAnt+2) {
-							// Si en JCalendar estÃ¡ 30 de enero y se avanza al mes siguiente, devolverÃ­a 2 de marzo (se toma como equivalente a 30 de febrero)
+					if (monthAct != monthAnt) {
+						if (monthAct == monthAnt + 2) {
+							// Si en JCalendar estÃ¡ 30 de enero y se avanza al mes siguiente, devolverÃ­a 2
+							// de marzo (se toma como equivalente a 30 de febrero)
 							// Con este cÃ³digo se dejarÃ¡ como 1 de febrero en el JCalendar
-							calendarAct.set(Calendar.MONTH, monthAnt+1);
+							calendarAct.set(Calendar.MONTH, monthAnt + 1);
 							calendarAct.set(Calendar.DAY_OF_MONTH, 1);
-						}						
+						}
 						jCalendar1.setCalendar(calendarAct);
 						BLFacade facade = StartGUI.getBusinessLogic();
-						datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
+						datesWithEventsCurrentMonth = facade.getOpenEventsMonthType(jCalendar1.getDate(),type);
 					}
-					CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth);
+					CreateQuestionGUI.paintDaysWithEvents(jCalendar1, datesWithEventsCurrentMonth);
 					try {
 						tableModelEvents.setDataVector(null, columnNamesEvents);
 						tableModelEvents.setColumnCount(3); // another column added to allocate ev objects
 						BLFacade facade = StartGUI.getBusinessLogic();
-						Vector<Event> events = facade.getEvents(firstDay);
-						if (events.isEmpty() ) jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("NoEvents")+ ": "+dateformat1.format(calendarAct.getTime()));
-						else jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events")+ ": "+dateformat1.format(calendarAct.getTime()));
-						for (Event ev:events){
+						Vector<Event> events = facade.getEventsType(firstDay,type);
+						if (events.isEmpty())
+							jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("NoEvents") + ": "
+									+ dateformat1.format(calendarAct.getTime()));
+						else
+							jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events") + ": "
+									+ dateformat1.format(calendarAct.getTime()));
+						for (Event ev : events) {
 							Vector<Object> row = new Vector<Object>();
-							System.out.println("Events "+ev);
+							System.out.println("Events " + ev);
 							row.add(ev.getEventNumber());
 							row.add(ev.getDescription());
 							row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,2)
-							tableModelEvents.addRow(row);		
+							tableModelEvents.addRow(row);
 						}
 						tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
 						tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
-						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(2)); // not shown in JTable
+						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(2)); // not
+																												// shown
+																												// in
+																												// JTable
 					} catch (Exception e1) {
 
 						jLabelQueries.setText(e1.getMessage());
 					}
 
 				}
-			} 
+			}
 		});
 		tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
 		tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
 		tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
 		tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
-
 
 	}
 
@@ -416,16 +418,16 @@ public class FindQuestionsGUI extends JFrame {
 		JFrame main = new MainUserGUI(u);
 		main.setVisible(true);
 	}
-	
+
 	private void redibujar() {
 		jLabelEventDate.setText(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
-		jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("Queries")); 
-		jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events")); 
+		jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("Queries"));
+		jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events"));
 		jButtonClose.setText(ResourceBundle.getBundle("Etiquetas").getString("Close"));
-		ResourceBundle.getBundle("Etiquetas").getString("EventN"); 
-		ResourceBundle.getBundle("Etiquetas").getString("Event"); 
-		ResourceBundle.getBundle("Etiquetas").getString("QueryN"); 
-		ResourceBundle.getBundle("Etiquetas").getString("Query");	
+		ResourceBundle.getBundle("Etiquetas").getString("EventN");
+		ResourceBundle.getBundle("Etiquetas").getString("Event");
+		ResourceBundle.getBundle("Etiquetas").getString("QueryN");
+		ResourceBundle.getBundle("Etiquetas").getString("Query");
 		lblSaldo.setText(ResourceBundle.getBundle("Etiquetas").getString("Founds")); //$NON-NLS-1$ //$NON-NLS-2$
 		lblUser.setText(ResourceBundle.getBundle("Etiquetas").getString("User"));
 		lblNormas.setText(ResourceBundle.getBundle("Etiquetas").getString("Rules")); //$NON-NLS-1$ //$NON-NLS-2$

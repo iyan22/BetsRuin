@@ -66,7 +66,7 @@ public interface BLFacade  {
 	 * @param date of the event
 	 * @return the created event
 	 */
-	@WebMethod Event createEvent(String description, Date date) ;
+	@WebMethod Event createEvent(String description, Date date,String type) ;
 	
 	/**
 	 * This method retrieves the events of a given date 
@@ -200,4 +200,21 @@ public interface BLFacade  {
 	public Vector<Question> getQuestions(Event e);
 	
 	public Vector<String> getFollowedTeams(User user);
+	
+	/**
+	 * This method retrieves the events of a given date with a specific category
+	 * 
+	 * @param date in which events are retrieved
+	 * @return collection of events
+	 */
+	@WebMethod public Vector<Event> getEventsType(Date date,String type);
+	
+	/**
+	 * This method invokes the data access to retrieve the dates a month for which there are events of a specific category
+	 * 
+	 * @param date of the month for which days with events want to be retrieved 
+	 * @return collection of dates
+	 */
+	@WebMethod
+	public Vector<Date> getOpenEventsMonthType(Date date, String type);
 }

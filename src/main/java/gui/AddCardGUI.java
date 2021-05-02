@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Font;
@@ -53,7 +54,7 @@ public class AddCardGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		closeButton1 = new JButton("Atrás");
+		closeButton1 = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Return"));
 		closeButton1.setForeground(new Color(255, 189, 89));
 		closeButton1.setBackground(new Color(61, 45, 20));
 		closeButton1.setFont(new Font("PT Sans", Font.BOLD, 16));
@@ -67,7 +68,7 @@ public class AddCardGUI extends JFrame {
 		closeButton1.setBounds(376, 249, 102, 35);
 		contentPane.add(closeButton1);
 		
-		lblVinculaTuTarjeta = new JLabel("Vincula tu tarjeta a Bets&Ruin");
+		lblVinculaTuTarjeta = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("LinkCard"));
 		lblVinculaTuTarjeta.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVinculaTuTarjeta.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblVinculaTuTarjeta.setBounds(68, 16, 375, 23);
@@ -97,7 +98,7 @@ public class AddCardGUI extends JFrame {
 		panel.add(cdN3);
 		cdN3.setColumns(10);
 		
-		JLabel jlbl1 = new JLabel("N. tarjeta:");
+		JLabel jlbl1 = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CardNumber"));
 		jlbl1.setFont(new Font("PT Sans", Font.BOLD, 16));
 		jlbl1.setBounds(32, 36, 101, 16);
 		panel.add(jlbl1);
@@ -118,12 +119,12 @@ public class AddCardGUI extends JFrame {
 		lblNewLabel_1.setBounds(200, 70, 7, 16);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel = new JLabel("F. caducidad:");
+		JLabel lblNewLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Date"));
 		lblNewLabel.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblNewLabel.setBounds(32, 69, 101, 16);
 		panel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("CVV:");
+		JLabel lblNewLabel_2 = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CVV"));
 		lblNewLabel_2.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblNewLabel_2.setBounds(32, 102, 102, 16);
 		panel.add(lblNewLabel_2);
@@ -134,7 +135,7 @@ public class AddCardGUI extends JFrame {
 		panel.add(cvV);
 		cvV.setColumns(10);
 		
-		JButton btnVincular = new JButton("Vincular");
+		JButton btnVincular = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Link"));
 		btnVincular.setBackground(new Color(255, 189, 89));
 		btnVincular.setForeground(new Color(61, 45, 20));
 		btnVincular.setFont(new Font("PT Sans", Font.BOLD, 16));
@@ -155,23 +156,23 @@ public class AddCardGUI extends JFrame {
 					int cvv=Integer.parseInt(cvV.getText());
 					
 					if(cdN1.getText().length()!=4 || cdN2.getText().length()!=4 || cdN3.getText().length()!=4 || cdN4.getText().length()!=4) {
-						result.setText("Not valid format for the card number!");
+						result.setText(ResourceBundle.getBundle("Etiquetas").getString("NoCardNum"));
 						result.setForeground(Color.red);
 					}else if(month <1 || month>12 || year<2021||year>2100) {
-						result.setText("Not valid format for the month or year!");
+						result.setText(ResourceBundle.getBundle("Etiquetas").getString("NoDateFormat"));
 						result.setForeground(Color.red);
 					}else if(cvV.getText().length()!=3) {
-						result.setText("Not valid format for the cvv!");
+						result.setText(ResourceBundle.getBundle("Etiquetas").getString("NoCvv"));
 						result.setForeground(Color.red);
 					}else {
 						int[] card= {cd1,cd2,cd3,cd4,month,year,cvv};
 						boolean res=facade.addCard(u,card);
 						if(res) {
-							result.setText("Card added!");
+							result.setText(ResourceBundle.getBundle("Etiquetas").getString("CardAdded"));
 							result.setForeground(Color.green);
 							u.setCard(card);
 						}else {
-							result.setText("Something went wrong, try again!");
+							result.setText(ResourceBundle.getBundle("Etiquetas").getString("SmthWrong"));
 							result.setForeground(Color.red);
 						}
 					}
@@ -179,7 +180,7 @@ public class AddCardGUI extends JFrame {
 					
 					
 				}catch(NumberFormatException ex) {
-					result.setText("Not valid format, only numbers accepted!");
+					result.setText(ResourceBundle.getBundle("Etiquetas").getString("NotValid"));
 					result.setForeground(Color.red);
 				}
 				

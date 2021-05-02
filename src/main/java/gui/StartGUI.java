@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
@@ -25,16 +26,18 @@ public class StartGUI extends JFrame {
 	private JButton jButtonRegister;
 	private JButton btnClose;
 	protected JLabel jLabelLogo;
-
+	private JButton btnSpanish;
+	private JButton btnBasque;
+	private JButton btnEnglish;
 
 	private static BLFacade appFacadeInterface;
 
-	public static BLFacade getBusinessLogic(){
+	public static BLFacade getBusinessLogic() {
 		return appFacadeInterface;
 	}
 
-	public static void setBussinessLogic (BLFacade afi){
-		appFacadeInterface=afi;
+	public static void setBussinessLogic(BLFacade afi) {
+		appFacadeInterface = afi;
 	}
 
 	/**
@@ -46,17 +49,18 @@ public class StartGUI extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				try {
-					//if (ConfigXML.getInstance().isBusinessLogicLocal()) facade.close();
+					// if (ConfigXML.getInstance().isBusinessLogicLocal()) facade.close();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
-					System.out.println("Error: "+e1.toString()+" , probably problems with Business Logic or Database");
+					System.out.println(
+							"Error: " + e1.toString() + " , probably problems with Business Logic or Database");
 				}
 				System.exit(1);
 			}
 		});
 
 		initialize();
-		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	private void initialize() {
@@ -64,7 +68,7 @@ public class StartGUI extends JFrame {
 		this.setSize(406, 477);
 		this.setContentPane(getJContentPane());
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("Start"));
-		
+
 	}
 
 	private JPanel getJContentPane() {
@@ -76,39 +80,10 @@ public class StartGUI extends JFrame {
 			jContentPane.add(getBoton1());
 			jContentPane.add(getBoton2());
 			jContentPane.add(getClose());
-			
-			JButton btnSpanish = new JButton(); //$NON-NLS-1$ //$NON-NLS-2$
-			btnSpanish.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
-			});
-			btnSpanish.setForeground(Color.BLACK);
-			btnSpanish.setBorderPainted(false);
-			btnSpanish.setBackground(Color.WHITE);
-			btnSpanish.setIcon(new ImageIcon(StartGUI.class.getResource("/img/Spanish.png")));
-			btnSpanish.setBounds(300, 6, 33, 21);
-			jContentPane.add(btnSpanish);
-			
-			JButton btnBasque = new JButton();
-			btnBasque.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-				}
-			});
-			btnBasque.setIcon(new ImageIcon(StartGUI.class.getResource("/img/Basque.png")));
-			btnBasque.setForeground(Color.BLACK);
-			btnBasque.setBorderPainted(false);
-			btnBasque.setBackground(Color.WHITE);
-			btnBasque.setBounds(327, 6, 40, 21);
-			jContentPane.add(btnBasque);
-			
-			JButton btnEnglish = new JButton();
-			btnEnglish.setIcon(new ImageIcon(StartGUI.class.getResource("/img/English.png")));
-			btnEnglish.setForeground(Color.BLACK);
-			btnEnglish.setBorderPainted(false);
-			btnEnglish.setBackground(Color.WHITE);
-			btnEnglish.setBounds(360, 6, 40, 21);
-			jContentPane.add(btnEnglish);
-			
+			jContentPane.add(getbtnSpanish());
+			jContentPane.add(getbtnBasque());
+			jContentPane.add(getbtnEnglish());
+
 		}
 		return jContentPane;
 	}
@@ -124,10 +99,10 @@ public class StartGUI extends JFrame {
 		}
 		return jLabelLogo;
 	}
-	
+
 	private JButton getClose() {
-		if(btnClose==null) {
-			btnClose = new JButton("Close");
+		if (btnClose == null) {
+			btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 			btnClose.setBackground(new Color(227, 227, 227));
 			btnClose.setOpaque(true);
 			btnClose.setBorderPainted(false);
@@ -138,7 +113,7 @@ public class StartGUI extends JFrame {
 					close(e);
 				}
 			});
-			
+
 		}
 		return btnClose;
 	}
@@ -158,7 +133,7 @@ public class StartGUI extends JFrame {
 					JFrame a = new LoginGUI();
 					closeWindow(e);
 					a.setVisible(true);
-					
+
 				}
 			});
 			this.dispose();
@@ -191,12 +166,71 @@ public class StartGUI extends JFrame {
 		}
 		return jButtonRegister;
 	}
-	
+
 	private void closeWindow(ActionEvent e) {
 		this.setVisible(false);
 	}
-	
+
 	public void close(ActionEvent e) {
 		this.dispose();
+	}
+
+	private JButton getbtnSpanish() {
+		btnSpanish = new JButton(); // $NON-NLS-1$ //$NON-NLS-2$
+		btnSpanish.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Locale.setDefault(new Locale("es"));
+				System.out.println("Locale: " + Locale.getDefault());
+				redibujar();
+			}
+		});
+		btnSpanish.setForeground(Color.BLACK);
+		btnSpanish.setBorderPainted(false);
+		btnSpanish.setBackground(Color.WHITE);
+		btnSpanish.setIcon(new ImageIcon(StartGUI.class.getResource("/img/Spanish.png")));
+		btnSpanish.setBounds(300, 6, 33, 21);
+		return btnSpanish;
+	}
+
+	private JButton getbtnBasque() {
+		btnBasque = new JButton();
+		btnBasque.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Locale.setDefault(new Locale("eus"));
+				System.out.println("Locale: " + Locale.getDefault());
+				redibujar();
+			}
+		});
+		btnBasque.setIcon(new ImageIcon(StartGUI.class.getResource("/img/Basque.png")));
+		btnBasque.setForeground(Color.BLACK);
+		btnBasque.setBorderPainted(false);
+		btnBasque.setBackground(Color.WHITE);
+		btnBasque.setBounds(327, 6, 40, 21);
+		return btnBasque;
+	}
+
+	private JButton getbtnEnglish() {
+		btnEnglish = new JButton();
+		btnEnglish.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Locale.setDefault(new Locale("en"));
+				System.out.println("Locale: " + Locale.getDefault());
+				redibujar();
+			}
+		});
+		btnEnglish.setIcon(new ImageIcon(StartGUI.class.getResource("/img/English.png")));
+		btnEnglish.setForeground(Color.BLACK);
+		btnEnglish.setBorderPainted(false);
+		btnEnglish.setBackground(Color.WHITE);
+		btnEnglish.setBounds(360, 6, 40, 21);
+		return btnEnglish;
+	}
+
+	private void redibujar() {
+		jButtonRegister.setText(ResourceBundle.getBundle("Etiquetas").getString("Register"));
+		jButtonLogin.setText(ResourceBundle.getBundle("Etiquetas").getString("Login"));
+		btnClose.setText(ResourceBundle.getBundle("Etiquetas").getString("Close"));
+		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("Start"));
+		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
 	}
 }

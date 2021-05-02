@@ -30,6 +30,8 @@ import configuration.UtilDate;
 import domain.Event;
 import java.awt.Font;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class CreateEventGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -52,9 +54,15 @@ public class CreateEventGUI extends JFrame {
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 	private JLabel jLabelMsg = new JLabel();
 	private JLabel jLabelError = new JLabel();
-	
+
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
 	private final JPanel panel = new JPanel();
+	private final JLabel lblNewLabel = new JLabel("Type");
+	private final JRadioButton rdbtnNewRadioButton = new JRadioButton();
+	private final JRadioButton rdbtnNewRadioButton_1 = new JRadioButton();
+	private final JRadioButton rdbtnNewRadioButton_2 = new JRadioButton();
+	private final JRadioButton rdbtnNewRadioButton_3 = new JRadioButton();
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Create the frame.
@@ -72,7 +80,7 @@ public class CreateEventGUI extends JFrame {
 	private void jbInit() throws Exception {
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(593, 359));
+		this.setSize(new Dimension(593, 430));
 		this.setTitle("Bets&Ruin - Create Event");
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		jTextFieldEvent.setFont(new Font("PT Sans", Font.PLAIN, 14));
@@ -81,7 +89,7 @@ public class CreateEventGUI extends JFrame {
 		jButtonCreate.setFont(new Font("PT Sans", Font.BOLD, 16));
 		jButtonCreate.setText("Create Event"); //$NON-NLS-1$ //$NON-NLS-2$
 
-		jButtonCreate.setBounds(new Rectangle(113, 272, 148, 41));
+		jButtonCreate.setBounds(new Rectangle(114, 347, 148, 41));
 		jButtonCreate.setForeground(new Color(61, 45, 20));
 		jButtonCreate.setBackground(new Color(255, 189, 89));
 		jButtonCreate.setOpaque(true);
@@ -93,7 +101,7 @@ public class CreateEventGUI extends JFrame {
 			}
 		});
 		jButtonClose.setFont(new Font("PT Sans", Font.BOLD, 16));
-		jButtonClose.setBounds(new Rectangle(288, 272, 148, 41));
+		jButtonClose.setBounds(new Rectangle(289, 347, 148, 41));
 		jButtonClose.setBackground(new Color(61, 45, 20));
 		jButtonClose.setForeground(new Color(255, 189, 89));
 		jButtonClose.setOpaque(true);
@@ -106,23 +114,17 @@ public class CreateEventGUI extends JFrame {
 
 		jLabelMsg.setBounds(new Rectangle(275, 182, 305, 20));
 		jLabelMsg.setForeground(Color.red);
-		// jLabelMsg.setSize(new Dimension(305, 20));
-
-		jLabelError.setBounds(new Rectangle(175, 240, 305, 20));
-		jLabelError.setForeground(Color.red);
 
 		this.getContentPane().add(jLabelMsg, null);
-		this.getContentPane().add(jLabelError, null);
 
 		this.getContentPane().add(jButtonClose, null);
 		this.getContentPane().add(jButtonCreate, null);
 		this.getContentPane().add(jTextFieldEvent, null);
-		
-		
+
 		BLFacade facade = StartGUI.getBusinessLogic();
 		panel.setBackground(new Color(227, 227, 227));
-		panel.setBounds(18, 18, 552, 233);
-		
+		panel.setBounds(18, 18, 552, 318);
+
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		jLabelEventDate.setForeground(new Color(61, 45, 20));
@@ -137,23 +139,47 @@ public class CreateEventGUI extends JFrame {
 		jComboBoxEvents.setBounds(260, 36, 277, 20);
 		panel.add(jComboBoxEvents);
 		jComboBoxEvents.setFont(new Font("PT Sans", Font.PLAIN, 14));
-		
-				jComboBoxEvents.setModel(modelEvents);
-				jLabelEvent.setForeground(new Color(61, 45, 20));
-				jLabelEvent.setBounds(22, 195, 113, 20);
-				panel.add(jLabelEvent);
-				jLabelEvent.setFont(new Font("PT Sans", Font.BOLD, 16));
-				
-						jLabelEvent.setText("Description:");
-						jCalendar.getDayChooser().getDayPanel().setBackground(Color.WHITE);
-						jCalendar.getMonthChooser().getComboBox().setFont(new Font("PT Sans", Font.PLAIN, 14));
-						jCalendar.getYearChooser().getSpinner().setFont(new Font("PT Sans", Font.PLAIN, 14));
-						datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar.getDate());
-						paintDaysWithEvents(jCalendar,datesWithEventsCurrentMonth);
+
+		jComboBoxEvents.setModel(modelEvents);
+		jLabelEvent.setForeground(new Color(61, 45, 20));
+		jLabelEvent.setBounds(22, 195, 113, 20);
+		panel.add(jLabelEvent);
+		jLabelEvent.setFont(new Font("PT Sans", Font.BOLD, 16));
+
+		jLabelEvent.setText("Description:");
+		jCalendar.getDayChooser().getDayPanel().setBackground(Color.WHITE);
+		jCalendar.getMonthChooser().getComboBox().setFont(new Font("PT Sans", Font.PLAIN, 14));
+		jCalendar.getYearChooser().getSpinner().setFont(new Font("PT Sans", Font.PLAIN, 14));
+		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar.getDate());
+		paintDaysWithEvents(jCalendar, datesWithEventsCurrentMonth);
 		jCalendar.setBounds(22, 34, 226, 149);
 		panel.add(jCalendar);
+		jLabelError.setBounds(150, 294, 305, 20);
+		panel.add(jLabelError);
+		jLabelError.setForeground(Color.red);
+		lblNewLabel.setBounds(22, 226, 46, 14);
+		panel.add(lblNewLabel);
 
-		
+		rdbtnNewRadioButton.setText("Futbol");
+		buttonGroup.add(rdbtnNewRadioButton);
+		rdbtnNewRadioButton.setBounds(139, 226, 109, 23);
+		panel.add(rdbtnNewRadioButton);
+
+		rdbtnNewRadioButton_1.setText("Baloncesto");
+		buttonGroup.add(rdbtnNewRadioButton_1);
+		rdbtnNewRadioButton_1.setBounds(294, 226, 109, 23);
+		panel.add(rdbtnNewRadioButton_1);
+
+		rdbtnNewRadioButton_2.setText("Tenis");
+		buttonGroup.add(rdbtnNewRadioButton_2);
+		rdbtnNewRadioButton_2.setBounds(139, 252, 109, 23);
+		panel.add(rdbtnNewRadioButton_2);
+
+		rdbtnNewRadioButton_3.setText("E-Sport");
+		buttonGroup.add(rdbtnNewRadioButton_3);
+		rdbtnNewRadioButton_3.setBounds(294, 252, 109, 23);
+		panel.add(rdbtnNewRadioButton_3);
+
 		// Code for JCalendar
 		this.jCalendar.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent propertychangeevent) {
@@ -164,32 +190,32 @@ public class CreateEventGUI extends JFrame {
 				} else if (propertychangeevent.getPropertyName().equals("calendar")) {
 					calendarAnt = (Calendar) propertychangeevent.getOldValue();
 					calendarAct = (Calendar) propertychangeevent.getNewValue();
-					System.out.println("calendarAnt: "+calendarAnt.getTime());
-					System.out.println("calendarAct: "+calendarAct.getTime());
+					System.out.println("calendarAnt: " + calendarAnt.getTime());
+					System.out.println("calendarAct: " + calendarAct.getTime());
 					DateFormat dateformat1 = DateFormat.getDateInstance(1, jCalendar.getLocale());
-					
+
 					int monthAnt = calendarAnt.get(Calendar.MONTH);
 					int monthAct = calendarAct.get(Calendar.MONTH);
-					if (monthAct!=monthAnt) {
-						if (monthAct==monthAnt+2) { 
-							// Si en JCalendar estÃ¡ 30 de enero y se avanza al mes siguiente, devolverÃ­a 2 de marzo (se toma como equivalente a 30 de febrero)
+					if (monthAct != monthAnt) {
+						if (monthAct == monthAnt + 2) {
+							// Si en JCalendar estÃ¡ 30 de enero y se avanza al mes siguiente,
+							// devolverÃ­a 2 de marzo (se toma como equivalente a 30 de febrero)
 							// Con este cÃ³digo se dejarÃ¡ como 1 de febrero en el JCalendar
-							calendarAct.set(Calendar.MONTH, monthAnt+1);
+							calendarAct.set(Calendar.MONTH, monthAnt + 1);
 							calendarAct.set(Calendar.DAY_OF_MONTH, 1);
 						}
-						
+
 						jCalendar.setCalendar(calendarAct);
-						
+
 						BLFacade facade = StartGUI.getBusinessLogic();
 
-						datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar.getDate());
+						datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar.getDate());
 					}
 
+					paintDaysWithEvents(jCalendar, datesWithEventsCurrentMonth);
 
-
-					paintDaysWithEvents(jCalendar,datesWithEventsCurrentMonth);
-
-					//	Date firstDay = UtilDate.trim(new Date(jCalendar.getCalendar().getTime().getTime()));
+					// Date firstDay = UtilDate.trim(new
+					// Date(jCalendar.getCalendar().getTime().getTime()));
 					Date firstDay = UtilDate.trim(calendarAct.getTime());
 
 					try {
@@ -221,17 +247,17 @@ public class CreateEventGUI extends JFrame {
 			}
 		});
 	}
-	
-	public static void paintDaysWithEvents(JCalendar jCalendar,Vector<Date> datesWithEventsCurrentMonth) {
-		// For each day with events in current month, the background color for that day is changed.
 
-		
+	public static void paintDaysWithEvents(JCalendar jCalendar, Vector<Date> datesWithEventsCurrentMonth) {
+		// For each day with events in current month, the background color for that day
+		// is changed.
+
 		Calendar calendar = jCalendar.getCalendar();
-		
+
 		int month = calendar.get(Calendar.MONTH);
-		int today=calendar.get(Calendar.DAY_OF_MONTH);
-		int year=calendar.get(Calendar.YEAR);
-		
+		int today = calendar.get(Calendar.DAY_OF_MONTH);
+		int year = calendar.get(Calendar.YEAR);
+
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		int offset = calendar.get(Calendar.DAY_OF_WEEK);
 
@@ -239,15 +265,12 @@ public class CreateEventGUI extends JFrame {
 			offset += 4;
 		else
 			offset += 5;
-		
-		
-	 	for (Date d:datesWithEventsCurrentMonth){
 
-	 		calendar.setTime(d);
-	 		System.out.println(d);
-	 		
+		for (Date d : datesWithEventsCurrentMonth) {
 
-			
+			calendar.setTime(d);
+			System.out.println(d);
+
 			// Obtain the component of the day in the panel of the DayChooser of the
 			// JCalendar.
 			// The component is located after the decorator buttons of "Sun", "Mon",... or
@@ -259,16 +282,14 @@ public class CreateEventGUI extends JFrame {
 			Component o = (Component) jCalendar.getDayChooser().getDayPanel()
 					.getComponent(calendar.get(Calendar.DAY_OF_MONTH) + offset);
 			o.setBackground(Color.CYAN);
-	 	}
-	 	
- 			calendar.set(Calendar.DAY_OF_MONTH, today);
-	 		calendar.set(Calendar.MONTH, month);
-	 		calendar.set(Calendar.YEAR, year);
+		}
 
-	 	
+		calendar.set(Calendar.DAY_OF_MONTH, today);
+		calendar.set(Calendar.MONTH, month);
+		calendar.set(Calendar.YEAR, year);
+
 	}
-	
-	 
+
 	private void jButtonCreate_actionPerformed(ActionEvent e) {
 
 		try {
@@ -277,26 +298,43 @@ public class CreateEventGUI extends JFrame {
 
 			// Displays an exception if the query field is empty
 			String inputQuery = jTextFieldEvent.getText();
-			
+
 			Date firstDay = UtilDate.trim(calendarAct.getTime());
-			
+
 			BLFacade facade = StartGUI.getBusinessLogic();
-			
+
 			Vector<domain.Event> events = facade.getEvents(firstDay);
-			
-			boolean found=false;
-			for(Event evt: events) {
-				if(evt.getDescription().contentEquals(inputQuery)) {
-					found=true;
+
+			boolean found = false;
+			for (Event evt : events) {
+				if (evt.getDescription().contentEquals(inputQuery)) {
+					found = true;
 					jLabelError.setText("Event already exists!");
 					jLabelError.setForeground(Color.red);
 					break;
 				}
 			}
-			if(!found) {
-				jLabelMsg.setText("Event created successfully!");
-				jLabelMsg.setForeground(Color.green);
-				facade.createEvent(inputQuery, firstDay);
+			if (!found) {
+				if (rdbtnNewRadioButton.isSelected() == true) {
+					jLabelMsg.setText("Event created successfully!");
+					jLabelMsg.setForeground(Color.green);
+					facade.createEvent(inputQuery, firstDay, rdbtnNewRadioButton.getText());
+				} else if (rdbtnNewRadioButton_1.isSelected() == true) {
+					jLabelMsg.setText("Event created successfully!");
+					jLabelMsg.setForeground(Color.green);
+					facade.createEvent(inputQuery, firstDay, rdbtnNewRadioButton_1.getText());
+				} else if (rdbtnNewRadioButton_2.isSelected() == true) {
+					jLabelMsg.setText("Event created successfully!");
+					jLabelMsg.setForeground(Color.green);
+					facade.createEvent(inputQuery, firstDay, rdbtnNewRadioButton_2.getText());
+				} else if (rdbtnNewRadioButton_3.isSelected() == true) {
+					jLabelMsg.setText("Event created successfully!");
+					jLabelMsg.setForeground(Color.green);
+					facade.createEvent(inputQuery, firstDay, rdbtnNewRadioButton_3.getText());
+				} else {
+					jLabelMsg.setText("Choose the event type!");
+					jLabelMsg.setForeground(Color.red);
+				}
 			}
 
 		} catch (Exception e1) {
@@ -310,4 +348,3 @@ public class CreateEventGUI extends JFrame {
 		this.setVisible(false);
 	}
 }
-

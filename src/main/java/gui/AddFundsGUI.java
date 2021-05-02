@@ -15,6 +15,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
@@ -37,7 +38,7 @@ public class AddFundsGUI extends JFrame {
 		setContentPane(panelframe);
 		panelframe.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("¿Con cuánto dinero quieres jugar?");
+		JLabel lblNewLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("InsertHowMuchMoney"));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setBounds(32, 11, 392, 28);
@@ -50,7 +51,7 @@ public class AddFundsGUI extends JFrame {
 		result.setBounds(44, 177, 256, 28);
 		panelframe.add(result);
 		
-		JButton closeButton1 = new JButton("Return");
+		JButton closeButton1 = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Return"));
 		closeButton1.setForeground(new Color(255, 189, 89));
 		closeButton1.setBackground(new Color(61, 45, 20));
 		closeButton1.setFont(new Font("PT Sans", Font.BOLD, 16));
@@ -85,17 +86,17 @@ public class AddFundsGUI extends JFrame {
 				
 				boolean res=facade.addFunds(u, amount);
 				if(res) {
-					result.setText("Funds added successfully!");
+					result.setText(ResourceBundle.getBundle("Etiquetas").getString("FundsAdded"));
 					result.setForeground(Color.green);
 					u.addFunds(amount);
 				
 				}else {
-					result.setText("Something went wrong, try again!");
+					result.setText(ResourceBundle.getBundle("Etiquetas").getString("SmthWrong"));
 					result.setForeground(Color.red);
 				}
 				
 				}catch(NumberFormatException ex) {
-					result.setText("Not valid format for the amount!");
+					result.setText(ResourceBundle.getBundle("Etiquetas").getString("AmountError"));
 					result.setForeground(Color.red);
 				}
 				
@@ -108,13 +109,13 @@ public class AddFundsGUI extends JFrame {
 		panel.add(amountField);
 		amountField.setColumns(10);
 		
-		JLabel lblAmount = new JLabel("Cantidad:");
+		JLabel lblAmount = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Amount") + ":");
 		lblAmount.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAmount.setBounds(6, 19, 104, 22);
 		panel.add(lblAmount);
 		lblAmount.setFont(new Font("PT Sans", Font.BOLD, 16));
 		
-		JLabel lblCurrency = new JLabel("€");
+		JLabel lblCurrency = new JLabel("�");
 		lblCurrency.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrency.setFont(new Font("PT Sans", Font.BOLD, 16));
 		lblCurrency.setBounds(247, 21, 31, 22);

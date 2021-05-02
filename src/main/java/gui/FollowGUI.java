@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,11 +25,11 @@ public class FollowGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel labelEvent = new JLabel("");
-	private JLabel lblSeguirA = new JLabel("Seguir a:");
+	private JLabel lblSeguirA = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("FollowTo") + ";");
 	private JRadioButton radioButtonFollow1 = new JRadioButton("");
 	private JRadioButton radioButtonFollow2 = new JRadioButton("");
-	private JButton btnSeguir = new JButton("Seguir");
-	private JButton btnVolver = new JButton("Volver");
+	private JButton btnSeguir = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Follow"));
+	private JButton btnVolver = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Return"));
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final JLabel followMessage = new JLabel("");
 
@@ -66,17 +67,17 @@ public class FollowGUI extends JFrame {
 				try {
 					if(radioButtonFollow1.isSelected()) {
 						facade.follow(u, events[0]);
-						followMessage.setText("Ahora sigues a " + events[0]);
+						followMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("Following") + events[0]);
 						followMessage.setForeground(Color.green);
 					} else if(radioButtonFollow2.isSelected()) {
 						facade.follow(u, events[1]);
-						followMessage.setText("Ahora sigues a " + events[1]);
+						followMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("Following") + events[1]);
 						followMessage.setForeground(Color.green);
 					} else {
-						followMessage.setText("No has seleccionado ninguna opcion.");
+						followMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("NoSelect"));
 					}
 				} catch(AlreadyFollowed ex) {
-					followMessage.setText("Ya eres seguidor de este equipo");
+					followMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("AlreadyFollow"));
 					followMessage.setForeground(Color.red);
 				}
 			}

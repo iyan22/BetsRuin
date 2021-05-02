@@ -67,29 +67,29 @@ public class DataAccess  {
 			int year=today.get(Calendar.YEAR);
 			if (month==12) { month=0; year+=1;}  
 
-			Event ev1=new Event(1, "AtlÃ©tico-Athletic", UtilDate.newDate(year,month,17));
-			Event ev2=new Event(2, "Eibar-Barcelona", UtilDate.newDate(year,month,17));
-			Event ev3=new Event(3, "Getafe-Celta", UtilDate.newDate(year,month,17));
-			Event ev4=new Event(4, "AlavÃ©s-Deportivo", UtilDate.newDate(year,month,17));
-			Event ev5=new Event(5, "EspaÃ±ol-Villareal", UtilDate.newDate(year,month,17));
-			Event ev6=new Event(6, "Las Palmas-Sevilla", UtilDate.newDate(year,month,17));
-			Event ev7=new Event(7, "Malaga-Valencia", UtilDate.newDate(year,month,17));
-			Event ev8=new Event(8, "Girona-LeganÃ©s", UtilDate.newDate(year,month,17));
-			Event ev9=new Event(9, "Real Sociedad-Levante", UtilDate.newDate(year,month,17));
-			Event ev10=new Event(10, "Betis-Real Madrid", UtilDate.newDate(year,month,17));
+			Event ev1=new Event(1, "Atlético-Athletic", UtilDate.newDate(year,month,17),"Futbol");
+			Event ev2=new Event(2, "Eibar-Barcelona", UtilDate.newDate(year,month,17),"Futbol");
+			Event ev3=new Event(3, "Getafe-Celta", UtilDate.newDate(year,month,17),"Futbol");
+			Event ev4=new Event(4, "Alavés-Deportivo", UtilDate.newDate(year,month,17),"Futbol");
+			Event ev5=new Event(5, "Español-Villareal", UtilDate.newDate(year,month,17),"Futbol");
+			Event ev6=new Event(6, "Las Palmas-Sevilla", UtilDate.newDate(year,month,17),"Futbol");
+			Event ev7=new Event(7, "Malaga-Valencia", UtilDate.newDate(year,month,17),"Futbol");
+			Event ev8=new Event(8, "Girona-Leganés", UtilDate.newDate(year,month,17),"Futbol");
+			Event ev9=new Event(9, "Real Sociedad-Levante", UtilDate.newDate(year,month,17),"Futbol");
+			Event ev10=new Event(10, "Betis-Real Madrid", UtilDate.newDate(year,month,17),"Futbol");
 
-			Event ev11=new Event(11, "Atletico-Athletic", UtilDate.newDate(year,month,1));
-			Event ev12=new Event(12, "Eibar-Barcelona", UtilDate.newDate(year,month,1));
-			Event ev13=new Event(13, "Getafe-Celta", UtilDate.newDate(year,month,1));
-			Event ev14=new Event(14, "AlavÃ©s-Deportivo", UtilDate.newDate(year,month,1));
-			Event ev15=new Event(15, "EspaÃ±ol-Villareal", UtilDate.newDate(year,month,1));
-			Event ev16=new Event(16, "Las Palmas-Sevilla", UtilDate.newDate(year,month,1));
+			Event ev11=new Event(11, "Atletico-Athletic", UtilDate.newDate(year,month,1),"Futbol");
+			Event ev12=new Event(12, "Eibar-Barcelona", UtilDate.newDate(year,month,1),"Futbol");
+			Event ev13=new Event(13, "Getafe-Celta", UtilDate.newDate(year,month,1),"Futbol");
+			Event ev14=new Event(14, "Alavés-Deportivo", UtilDate.newDate(year,month,1),"Futbol");
+			Event ev15=new Event(15, "Español-Villareal", UtilDate.newDate(year,month,1),"Futbol");
+			Event ev16=new Event(16, "Las Palmas-Sevilla", UtilDate.newDate(year,month,1),"Futbol");
 
 
-			Event ev17=new Event(17, "MÃ¡laga-Valencia", UtilDate.newDate(year,month+1,28));
-			Event ev18=new Event(18, "Girona-LeganÃ©s", UtilDate.newDate(year,month+1,28));
-			Event ev19=new Event(19, "Real Sociedad-Levante", UtilDate.newDate(year,month+1,28));
-			Event ev20=new Event(20, "Betis-Real Madrid", UtilDate.newDate(year,month+1,28));
+			Event ev17=new Event(17, "Málaga-Valencia", UtilDate.newDate(year,month+1,28),"Futbol");
+			Event ev18=new Event(18, "Girona-Leganés", UtilDate.newDate(year,month+1,28),"Futbol");
+			Event ev19=new Event(19, "Real Sociedad-Levante", UtilDate.newDate(year,month+1,28),"Futbol");
+			Event ev20=new Event(20, "Betis-Real Madrid", UtilDate.newDate(year,month+1,28),"Futbol");
 
 			Question q1;
 			Question q2;
@@ -241,11 +241,11 @@ public class DataAccess  {
 	 * @param date of the event.
 	 * @return the event.
 	 */
-	public Event createEvent(String description, Date date) {
+	public Event createEvent(String description, Date date, String type) {
 		TypedQuery<Event> query= db.createQuery("SELECT e FROM Event e", Event.class);
 		ArrayList<Event> resv= (ArrayList<Event>) query.getResultList();
 		int res=resv.size();
-		Event event = new Event(res+1, description, date);
+		Event event = new Event(res+1, description, date, type);
 		db.getTransaction().begin();
 		db.persist(event);
 		db.getTransaction().commit();
@@ -264,7 +264,8 @@ public class DataAccess  {
 		query.setParameter(1, date);
 		return new Vector<Event>(query.getResultList());
 	}
-
+	
+	
 	/**
 	 * This method gets all the bets from a questions, not used for first iteration.
 	 * @param q question to get the bets.
@@ -723,6 +724,46 @@ public class DataAccess  {
 			result.add(t);
 		}
 		return result;
+	}
+	
+	/**
+	 * This method retrieves from the database the events of a given date and of a specific category 
+	 * 
+	 * @param date in which events are retrieved
+	 * @return collection of events
+	 */
+	public Vector<Event> getEventsType(Date date, String type) {
+		System.out.println(">> DataAccess: getEvents");
+		TypedQuery<Event> query = db.createQuery("SELECT ev FROM Event ev WHERE ev.eventDate=?1 AND ev.type=?2",Event.class);   
+		query.setParameter(1, date);
+		query.setParameter(2, type);
+		return new Vector<Event>(query.getResultList());
+	}
+
+	/**
+	 * This method retrieves from the database the dates a month for which there are events of a specific category
+	 * 
+	 * @param date of the month for which days with events want to be retrieved 
+	 * @return collection of dates
+	 */
+	public Vector<Date> getOpenEventsMonthType(Date date,String type) {
+		System.out.println(">> DataAccess: getEventsMonth");
+		Vector<Date> res = new Vector<Date>();	
+
+		Date firstDayMonthDate= UtilDate.firstDayMonth(date);
+		Date lastDayMonthDate= UtilDate.lastDayMonth(date);
+
+
+		TypedQuery<Date> query = db.createQuery("SELECT DISTINCT ev.eventDate FROM Event ev WHERE ev.eventDate BETWEEN ?1 and ?2 AND ev.type=?3",Date.class);   
+		query.setParameter(1, firstDayMonthDate);
+		query.setParameter(2, lastDayMonthDate);
+		query.setParameter(3, type);
+		List<Date> dates = query.getResultList();
+		for (Date d : dates) {
+			System.out.println(d.toString());		 
+			res.add(d);
+		}
+		return res;
 	}
 	
 }

@@ -13,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Vector;
 import java.awt.event.ActionListener;
@@ -149,7 +150,7 @@ public class MainUserGUI extends JFrame {
 			jButtonQueryQueries.setOpaque(true);
 			jButtonQueryQueries.setBorderPainted(false);
 			jButtonQueryQueries.setBounds(26, 211, 647, 49);
-			jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.jButtonQueryQueries.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("KnowEvents"));
 			jButtonQueryQueries.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JFrame a = new FindQuestionsGUI(u);
@@ -177,13 +178,7 @@ public class MainUserGUI extends JFrame {
 		}
 		return jLabelLogo;
 	}
-
-	@SuppressWarnings("unused")
-	private void redibujar() {
-		jLabelLogo.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectOption"));
-		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
-		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
-	}
+	
 	private JButton getBtnReturn() {
 		if (btnReturn == null) {
 			btnReturn = new JButton(); //$NON-NLS-1$ //$NON-NLS-2$
@@ -192,7 +187,7 @@ public class MainUserGUI extends JFrame {
 			btnReturn.setBorderPainted(false);
 			btnReturn.setFont(new Font("PT Sans", Font.BOLD, 14));
 			btnReturn.setBounds(26, 740, 973, 29);
-			btnReturn.setText(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.btnReturn.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnReturn.setText(ResourceBundle.getBundle("Etiquetas").getString("Logout")); //$NON-NLS-1$ //$NON-NLS-2$
 			btnReturn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					close(e);
@@ -214,7 +209,7 @@ public class MainUserGUI extends JFrame {
 			UserZone.setFont(new Font("Lucida Grande", Font.BOLD, 22));
 			UserZone.setBorderPainted(false);
 			UserZone.setOpaque(true);
-			UserZone.setText(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.UserZone.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			UserZone.setText(ResourceBundle.getBundle("Etiquetas").getString("UserZone")); //$NON-NLS-1$ //$NON-NLS-2$
 			UserZone.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -233,6 +228,9 @@ public class MainUserGUI extends JFrame {
 			btnBaloncesto.setBounds(327, 60, 300, 173);
 			btnBaloncesto.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					JFrame a = new FindEventTypeGUI(u,"Baloncesto");
+					a.setVisible(true);
+					dispose(e);
 				}
 			});
 			btnBaloncesto.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/BaloncestoES.png")));
@@ -246,6 +244,9 @@ public class MainUserGUI extends JFrame {
 			btnTenis.setBounds(16, 245, 300, 173);
 			btnTenis.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					JFrame a = new FindEventTypeGUI(u,"Tenis");
+					a.setVisible(true);
+					dispose(e);
 				}
 			});
 			btnTenis.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/TenisES.png")));
@@ -255,7 +256,7 @@ public class MainUserGUI extends JFrame {
 	}
 	private JLabel getJLabelWelcome() {
 		if (jLabelWelcome == null) {
-			jLabelWelcome = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.jLabelWelcome.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			jLabelWelcome = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Wellcome")); //$NON-NLS-1$ //$NON-NLS-2$
 			jLabelWelcome.setForeground(new Color(61, 45, 20));
 			jLabelWelcome.setFont(new Font("PT Sans", Font.BOLD, 24));
 			jLabelWelcome.setBounds(248, 53, 141, 32);
@@ -285,7 +286,10 @@ public class MainUserGUI extends JFrame {
 			btnEsports.setBounds(328, 245, 300, 173);
 			panelCategorias.add(btnEsports);
 			btnEsports.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
+				public void actionPerformed(ActionEvent e) {
+					JFrame a = new FindEventTypeGUI(u,"E-Sport");
+					a.setVisible(true);
+					dispose(e);
 				}
 			});
 			btnEsports.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/EsportsES.png")));
@@ -300,7 +304,10 @@ public class MainUserGUI extends JFrame {
 		if (btnFutbol == null) {
 			btnFutbol = new JButton();
 			btnFutbol.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
+				public void actionPerformed(ActionEvent e) {
+					JFrame a = new FindEventTypeGUI(u,"Futbol");
+					a.setVisible(true);
+					dispose(e);
 				}
 			});
 			btnFutbol.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/FutbolES.png")));
@@ -311,7 +318,7 @@ public class MainUserGUI extends JFrame {
 	}
 	private JLabel getLblCategorias() {
 		if (lblCategorias == null) {
-			lblCategorias = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblDisfrutaDeLas.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			lblCategorias = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Enjoy")); //$NON-NLS-1$ //$NON-NLS-2$
 			lblCategorias.setForeground(new Color(61, 45, 20));
 			lblCategorias.setBounds(16, 16, 611, 32);
 			lblCategorias.setFont(new Font("PT Sans", Font.BOLD, 24));
@@ -391,31 +398,17 @@ public class MainUserGUI extends JFrame {
 	}
 	private JLabel getLblEventosInteres() {
 		if (lblEventosInteres == null) {
-			lblEventosInteres = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblEventosInteres.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			lblEventosInteres = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Interesting")); //$NON-NLS-1$ //$NON-NLS-2$
 			lblEventosInteres.setForeground(new Color(61, 45, 20));
 			lblEventosInteres.setFont(new Font("PT Sans", Font.BOLD, 24));
-			lblEventosInteres.setBounds(13, 6, 277, 44);
+			lblEventosInteres.setBounds(17, 243, 277, 44);
 		}
 		return lblEventosInteres;
 	}
-	private JButton getBtnEspanol() {
-		if (btnEspanol == null) {
-			btnEspanol = new JButton(); //$NON-NLS-1$ //$NON-NLS-2$
-			btnEspanol.setBounds(254, 6, 31, 20);
-			btnEspanol.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
-			});
-			btnEspanol.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/Spanish.png")));
-			btnEspanol.setBorderPainted(false);
-		}
-		return btnEspanol;
-	}
 	private JLabel getLblEspanol() {
 		if (lblEspanol == null) {
-			lblEspanol = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblnosEntiendes.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			lblEspanol.setHorizontalAlignment(SwingConstants.CENTER);
-			lblEspanol.setBounds(6, 6, 236, 20);
+			lblEspanol = new JLabel("¿Nos entiendes?"); //$NON-NLS-1$ //$NON-NLS-2$
+			lblEspanol.setBounds(68, 7, 99, 19);
 			lblEspanol.setForeground(new Color(61, 45, 20));
 			lblEspanol.setFont(new Font("PT Sans", Font.BOLD, 14));
 		}
@@ -423,9 +416,8 @@ public class MainUserGUI extends JFrame {
 	}
 	private JLabel getLblEuskara() {
 		if (lblEuskara == null) {
-			lblEuskara = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblUlertzen.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			lblEuskara.setHorizontalAlignment(SwingConstants.CENTER);
-			lblEuskara.setBounds(6, 30, 236, 20);
+			lblEuskara = new JLabel("Ulertzen?"); //$NON-NLS-1$ //$NON-NLS-2$
+			lblEuskara.setBounds(89, 31, 57, 19);
 			lblEuskara.setForeground(new Color(61, 45, 20));
 			lblEuskara.setFont(new Font("PT Sans", Font.BOLD, 14));
 		}
@@ -433,9 +425,8 @@ public class MainUserGUI extends JFrame {
 	}
 	private JLabel getLblEnglish() {
 		if (lblEnglish == null) {
-			lblEnglish = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblDoYouUnderstand.text")); //$NON-NLS-1$ //$NON-NLS-2$
-			lblEnglish.setHorizontalAlignment(SwingConstants.CENTER);
-			lblEnglish.setBounds(6, 53, 236, 20);
+			lblEnglish = new JLabel("Do you understand us?"); //$NON-NLS-1$ //$NON-NLS-2$
+			lblEnglish.setBounds(43, 54, 142, 19);
 			lblEnglish.setForeground(new Color(61, 45, 20));
 			lblEnglish.setFont(new Font("PT Sans", Font.BOLD, 14));
 		}
@@ -444,7 +435,7 @@ public class MainUserGUI extends JFrame {
 	private JPanel getPanelIdiomas() {
 		if (panelIdiomas == null) {
 			panelIdiomas = new JPanel();
-			panelIdiomas.setBounds(699, 26, 300, 77);
+			panelIdiomas.setBounds(699, 24, 300, 79);
 			panelIdiomas.setLayout(null);
 			panelIdiomas.add(getLblEnglish());
 			panelIdiomas.add(getLblEuskara());
@@ -455,13 +446,32 @@ public class MainUserGUI extends JFrame {
 		}
 		return panelIdiomas;
 	}
+	private JButton getBtnEspanol() {
+		if (btnEspanol == null) {
+			btnEspanol = new JButton(); //$NON-NLS-1$ //$NON-NLS-2$
+			btnEspanol.setBounds(231, 0, 40, 28);
+			btnEspanol.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Locale.setDefault(new Locale("es"));
+					System.out.println("Locale: "+Locale.getDefault());
+					redibujar();
+				}
+			});
+			btnEspanol.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/Spanish.png")));
+			btnEspanol.setBorderPainted(false);
+		}
+		return btnEspanol;
+	}
 	private JButton getBtnEuskara() {
 		if (btnEuskara == null) {
 			btnEuskara = new JButton();
 			btnEuskara.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/Basque.png")));
-			btnEuskara.setBounds(254, 30, 31, 20);
+			btnEuskara.setBounds(231, 22, 40, 28);
 			btnEuskara.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					Locale.setDefault(new Locale("eus"));
+					System.out.println("Locale: "+Locale.getDefault());
+					redibujar();
 				}
 			});
 			btnEuskara.setSelectedIcon(new ImageIcon("/Users/iyanalvarez/eclipse-workspace/Bets/src/main/resources/img/Basque.png"));
@@ -475,16 +485,19 @@ public class MainUserGUI extends JFrame {
 			btnEnglish.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/English.png")));
 			btnEnglish.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					Locale.setDefault(new Locale("en"));
+					System.out.println("Locale: "+Locale.getDefault());
+					redibujar();
 				}
 			});
 			btnEnglish.setBorderPainted(false);
-			btnEnglish.setBounds(254, 51, 31, 22);
+			btnEnglish.setBounds(231, 49, 40, 28);
 		}
 		return btnEnglish;
 	}
 	private JButton getBtnApostar() {
 		if (btnApostar == null) {
-			btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.btnApostar.text")); //$NON-NLS-1$ //$NON-NLS-2$
+			btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Bet")); //$NON-NLS-1$ //$NON-NLS-2$
 			btnApostar.setFont(new Font("PT Sans", Font.BOLD, 14));
 			btnApostar.setEnabled(false);
 			btnApostar.setForeground(new Color(61, 45, 20));
@@ -511,6 +524,16 @@ public class MainUserGUI extends JFrame {
 			btnApostar.setBounds(10, 570, 280, 32);
 		}
 		return btnApostar;
+	}
+	
+	private void redibujar() {
+		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainTitle"));
+		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("KnowEvents"));
+		btnReturn.setText(ResourceBundle.getBundle("Etiquetas").getString("Return"));
+		UserZone.setText(ResourceBundle.getBundle("Etiquetas").getString("UserZone"));
+		jLabelWelcome.setText(ResourceBundle.getBundle("Etiquetas").getString("Wellcome")); 
+		lblCategorias.setText(ResourceBundle.getBundle("Etiquetas").getString("Enjoy"));
+		lblEventosInteres.setText(ResourceBundle.getBundle("Etiquetas").getString("Interesting"));
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"
 
