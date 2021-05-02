@@ -72,13 +72,13 @@ public class DirectAccessEventGUI extends JFrame {
 
 		this.event=e;
 		this.user=u;
-		
+
 		String[] events = event.getDescription().split("-");
 		String fol="";
 		String alt="";
-		
+
 		Vector<String> teams = facade.getFollowedTeams(u);
-		
+
 		if(teams.contains(events[0])) {
 			fol=events[0];
 			alt=events[1];
@@ -86,9 +86,9 @@ public class DirectAccessEventGUI extends JFrame {
 			fol=events[1];
 			alt=events[0];
 		}
-		
+
 		lbltuEquipoFavorito.setText("Tu equipo favorito " + fol + " compite contra "+alt);
-		
+
 		tableModelQuestions = new DefaultTableModel(null, columnNamesQuestions);
 		scrollPaneQuestions.setViewportView(tableQuestions);
 		tableQuestions.setModel(tableModelQuestions);
@@ -130,9 +130,9 @@ public class DirectAccessEventGUI extends JFrame {
 
 		scrollPanePredictions.setBounds(21, 290, 581, 105);
 		contentPane.add(scrollPanePredictions);
-		
 
-		
+
+
 		tablePredictions.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -161,11 +161,11 @@ public class DirectAccessEventGUI extends JFrame {
 			}
 		});
 		contentPane.add(btnVolver);
-		
+
 		scrollPanePredictions.setViewportView(tablePredictions);
 		tableModelPredictions = new DefaultTableModel(null, columnNamePrediction);
 		tablePredictions.setModel(tableModelPredictions);
-		
+
 		tableQuestions.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -175,23 +175,28 @@ public class DirectAccessEventGUI extends JFrame {
 				BLFacade facade = StartGUI.getBusinessLogic();
 				Vector<Prediction> predictions = (Vector<Prediction>) facade.getPredictions(q);
 
-				
+
 				tableModelPredictions.setDataVector(null, columnNamePrediction);
 				tableModelPredictions.setColumnCount(2);
 
-				for (Prediction p: predictions){
-					Vector<Object> row = new Vector<Object>();
-					row.add(p.getAnswer());
-					row.add(p);
-					tableModelPredictions.addRow(row);
+				if(predictions.isEmpty()) {
+					tableModelPredictions.setRowCount(0);
 
+				} else {
+
+					for (Prediction p: predictions){
+						Vector<Object> row = new Vector<Object>();
+						row.add(p.getAnswer());
+						row.add(p);
+						tableModelPredictions.addRow(row);
+					}
 				}
 				tablePredictions.getColumnModel().removeColumn(tablePredictions.getColumnModel().getColumn(1)); // not shown in JTable
 			}
 		});
 
 	}
-	
+
 	public void close(ActionEvent e) {
 		this.dispose();
 	}
