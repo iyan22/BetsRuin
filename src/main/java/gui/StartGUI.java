@@ -128,8 +128,8 @@ public class StartGUI extends JFrame {
 			jButtonLogin.setBorderPainted(false);
 			jButtonLogin.setBounds(29, 236, 338, 63);
 			jButtonLogin.setText(ResourceBundle.getBundle("Etiquetas").getString("Login"));
-			jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
+			jButtonLogin.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					JFrame a = new LoginGUI();
 					closeWindow(e);
 					a.setVisible(true);
@@ -156,8 +156,8 @@ public class StartGUI extends JFrame {
 			jButtonRegister.setFont(new Font("PT Sans", Font.BOLD, 22));
 			jButtonRegister.setBounds(29, 311, 338, 63);
 			jButtonRegister.setText(ResourceBundle.getBundle("Etiquetas").getString("Register"));
-			jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
+			jButtonRegister.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					JFrame a = new RegisterGUI();
 					closeWindow(e);
 					a.setVisible(true);

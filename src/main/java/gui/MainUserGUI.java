@@ -401,14 +401,15 @@ public class MainUserGUI extends JFrame {
 			lblEventosInteres = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Interesting")); //$NON-NLS-1$ //$NON-NLS-2$
 			lblEventosInteres.setForeground(new Color(61, 45, 20));
 			lblEventosInteres.setFont(new Font("PT Sans", Font.BOLD, 24));
-			lblEventosInteres.setBounds(17, 243, 277, 44);
+			lblEventosInteres.setBounds(13, 6, 277, 44);
 		}
 		return lblEventosInteres;
 	}
 	private JLabel getLblEspanol() {
 		if (lblEspanol == null) {
-			lblEspanol = new JLabel("¿Nos entiendes?"); //$NON-NLS-1$ //$NON-NLS-2$
-			lblEspanol.setBounds(68, 7, 99, 19);
+			lblEspanol = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainUserGUI.lblEspanol.text")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-2$
+			lblEspanol.setHorizontalAlignment(SwingConstants.CENTER);
+			lblEspanol.setBounds(16, 7, 203, 19);
 			lblEspanol.setForeground(new Color(61, 45, 20));
 			lblEspanol.setFont(new Font("PT Sans", Font.BOLD, 14));
 		}
@@ -417,7 +418,8 @@ public class MainUserGUI extends JFrame {
 	private JLabel getLblEuskara() {
 		if (lblEuskara == null) {
 			lblEuskara = new JLabel("Ulertzen?"); //$NON-NLS-1$ //$NON-NLS-2$
-			lblEuskara.setBounds(89, 31, 57, 19);
+			lblEuskara.setHorizontalAlignment(SwingConstants.CENTER);
+			lblEuskara.setBounds(16, 31, 209, 19);
 			lblEuskara.setForeground(new Color(61, 45, 20));
 			lblEuskara.setFont(new Font("PT Sans", Font.BOLD, 14));
 		}
@@ -426,7 +428,8 @@ public class MainUserGUI extends JFrame {
 	private JLabel getLblEnglish() {
 		if (lblEnglish == null) {
 			lblEnglish = new JLabel("Do you understand us?"); //$NON-NLS-1$ //$NON-NLS-2$
-			lblEnglish.setBounds(43, 54, 142, 19);
+			lblEnglish.setHorizontalAlignment(SwingConstants.CENTER);
+			lblEnglish.setBounds(16, 54, 209, 19);
 			lblEnglish.setForeground(new Color(61, 45, 20));
 			lblEnglish.setFont(new Font("PT Sans", Font.BOLD, 14));
 		}

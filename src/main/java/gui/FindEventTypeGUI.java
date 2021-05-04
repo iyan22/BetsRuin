@@ -62,8 +62,8 @@ public class FindEventTypeGUI extends JFrame {
 	private final JLabel lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Founds")); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JLabel lblUser = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("User")); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JPanel panelNormas = new JPanel();
-	private final JLabel lblNormas = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules")); //$NON-NLS-1$ //$NON-NLS-2$
-	private final JLabel lbljuej = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules2")); //$NON-NLS-1$ //$NON-NLS-2$
+	private final JLabel lblCategoria = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules")); //$NON-NLS-1$ //$NON-NLS-2$
+	private final JLabel lblCategoriavar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules2")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String type;
 
@@ -232,21 +232,24 @@ public class FindEventTypeGUI extends JFrame {
 		getContentPane().add(panelIdiomas);
 
 		JLabel lblEnglish = new JLabel("Do you understand us?");
+		lblEnglish.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEnglish.setForeground(new Color(61, 45, 20));
 		lblEnglish.setFont(new Font("PT Sans", Font.BOLD, 14));
-		lblEnglish.setBounds(43, 54, 142, 19);
+		lblEnglish.setBounds(17, 54, 202, 19);
 		panelIdiomas.add(lblEnglish);
 
 		JLabel lblEuskara = new JLabel("Ulertzen?");
+		lblEuskara.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEuskara.setForeground(new Color(61, 45, 20));
 		lblEuskara.setFont(new Font("PT Sans", Font.BOLD, 14));
-		lblEuskara.setBounds(89, 31, 57, 19);
+		lblEuskara.setBounds(17, 31, 202, 19);
 		panelIdiomas.add(lblEuskara);
 
 		JLabel lblEspanol = new JLabel("¿Nos entiendes?");
+		lblEspanol.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEspanol.setForeground(new Color(61, 45, 20));
 		lblEspanol.setFont(new Font("PT Sans", Font.BOLD, 14));
-		lblEspanol.setBounds(68, 7, 99, 19);
+		lblEspanol.setBounds(17, 7, 202, 19);
 		panelIdiomas.add(lblEspanol);
 
 		JButton btnEspanol = new JButton();
@@ -317,16 +320,16 @@ public class FindEventTypeGUI extends JFrame {
 		panelNormas.setBounds(200, 22, 189, 156);
 
 		getContentPane().add(panelNormas);
-		lblNormas.setForeground(new Color(61, 45, 20));
-		lblNormas.setFont(new Font("PT Sans", Font.BOLD, 18));
-		lblNormas.setBounds(16, 20, 131, 19);
+		lblCategoria.setForeground(new Color(61, 45, 20));
+		lblCategoria.setFont(new Font("PT Sans", Font.BOLD, 18));
+		lblCategoria.setBounds(16, 6, 131, 42);
 
-		panelNormas.add(lblNormas);
-		lbljuej.setForeground(new Color(61, 45, 20));
-		lbljuej.setFont(new Font("PT Sans", Font.BOLD, 14));
-		lbljuej.setBounds(16, 40, 163, 99);
+		panelNormas.add(lblCategoria);
+		lblCategoriavar.setForeground(new Color(255, 189, 89));
+		lblCategoriavar.setFont(new Font("PT Sans", Font.BOLD, 36));
+		lblCategoriavar.setBounds(16, 53, 163, 86);
 
-		panelNormas.add(lbljuej);
+		panelNormas.add(lblCategoriavar);
 
 		btnSeguirEquipo.setOpaque(true);
 		btnSeguirEquipo.setEnabled(false);
@@ -430,8 +433,8 @@ public class FindEventTypeGUI extends JFrame {
 		ResourceBundle.getBundle("Etiquetas").getString("Query");
 		lblSaldo.setText(ResourceBundle.getBundle("Etiquetas").getString("Founds")); //$NON-NLS-1$ //$NON-NLS-2$
 		lblUser.setText(ResourceBundle.getBundle("Etiquetas").getString("User"));
-		lblNormas.setText(ResourceBundle.getBundle("Etiquetas").getString("Rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		lbljuej.setText(ResourceBundle.getBundle("Etiquetas").getString("Rules2"));
+		lblCategoria.setText(ResourceBundle.getBundle("Etiquetas").getString("Rules")); //$NON-NLS-1$ //$NON-NLS-2$
+		lblCategoriavar.setText(ResourceBundle.getBundle("Etiquetas").getString("Rules2"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 		seePreds.setText(ResourceBundle.getBundle("Etiquetas").getString("SeePrediction"));
 		btnSeguirEquipo.setText(ResourceBundle.getBundle("Etiquetas").getString("FollowTeam"));

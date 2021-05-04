@@ -42,6 +42,7 @@ public class RegisterGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterGUI() {
+		setResizable(false);
 		setTitle("Bets&Ruin - Register");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 429, 543);

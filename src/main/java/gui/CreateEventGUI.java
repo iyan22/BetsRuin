@@ -32,6 +32,7 @@ import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.SwingConstants;
 
 public class CreateEventGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -57,7 +58,7 @@ public class CreateEventGUI extends JFrame {
 
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
 	private final JPanel panel = new JPanel();
-	private final JLabel lblNewLabel = new JLabel("Type");
+	private final JLabel lblType = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateEventGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JRadioButton rdbtnNewRadioButton = new JRadioButton();
 	private final JRadioButton rdbtnNewRadioButton_1 = new JRadioButton();
 	private final JRadioButton rdbtnNewRadioButton_2 = new JRadioButton();
@@ -154,30 +155,42 @@ public class CreateEventGUI extends JFrame {
 		paintDaysWithEvents(jCalendar, datesWithEventsCurrentMonth);
 		jCalendar.setBounds(22, 34, 226, 149);
 		panel.add(jCalendar);
-		jLabelError.setBounds(150, 294, 305, 20);
+		jLabelError.setHorizontalAlignment(SwingConstants.CENTER);
+		jLabelError.setFont(new Font("PT Sans", Font.BOLD, 16));
+		jLabelError.setBounds(22, 282, 515, 25);
 		panel.add(jLabelError);
-		jLabelError.setForeground(Color.red);
-		lblNewLabel.setBounds(22, 226, 46, 14);
-		panel.add(lblNewLabel);
+		jLabelError.setForeground(Color.RED);
+		lblType.setForeground(new Color(61, 45, 20));
+		lblType.setFont(new Font("PT Sans", Font.BOLD, 16));
+		lblType.setBounds(22, 226, 113, 14);
+		panel.add(lblType);
+		rdbtnNewRadioButton.setForeground(new Color(61, 45, 20));
+		rdbtnNewRadioButton.setFont(new Font("PT Sans", Font.BOLD, 16));
 
 		rdbtnNewRadioButton.setText("Futbol");
 		buttonGroup.add(rdbtnNewRadioButton);
-		rdbtnNewRadioButton.setBounds(139, 226, 109, 23);
+		rdbtnNewRadioButton.setBounds(139, 226, 143, 23);
 		panel.add(rdbtnNewRadioButton);
+		rdbtnNewRadioButton_1.setForeground(new Color(61, 45, 20));
+		rdbtnNewRadioButton_1.setFont(new Font("PT Sans", Font.BOLD, 15));
 
 		rdbtnNewRadioButton_1.setText("Baloncesto");
 		buttonGroup.add(rdbtnNewRadioButton_1);
-		rdbtnNewRadioButton_1.setBounds(294, 226, 109, 23);
+		rdbtnNewRadioButton_1.setBounds(294, 226, 143, 23);
 		panel.add(rdbtnNewRadioButton_1);
+		rdbtnNewRadioButton_2.setForeground(new Color(61, 45, 20));
+		rdbtnNewRadioButton_2.setFont(new Font("PT Sans", Font.BOLD, 16));
 
 		rdbtnNewRadioButton_2.setText("Tenis");
 		buttonGroup.add(rdbtnNewRadioButton_2);
-		rdbtnNewRadioButton_2.setBounds(139, 252, 109, 23);
+		rdbtnNewRadioButton_2.setBounds(139, 252, 143, 23);
 		panel.add(rdbtnNewRadioButton_2);
+		rdbtnNewRadioButton_3.setForeground(new Color(61, 45, 20));
+		rdbtnNewRadioButton_3.setFont(new Font("PT Sans", Font.BOLD, 16));
 
 		rdbtnNewRadioButton_3.setText("E-Sport");
 		buttonGroup.add(rdbtnNewRadioButton_3);
-		rdbtnNewRadioButton_3.setBounds(294, 252, 109, 23);
+		rdbtnNewRadioButton_3.setBounds(294, 252, 143, 23);
 		panel.add(rdbtnNewRadioButton_3);
 
 		// Code for JCalendar
