@@ -40,6 +40,7 @@ public class MainUserGUI extends JFrame {
 	private JLabel lblUsername;
 	private JPanel panelCategorias;
 	private JButton btnFutbol;
+	private JButton btnEsports;
 	private JLabel lblCategorias;
 	private JPanel separador1;
 	private JPanel separador2;
@@ -77,7 +78,6 @@ public class MainUserGUI extends JFrame {
 				try {
 					//if (ConfigXML.getInstance().isBusinessLogicLocal()) facade.close();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					System.out.println("Error: "+e1.toString()+" , probably problems with Business Logic or Database");
 				}
 				System.exit(0);
@@ -233,7 +233,13 @@ public class MainUserGUI extends JFrame {
 					dispose(e);
 				}
 			});
-			btnBaloncesto.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/BaloncestoES.png")));
+			if(Locale.getDefault().getLanguage()=="es") {
+				btnBaloncesto.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/BaloncestoES.png")));
+			}else if(Locale.getDefault().getLanguage()=="en") {
+				btnBaloncesto.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/BaloncestoEN.png")));
+			}else if(Locale.getDefault().getLanguage()=="eus"){
+				btnBaloncesto.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/BaloncestoEUS.png")));
+			}
 			btnBaloncesto.setBorderPainted(false);
 		}
 		return btnBaloncesto;
@@ -249,7 +255,13 @@ public class MainUserGUI extends JFrame {
 					dispose(e);
 				}
 			});
-			btnTenis.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/TenisES.png")));
+			if(Locale.getDefault().getLanguage()=="es") {
+				btnTenis.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/TenisES.png")));
+			}else if(Locale.getDefault().getLanguage()=="en") {
+				btnTenis.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/TenisEN.png")));
+			}else if(Locale.getDefault().getLanguage()=="eus"){
+				btnTenis.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/TenisEUS.png")));
+			}
 			btnTenis.setBorderPainted(false);
 		}
 		return btnTenis;
@@ -282,7 +294,7 @@ public class MainUserGUI extends JFrame {
 			panelCategorias.setLayout(null);
 			panelCategorias.add(getLblCategorias());
 			
-			JButton btnEsports = new JButton(); //$NON-NLS-1$ //$NON-NLS-2$
+			btnEsports = new JButton();
 			btnEsports.setBounds(328, 245, 300, 173);
 			panelCategorias.add(btnEsports);
 			btnEsports.addActionListener(new ActionListener() {
@@ -292,7 +304,13 @@ public class MainUserGUI extends JFrame {
 					dispose(e);
 				}
 			});
-			btnEsports.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/EsportsES.png")));
+			if(Locale.getDefault().getLanguage()=="es") {
+				btnEsports.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/EsportsES.png")));
+			}else if(Locale.getDefault().getLanguage()=="en") {
+				btnEsports.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/EsportsEN.png")));
+			}else if(Locale.getDefault().getLanguage()=="eus"){
+				btnEsports.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/EsportsEUS.png")));
+			}
 			btnEsports.setBorderPainted(false);
 			panelCategorias.add(getBtnTenis());
 			panelCategorias.add(getBtnBaloncesto());
@@ -310,7 +328,13 @@ public class MainUserGUI extends JFrame {
 					dispose(e);
 				}
 			});
-			btnFutbol.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/FutbolES.png")));
+			if(Locale.getDefault().getLanguage()=="es") {
+				btnFutbol.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/FutbolES.png")));
+			}else if(Locale.getDefault().getLanguage()=="en") {
+				btnFutbol.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/FutbolEN.png")));
+			}else if(Locale.getDefault().getLanguage()=="eus"){
+				btnFutbol.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/FutbolEUS.png")));
+			}
 			btnFutbol.setBorderPainted(false);
 			btnFutbol.setBounds(16, 60, 300, 173);
 		}
@@ -538,6 +562,22 @@ public class MainUserGUI extends JFrame {
 		lblCategorias.setText(ResourceBundle.getBundle("Etiquetas").getString("Enjoy"));
 		lblEventosInteres.setText(ResourceBundle.getBundle("Etiquetas").getString("Interesting"));
 		btnApostar.setText(ResourceBundle.getBundle("Etiquetas").getString("Bet"));
+		if(Locale.getDefault().getLanguage()=="es") {
+			btnBaloncesto.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/BaloncestoES.png")));
+			btnFutbol.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/FutbolES.png")));
+			btnEsports.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/EsportsES.png")));
+			btnTenis.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/TenisES.png")));
+		}else if(Locale.getDefault().getLanguage()=="en") {
+			btnBaloncesto.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/BaloncestoEN.png")));
+			btnFutbol.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/FutbolEN.png")));
+			btnEsports.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/EsportsEN.png")));
+			btnTenis.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/TenisEN.png")));
+		}else if(Locale.getDefault().getLanguage()=="eus"){
+			btnBaloncesto.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/BaloncestoEUS.png")));
+			btnFutbol.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/FutbolEUS.png")));
+			btnEsports.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/EsportsEUS.png")));
+			btnTenis.setIcon(new ImageIcon(MainUserGUI.class.getResource("/img/TenisEUS.png")));
+		}
 	}
-} // @jve:decl-index=0:visual-constraint="0,0"
+} 
 

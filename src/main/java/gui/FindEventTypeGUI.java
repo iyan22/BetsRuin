@@ -62,7 +62,7 @@ public class FindEventTypeGUI extends JFrame {
 	private final JLabel lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Founds")); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JLabel lblUser = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("User")); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JPanel panelNormas = new JPanel();
-	private final JLabel lblCategoria = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules")); //$NON-NLS-1$ //$NON-NLS-2$
+	private final JLabel lblCategoria = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JLabel lblCategoriavar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Rules2")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private String type;
@@ -320,11 +320,21 @@ public class FindEventTypeGUI extends JFrame {
 		panelNormas.setBounds(200, 22, 189, 156);
 
 		getContentPane().add(panelNormas);
+		lblCategoria.setText(ResourceBundle.getBundle("Etiquetas").getString("Categories"));
 		lblCategoria.setForeground(new Color(61, 45, 20));
 		lblCategoria.setFont(new Font("PT Sans", Font.BOLD, 18));
 		lblCategoria.setBounds(16, 6, 131, 42);
 
 		panelNormas.add(lblCategoria);
+		if(type=="Futbol") {
+			lblCategoriavar.setText(ResourceBundle.getBundle("Etiquetas").getString("Football"));
+		}else if(type=="E-Sport"){
+			lblCategoriavar.setText(ResourceBundle.getBundle("Etiquetas").getString("E-Sport"));
+		}else if(type=="Tenis"){
+			lblCategoriavar.setText(ResourceBundle.getBundle("Etiquetas").getString("Tennis"));
+		}else if(type=="Baloncesto"){
+			lblCategoriavar.setText(ResourceBundle.getBundle("Etiquetas").getString("Basketball"));
+		}
 		lblCategoriavar.setForeground(new Color(255, 189, 89));
 		lblCategoriavar.setFont(new Font("PT Sans", Font.BOLD, 36));
 		lblCategoriavar.setBounds(16, 53, 163, 86);
@@ -439,5 +449,15 @@ public class FindEventTypeGUI extends JFrame {
 		seePreds.setText(ResourceBundle.getBundle("Etiquetas").getString("SeePrediction"));
 		btnSeguirEquipo.setText(ResourceBundle.getBundle("Etiquetas").getString("FollowTeam"));
 		jLabelFollow.setText(ResourceBundle.getBundle("Etiquetas").getString("FollowText"));
+		lblCategoria.setText(ResourceBundle.getBundle("Etiquetas").getString("Categories"));
+		if(type=="Futbol") {
+			lblCategoriavar.setText(ResourceBundle.getBundle("Etiquetas").getString("Football"));
+		}else if(type=="E-Sport"){
+			lblCategoriavar.setText(ResourceBundle.getBundle("Etiquetas").getString("E-Sport"));
+		}else if(type=="Tenis"){
+			lblCategoriavar.setText(ResourceBundle.getBundle("Etiquetas").getString("Tennis"));
+		}else if(type=="Baloncesto"){
+			lblCategoriavar.setText(ResourceBundle.getBundle("Etiquetas").getString("Basketball"));
+		}
 	}
 }
