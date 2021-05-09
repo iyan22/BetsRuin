@@ -1,18 +1,28 @@
 package businessLogic;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import configuration.ConfigXML;
 import dataAccess.DataAccess;
 import domain.Question;
 import domain.User;
 import domain.Bet;
+import domain.Email;
 import domain.Event;
 import domain.Prediction;
 import exceptions.AlreadyFollowed;
@@ -412,5 +422,71 @@ public class BLFacadeImplementation implements BLFacade {
 		Vector<Date> dates = dbManager.getOpenEventsMonthType(date,type);
 		dbManager.close();
 		return dates;
+	}
+	/**
+	 * Method used to send mail to all the users
+	 */
+	@WebMethod
+	public void sendMailOffer(Email mail) {
+		dbManager.open(false);
+		ArrayList<User> users=dbManager.getAllUsers();
+		dbManager.close();
+		String from = mail.getSender();
+		String host = "smtp.gmail.com";
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+
+            protected PasswordAuthentication getPasswordAuthentication() {
+
+                return new PasswordAuthentication("inforbets66@gmail.com", "betsinfor66");
+
+            }
+
+        });
+        boolean sent=true;
+		for(int i=0; i<users.size(); i++) {
+	        User u = users.get(i);
+	        String to=u.getMail();
+	        session.setDebug(true);
+
+	        try {
+	            // Create a default MimeMessage object.
+	            MimeMessage message = new MimeMessage(session);
+
+	            // Set From: header field of the header.
+	            message.setFrom(new InternetAddress(from));
+
+	            // Set To: header field of the header.
+	            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+	            // Set Subject: header field
+	            message.setSubject(mail.getSubject());
+
+	            // Now set the actual message
+	            message.setText(mail.getMessage());
+
+	            System.out.println("sending...");
+	            // Send message
+	            Transport.send(message);
+	            System.out.println("Sent message successfully....");
+	        } catch (MessagingException mex) {
+	            //mex.printStackTrace(); do nothing
+	        	sent=false;
+	        }
+	        if(sent) {
+	        	mail.addUser(u);
+	        }else {
+	        	sent=true;
+	        }
+	        
+		}
+		dbManager.open(false);
+		dbManager.saveMail(mail);
+		dbManager.close();
+		
 	}
 }

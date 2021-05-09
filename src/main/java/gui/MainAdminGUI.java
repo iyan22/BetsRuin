@@ -31,6 +31,7 @@ public class MainAdminGUI extends JFrame {
 	protected JLabel jLabelSelectOption;
 	private JButton btnReturn;
 	private User u;
+	private JButton sendMail;
 	
 	/**
 	 * Create the frame.
@@ -56,7 +57,7 @@ public class MainAdminGUI extends JFrame {
 
 	public void initialize() {
 		
-		this.setSize(635, 525);
+		this.setSize(635, 557);
 		this.setContentPane(getJContentPane());
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.this.title")); //$NON-NLS-1$ //$NON-NLS-2$
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,7 +84,7 @@ public class MainAdminGUI extends JFrame {
 				}
 			});
 			btnCloseEvent.setText("Close Event"); 
-			btnCloseEvent.setBounds(36, 323, 548, 37);
+			btnCloseEvent.setBounds(36, 321, 548, 37);
 			btnCloseEvent.setFont(new Font("PT Sans", Font.BOLD, 16));
 			btnCloseEvent.setForeground(new Color(61, 45, 20));
 			btnCloseEvent.setBackground(new Color(255, 189, 89));
@@ -96,8 +97,9 @@ public class MainAdminGUI extends JFrame {
 			jLabelLogo.setHorizontalAlignment(SwingConstants.CENTER);
 			jLabelLogo.setForeground(Color.BLACK);
 			jLabelLogo.setFont(new Font("PT Sans", Font.BOLD, 16));
-			jLabelLogo.setBounds(36, 36, 194, 159);
+			jLabelLogo.setBounds(36, 21, 194, 159);
 			contentPane.add(jLabelLogo);
+			contentPane.add(getSendMail());
 		}
 		return contentPane;
 	}
@@ -105,7 +107,7 @@ public class MainAdminGUI extends JFrame {
 	private JLabel getLblNewLabel() {
 		if (jLabelSelectOption == null) {
 			jLabelSelectOption = new JLabel("<html>ADMIN ZONE</html>");
-			jLabelSelectOption.setBounds(269, 36, 315, 159);
+			jLabelSelectOption.setBounds(269, 21, 315, 159);
 			jLabelSelectOption.setFont(new Font("PT Sans", Font.BOLD, 70));
 			jLabelSelectOption.setForeground(new Color(61, 45, 20));
 			jLabelSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
@@ -137,7 +139,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton2() {
 		if (jButtonCreateQuery == null) {
 			jButtonCreateQuery = new JButton();
-			jButtonCreateQuery.setBounds(36, 372, 269, 37);
+			jButtonCreateQuery.setBounds(36, 417, 269, 37);
 			jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("CreateQuery"));
 			jButtonCreateQuery.setFont(new Font("PT Sans", Font.BOLD, 16));
 			jButtonCreateQuery.setForeground(new Color(61, 45, 20));
@@ -157,7 +159,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton4() {
 		if (jButtonCreateEvent == null) {
 			jButtonCreateEvent = new JButton();
-			jButtonCreateEvent.setBounds(36, 274, 548, 37);
+			jButtonCreateEvent.setBounds(36, 273, 548, 37);
 			jButtonCreateEvent.setText("Create Event");
 			jButtonCreateEvent.setFont(new Font("PT Sans", Font.BOLD, 16));
 			jButtonCreateEvent.setForeground(new Color(61, 45, 20));
@@ -177,7 +179,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton getBoton5() {
 		if(jButtonCreatePrediction == null) {
 			jButtonCreatePrediction = new JButton();
-			jButtonCreatePrediction.setBounds(317, 372, 267, 37);
+			jButtonCreatePrediction.setBounds(317, 417, 267, 37);
 			jButtonCreatePrediction.setText("Create Prediction");
 			jButtonCreatePrediction.setFont(new Font("PT Sans", Font.BOLD, 16));
 			jButtonCreatePrediction.setForeground(new Color(61, 45, 20));
@@ -204,7 +206,7 @@ public class MainAdminGUI extends JFrame {
 			btnReturn.setBackground(new Color(61, 45, 20));
 			btnReturn.setOpaque(true);
 			btnReturn.setBorderPainted(false);
-			btnReturn.setBounds(36, 421, 548, 42);
+			btnReturn.setBounds(36, 465, 548, 42);
 			btnReturn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					close(e);
@@ -218,5 +220,24 @@ public class MainAdminGUI extends JFrame {
 		JFrame a = new StartGUI();
 		a.setVisible(true);
 		this.dispose();
+	}
+	private JButton getSendMail() {
+		if (sendMail == null) {
+			sendMail = new JButton();
+			sendMail.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					SendMailOfferGUI of=new SendMailOfferGUI(u);
+					of.setVisible(true);
+				}
+			});
+			sendMail.setText(ResourceBundle.getBundle("Etiquetas").getString("btnSendMail")); //$NON-NLS-1$ //$NON-NLS-2$
+			sendMail.setOpaque(true);
+			sendMail.setForeground(new Color(61, 45, 20));
+			sendMail.setFont(new Font("Dialog", Font.BOLD, 16));
+			sendMail.setBorderPainted(false);
+			sendMail.setBackground(new Color(255, 189, 89));
+			sendMail.setBounds(36, 369, 548, 37);
+		}
+		return sendMail;
 	}
 }

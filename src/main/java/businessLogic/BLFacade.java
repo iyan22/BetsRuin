@@ -8,6 +8,7 @@ import java.util.Vector;
 import domain.Question;
 import domain.User;
 import domain.Bet;
+import domain.Email;
 import domain.Event;
 import domain.Prediction;
 import exceptions.AlreadyFollowed;
@@ -217,4 +218,11 @@ public interface BLFacade  {
 	 */
 	@WebMethod
 	public Vector<Date> getOpenEventsMonthType(Date date, String type);
+	
+	/**
+	 * This method sends the Offer Email to all the registered users
+	 * @param mail
+	 */
+	@WebMethod
+	public void sendMailOffer(Email mail);
 }

@@ -18,6 +18,7 @@ import javax.persistence.TypedQuery;
 import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Bet;
+import domain.Email;
 import domain.Event;
 import domain.Prediction;
 import domain.Question;
@@ -124,7 +125,7 @@ public class DataAccess  {
 
 			}
 
-			User admin = new User("admin", "admin","admin","admin", "admin", "", "");
+			User admin = new User("admin", "admin","admin","admin", "inforbets66@gmail.com", "", "");
 			admin.setAdmin();
 			db.persist(admin);
 
@@ -764,6 +765,24 @@ public class DataAccess  {
 			res.add(d);
 		}
 		return res;
+	}
+	/**
+	 * This method all the registered Users except admins
+	 * @return list with all the users
+	 */
+	public ArrayList<User> getAllUsers(){
+		TypedQuery<User> query=db.createQuery("SELECT u FROM User u WHERE u.admin=FALSE",User.class);
+		ArrayList<User> users= (ArrayList<User>) query.getResultList();
+		return users;
+	}
+	/**
+	 * Method used to register the email in the 
+	 * @param mail
+	 */
+	public void saveMail(Email mail) {
+		db.getTransaction().begin();
+		db.persist(mail);
+		db.getTransaction().commit();
 	}
 	
 }

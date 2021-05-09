@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
+import domain.User;
 import exceptions.UserAlreadyExists;
 import exceptions.NoReferralCodeFound;
 
@@ -37,7 +38,7 @@ public class RegisterGUI extends JFrame {
 	private JPanel panel;
 	private JLabel lblReferralCode;
 	private JTextField referralField;
-
+	private User u;
 	/**
 	 * Create the frame.
 	 */

@@ -41,6 +41,9 @@ public class User {
 	public String getMail() {
 		return email;
 	}
+	public void setMail(String mail) {
+		this.email=mail;
+	}
 	public float getFunds() {
 		return funds;
 	}
@@ -107,4 +110,5 @@ public class User {
 	public Vector<String> getFollowed(){
 		return followed;
 	}
+	
 }
