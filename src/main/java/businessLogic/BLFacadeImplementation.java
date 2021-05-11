@@ -143,7 +143,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @param username to check
 	 * @return true if the user is admin, false otherwise.
 	 */
-	public boolean isAdmin(String username) {
+	@WebMethod public boolean isAdmin(String username) {
 		dbManager.open(false);
 		boolean adm = dbManager.isAdmin(username);
 		dbManager.close();
@@ -156,7 +156,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @param questionNumber id of the question.
 	 * @return question if is in the data base.
 	 */
-	public Question findQuestion(int questionNumber) {
+	@WebMethod public Question findQuestion(int questionNumber) {
 		dbManager.open(false);
 
 		Question q = dbManager.findQuestion(questionNumber);
@@ -173,7 +173,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @param date        of the event
 	 * @return the created event
 	 */
-	public Event createEvent(String description, Date date, String type) {
+	@WebMethod public Event createEvent(String description, Date date, String type) {
 		dbManager.open(false);
 		Event event = dbManager.createEvent(description, date, type);
 		dbManager.close();
@@ -188,7 +188,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @return user if the username is correct, null if username or password are not
 	 *         correct
 	 */
-	public User login(String username, String password) {
+	@WebMethod public User login(String username, String password) {
 		dbManager.open(false);
 
 		User usr = dbManager.login(username, password);
@@ -197,7 +197,7 @@ public class BLFacadeImplementation implements BLFacade {
 		return usr;
 	}
 
-	public Prediction addPrediction(Question q, String answer, float share) {
+	@WebMethod public Prediction addPrediction(Question q, String answer, float share) {
 		dbManager.open(false);
 		Prediction pred = dbManager.addPrediction(q, answer, share);
 		dbManager.close();
@@ -211,7 +211,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @param prediction to add the bet to
 	 * @return the created bet
 	 */
-	public Bet addBet(User user, float amount, Prediction pred) {
+	@WebMethod public Bet addBet(User user, float amount, Prediction pred) {
 		dbManager.open(false);
 		Bet bet = dbManager.addBet(user, amount, pred);
 		dbManager.close();
@@ -221,7 +221,7 @@ public class BLFacadeImplementation implements BLFacade {
 	/**
 	 * Method to close the data base.
 	 */
-	public void close() {
+	@WebMethod public void close() {
 		DataAccess dB4oManager = new DataAccess(false);
 
 		dB4oManager.close();
@@ -246,14 +246,14 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @param username
 	 * @return list of bets
 	 */
-	public List<Bet> getBets(String username) {
+	@WebMethod public List<Bet> getBets(String username) {
 		dbManager.open(false);
 		List<Bet> l = dbManager.getBets(username);
 		dbManager.close();
 		return l;
 	}
 
-	public List<Prediction> getPredictions(Question q) {
+	@WebMethod public List<Prediction> getPredictions(Question q) {
 		dbManager.open(false);
 		List<Prediction> list = dbManager.getPredictions(q);
 		dbManager.close();
@@ -266,7 +266,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @param user
 	 * @return boolean if successful or not
 	 */
-	public boolean addFunds(User user, float amount) {
+	@WebMethod public boolean addFunds(User user, float amount) {
 		dbManager.open(false);
 		boolean res = dbManager.addFunds(user, amount);
 		dbManager.close();
@@ -280,7 +280,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @param card
 	 * @return true if success, false if error
 	 */
-	public boolean addCard(User user, int[] card) {
+	@WebMethod public boolean addCard(User user, int[] card) {
 		dbManager.open(false);
 		boolean res = dbManager.addCard(user, card);
 		dbManager.close();
@@ -293,7 +293,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @param user
 	 * @param amount
 	 */
-	public void betMade(User user, float amount) {
+	@WebMethod public void betMade(User user, float amount) {
 		dbManager.open(false);
 		dbManager.betMade(user, amount);
 		dbManager.close();
@@ -304,7 +304,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * 
 	 * @param e
 	 */
-	public void closeEvent(Event e) {
+	@WebMethod public void closeEvent(Event e) {
 		dbManager.open(false);
 		dbManager.closeEvent(e);
 		dbManager.close();
@@ -315,7 +315,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * 
 	 * @param p
 	 */
-	public void setPredictionToWinner(Prediction p) {
+	@WebMethod public void setPredictionToWinner(Prediction p) {
 		dbManager.open(false);
 		dbManager.setWinner(p);
 		dbManager.close();
@@ -326,7 +326,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * 
 	 * @param q
 	 */
-	public void closeQuestion(Question q) {
+	@WebMethod public void closeQuestion(Question q) {
 		dbManager.open(false);
 		dbManager.closeQuestion(q);
 		dbManager.close();
@@ -368,7 +368,7 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @param user
 	 * @return collection of events
 	 */
-	public Vector<Event> activeFollowedEvents(User user) {
+	@WebMethod public Vector<Event> activeFollowedEvents(User user) {
 		dbManager.open(false);
 		Vector<Event> events = dbManager.activeFollowedEvents(user);
 		dbManager.close();
@@ -381,14 +381,14 @@ public class BLFacadeImplementation implements BLFacade {
 	 * @param e
 	 * @return collection of questions
 	 */
-	public Vector<Question> getQuestions(Event e) {
+	@WebMethod public Vector<Question> getQuestions(Event e) {
 		dbManager.open(false);
 		Vector<Question> questions = dbManager.getQuestions(e);
 		dbManager.close();
 		return questions;
 	}
 
-	public Vector<String> getFollowedTeams(User user) {
+	@WebMethod public Vector<String> getFollowedTeams(User user) {
 		dbManager.open(false);
 		Vector<String> teams = dbManager.getFollowedTeams(user);
 		dbManager.close();

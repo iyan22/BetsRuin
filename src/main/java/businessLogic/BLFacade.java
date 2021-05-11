@@ -103,14 +103,14 @@ public interface BLFacade  {
 	 * @param questionNumber id of the question.
 	 * @return question if is in the data base.
 	 */
-	public Question findQuestion(int questionNumber);
+	@WebMethod public Question findQuestion(int questionNumber);
 	
 	/**
 	 * This method checks if the user is administrator.
 	 * @param username to check
 	 * @return true if the user is admin, false otherwise.
 	 */
-	public boolean isAdmin(String username);
+	@WebMethod public boolean isAdmin(String username);
 	
 	/**
 	 * This method calls the data access to initialize the database with some events and questions.
@@ -123,49 +123,49 @@ public interface BLFacade  {
 	 * @param username
 	 * @return list of bets
 	 */
-	public List<Bet> getBets(String username);
+	@WebMethod public List<Bet> getBets(String username);
 	
 	/**
 	 * Method used to obtain all the predictions that have been made for a question
 	 * @param q 
 	 * @return list of predictions
 	 */
-	public List<Prediction> getPredictions(Question q);
+	@WebMethod public List<Prediction> getPredictions(Question q);
 	
 	/**
 	 * Method used to add funds to user's account
 	 * @param user
 	 * @return boolean if successful or not
 	 */
-	public boolean addFunds(User user, float amount);
+	@WebMethod public boolean addFunds(User user, float amount);
 	/**
 	 * Method used to assign a credit card to a user
 	 * @param user
 	 * @param card
 	 * @return true if success, false if error
 	 */
-	public boolean addCard(User user, int[] card);
+	@WebMethod public boolean addCard(User user, int[] card);
 	/**
 	 * Method used to subtract the amount betted
 	 * @param user
 	 * @param amount
 	 */
-	public void betMade(User user, float amount);
+	@WebMethod public void betMade(User user, float amount);
 	/**
 	 * Method used to close an event, all questions must be closed
 	 * @param e
 	 */
-	public void closeEvent(Event e);
+	@WebMethod public void closeEvent(Event e);
 	/**
 	 * Method used to set a prediction as winner
 	 * @param p
 	 */
-	public void setPredictionToWinner(Prediction p);
+	@WebMethod public void setPredictionToWinner(Prediction p);
 	/**
 	 * Method used to close a question
 	 * @param q
 	 */
-	public void closeQuestion(Question q);
+	@WebMethod public void closeQuestion(Question q);
 	
 	/**
 	 * This method invokes the data access to retrieve the dates a month for which there are events
@@ -191,16 +191,16 @@ public interface BLFacade  {
 	 * @param user
 	 * @return collection of events
 	 */
-	public Vector<Event> activeFollowedEvents(User user);
+	@WebMethod public Vector<Event> activeFollowedEvents(User user);
 	
 	/**
 	 * Method used to obtain all the questions created for an event
 	 * @param e
 	 * @return collection of questions
 	 */
-	public Vector<Question> getQuestions(Event e);
+	@WebMethod public Vector<Question> getQuestions(Event e);
 	
-	public Vector<String> getFollowedTeams(User user);
+	@WebMethod public Vector<String> getFollowedTeams(User user);
 	
 	/**
 	 * This method retrieves the events of a given date with a specific category

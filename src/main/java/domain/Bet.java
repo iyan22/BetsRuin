@@ -1,14 +1,24 @@
 package domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+@SuppressWarnings("serial")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Bet {
+public class Bet implements Serializable{
 	
+	@XmlID
+	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@Id
-	private int id;
+	private Integer id;
 	@XmlIDREF
 	private Prediction prediction;
 	private String username;
@@ -24,6 +34,10 @@ public class Bet {
 	public void setUsername(User username) {
 		this.username = username.getUsername();
 	}
+	
+	public void setAmount(float a) {
+		amount=a;
+	}
 
 	public float getAmount() {
 		return amount;
@@ -32,17 +46,20 @@ public class Bet {
 	public String getUsername() {
 		return username;
 	}
-
-	public void setUser(User user) {
-		this.username = user.getUsername();
-	}
 	
 	public Prediction getPrediction() {
 		return prediction;
+	}
+	
+	public void setPrediction(Prediction p) {
+		prediction=p;
 	}
 	
 	public int getId() {
 		return id;
 	}
 	
+	public void setId(Integer i) {
+		id=i;
+	}
 }

@@ -1,5 +1,6 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import javax.persistence.CascadeType;
@@ -7,13 +8,20 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
-
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+@SuppressWarnings("serial")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Prediction {
-
+public class Prediction implements Serializable{
+	
+	@XmlID
+	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@Id
-	private int predictionId;
+	private Integer predictionId;
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private Vector<Bet> bets = new Vector<Bet>();
 	@XmlIDREF

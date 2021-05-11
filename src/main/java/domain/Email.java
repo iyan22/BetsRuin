@@ -5,13 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+
 @Entity
 public class Email {
+	
 	String sender;
 	String subject;
 	String message;
 	Date date; 
 	LinkedList<User> sentTo;
+	
 	public Email(String sender, String subject, String message) {
 		this.sender=sender;
 		this.subject=subject;

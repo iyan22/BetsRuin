@@ -298,7 +298,7 @@ public class DataAccess  {
 		System.out.println(">> DataAccess: addBet");
 		int i = countBets();
 		Bet bet = new Bet(i, amount, user, pred);
-		bet.setUser(user);
+		bet.setUsername(user);
 		pred.addBet(bet);
 		System.out.println("Bet added!");
 		db.getTransaction().begin();

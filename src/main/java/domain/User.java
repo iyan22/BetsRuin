@@ -1,15 +1,22 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlID;
 
 import exceptions.AlreadyFollowed;
 
+@SuppressWarnings("serial")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class User {
+public class User implements Serializable{
 	
+	@XmlID
 	@Id
 	private String username;
 	private String name;
