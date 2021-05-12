@@ -28,6 +28,8 @@ public class PlaceBetGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField amountBet;
+	private Prediction p;
+	private User u;
 
 	/**
 	 * Create the frame.
@@ -41,6 +43,9 @@ public class PlaceBetGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		this.p = prediction;
+		this.u = user;
 
 		JLabel submitted = new JLabel("");
 		submitted.setBackground(Color.WHITE);
@@ -164,7 +169,7 @@ public class PlaceBetGUI extends JFrame {
 		textPane.setParagraphAttributes(attribs, true);
 		textPane.setForeground(Color.red);
 
-		JLabel currency = new JLabel("€");
+		JLabel currency = new JLabel("â‚¬");
 		currency.setFont(new Font("PT Sans", Font.PLAIN, 16));
 		currency.setBounds(216, 108, 37, 19);
 		panel.add(currency);
