@@ -1,0 +1,7 @@
+NOTA INFORMATIVA
+
+Hemos tenido problemas a la hora de generar el fichero .jar principalmente errores de dependencia con los resources (base de datos, config.xml...)
+
+Sentimos las molestias.
+
+Nenufar
