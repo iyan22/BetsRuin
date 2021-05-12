@@ -1,9 +1,7 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
 
+import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -21,11 +19,13 @@ import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
+@SuppressWarnings("serial")
 public class SendMailOfferGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField subject;
 	private BLFacade facade = StartGUI.getBusinessLogic();
+	@SuppressWarnings("unused")
 	private User u;
 	JLabel result;
 	/**

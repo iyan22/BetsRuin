@@ -23,7 +23,7 @@ import javax.swing.ImageIcon;
 public class MainAdminGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane=null;
+	private JPanel contentPane = null;
 	private JButton jButtonCreateEvent = null;
 	private JButton jButtonCreateQuery = null;
 	private JButton jButtonQueryQuestions = null;
@@ -32,7 +32,7 @@ public class MainAdminGUI extends JFrame {
 	private JButton btnReturn;
 	private User u;
 	private JButton sendMail;
-	
+
 	/**
 	 * Create the frame.
 	 */
@@ -44,9 +44,10 @@ public class MainAdminGUI extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				try {
-					//if (ConfigXML.getInstance().isBusinessLogicLocal()) facade.close();
+					// if (ConfigXML.getInstance().isBusinessLogicLocal()) facade.close();
 				} catch (Exception e1) {
-					System.out.println("Error: "+e1.toString()+" , probably problems with Business Logic or Database");
+					System.out.println(
+							"Error: " + e1.toString() + " , probably problems with Business Logic or Database");
 				}
 				System.exit(0);
 			}
@@ -56,14 +57,14 @@ public class MainAdminGUI extends JFrame {
 	}
 
 	public void initialize() {
-		
+
 		this.setSize(635, 557);
 		this.setContentPane(getJContentPane());
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.this.title")); //$NON-NLS-1$ //$NON-NLS-2$
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 	}
-	
+
 	public JPanel getJContentPane() {
 		if (contentPane == null) {
 			contentPane = new JPanel();
@@ -75,7 +76,7 @@ public class MainAdminGUI extends JFrame {
 			contentPane.add(getBoton3());
 			contentPane.add(getBoton5());
 			contentPane.add(getBtnReturn());
-			
+
 			JButton btnCloseEvent = new JButton();
 			btnCloseEvent.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -83,7 +84,7 @@ public class MainAdminGUI extends JFrame {
 					a.setVisible(true);
 				}
 			});
-			btnCloseEvent.setText("Close Event"); 
+			btnCloseEvent.setText("Close Event");
 			btnCloseEvent.setBounds(36, 321, 548, 37);
 			btnCloseEvent.setFont(new Font("PT Sans", Font.BOLD, 16));
 			btnCloseEvent.setForeground(new Color(61, 45, 20));
@@ -91,8 +92,8 @@ public class MainAdminGUI extends JFrame {
 			btnCloseEvent.setOpaque(true);
 			btnCloseEvent.setBorderPainted(false);
 			contentPane.add(btnCloseEvent);
-			
-			JLabel jLabelLogo = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
+
+			JLabel jLabelLogo = new JLabel(); // $NON-NLS-1$ //$NON-NLS-2$
 			jLabelLogo.setIcon(new ImageIcon(MainAdminGUI.class.getResource("/img/LogoBetsRuinL.png")));
 			jLabelLogo.setHorizontalAlignment(SwingConstants.CENTER);
 			jLabelLogo.setForeground(Color.BLACK);
@@ -103,7 +104,7 @@ public class MainAdminGUI extends JFrame {
 		}
 		return contentPane;
 	}
-	
+
 	private JLabel getLblNewLabel() {
 		if (jLabelSelectOption == null) {
 			jLabelSelectOption = new JLabel("<html>ADMIN ZONE</html>");
@@ -114,7 +115,7 @@ public class MainAdminGUI extends JFrame {
 		}
 		return jLabelSelectOption;
 	}
-	
+
 	private JButton getBoton3() {
 		if (jButtonQueryQuestions == null) {
 			jButtonQueryQuestions = new JButton();
@@ -135,7 +136,7 @@ public class MainAdminGUI extends JFrame {
 		}
 		return jButtonQueryQuestions;
 	}
-	
+
 	private JButton getBoton2() {
 		if (jButtonCreateQuery == null) {
 			jButtonCreateQuery = new JButton();
@@ -155,7 +156,7 @@ public class MainAdminGUI extends JFrame {
 		}
 		return jButtonCreateQuery;
 	}
-	
+
 	private JButton getBoton4() {
 		if (jButtonCreateEvent == null) {
 			jButtonCreateEvent = new JButton();
@@ -175,9 +176,9 @@ public class MainAdminGUI extends JFrame {
 		}
 		return jButtonCreateEvent;
 	}
-	
+
 	private JButton getBoton5() {
-		if(jButtonCreatePrediction == null) {
+		if (jButtonCreatePrediction == null) {
 			jButtonCreatePrediction = new JButton();
 			jButtonCreatePrediction.setBounds(317, 417, 267, 37);
 			jButtonCreatePrediction.setText("Create Prediction");
@@ -192,11 +193,11 @@ public class MainAdminGUI extends JFrame {
 					a.setVisible(true);
 				}
 			});
-			
+
 		}
 		return jButtonCreatePrediction;
 	}
-	
+
 	private JButton getBtnReturn() {
 		if (btnReturn == null) {
 			btnReturn = new JButton();
@@ -215,25 +216,26 @@ public class MainAdminGUI extends JFrame {
 		}
 		return btnReturn;
 	}
-	
+
 	public void close(ActionEvent e) {
 		JFrame a = new StartGUI();
 		a.setVisible(true);
 		this.dispose();
 	}
+
 	private JButton getSendMail() {
 		if (sendMail == null) {
 			sendMail = new JButton();
 			sendMail.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					SendMailOfferGUI of=new SendMailOfferGUI(u);
+					SendMailOfferGUI of = new SendMailOfferGUI(u);
 					of.setVisible(true);
 				}
 			});
 			sendMail.setText(ResourceBundle.getBundle("Etiquetas").getString("btnSendMail")); //$NON-NLS-1$ //$NON-NLS-2$
 			sendMail.setOpaque(true);
 			sendMail.setForeground(new Color(61, 45, 20));
-			sendMail.setFont(new Font("Dialog", Font.BOLD, 16));
+			sendMail.setFont(new Font("PT Sans", Font.BOLD, 16));
 			sendMail.setBorderPainted(false);
 			sendMail.setBackground(new Color(255, 189, 89));
 			sendMail.setBounds(36, 369, 548, 37);

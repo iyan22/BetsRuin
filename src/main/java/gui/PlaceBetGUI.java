@@ -28,7 +28,9 @@ public class PlaceBetGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField amountBet;
+	@SuppressWarnings("unused")
 	private Prediction p;
+	@SuppressWarnings("unused")
 	private User u;
 
 	/**

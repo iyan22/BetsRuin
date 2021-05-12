@@ -64,6 +64,7 @@ public class DirectAccessEventGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("unused")
 	public DirectAccessEventGUI(Event e, User u) {
 		setTitle("Bets&Ruin - Place bet favourite team");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
