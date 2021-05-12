@@ -31,6 +31,8 @@ public class Bet implements Serializable{
 		this.prediction = prediction;
 	}
 	
+	public Bet() {}
+	
 	public void setUsername(User username) {
 		this.username = username.getUsername();
 	}

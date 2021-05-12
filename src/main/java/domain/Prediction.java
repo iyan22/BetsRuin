@@ -37,6 +37,7 @@ public class Prediction implements Serializable{
 		this.share = share;
 	}
 	
+	public Prediction() {}
 
 	public int getPredictionId() {
 		return predictionId;

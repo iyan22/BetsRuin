@@ -22,6 +22,9 @@ public class Email {
 		this.date= new Date();
 		this.sentTo= new LinkedList<User>();
 	}
+	
+	public Email() {}
+	
 	public String getSender() {
 		return sender;
 	}

@@ -45,6 +45,9 @@ public class User implements Serializable{
 		this.admin=false;
 		this.followed = new Vector<String>();
 	}
+	
+	public User() {}
+	
 	public String getMail() {
 		return email;
 	}
