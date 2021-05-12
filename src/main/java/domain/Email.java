@@ -9,11 +9,11 @@ import javax.persistence.Entity;
 @Entity
 public class Email {
 	
-	String sender;
-	String subject;
-	String message;
-	Date date; 
-	LinkedList<User> sentTo;
+	private String sender;
+	private String subject;
+	private String message;
+	private Date date; 
+	private LinkedList<User> sentTo;
 	
 	public Email(String sender, String subject, String message) {
 		this.sender=sender;
