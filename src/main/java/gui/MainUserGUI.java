@@ -431,7 +431,7 @@ public class MainUserGUI extends JFrame {
 	}
 	private JLabel getLblEspanol() {
 		if (lblEspanol == null) {
-			lblEspanol = new JLabel("ï¿½Nos entiendes?"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-2$
+			lblEspanol = new JLabel("¿Nos entiendes?"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-2$
 			lblEspanol.setHorizontalAlignment(SwingConstants.CENTER);
 			lblEspanol.setBounds(16, 7, 203, 19);
 			lblEspanol.setForeground(new Color(61, 45, 20));
