@@ -58,7 +58,7 @@ public class CreateEventGUI extends JFrame {
 
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
 	private final JPanel panel = new JPanel();
-	private final JLabel lblType = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateEventGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
+	private final JLabel lblType = new JLabel("Create Event GUI"); //$NON-NLS-1$ //$NON-NLS-2$
 	private final JRadioButton rdbtnNewRadioButton = new JRadioButton();
 	private final JRadioButton rdbtnNewRadioButton_1 = new JRadioButton();
 	private final JRadioButton rdbtnNewRadioButton_2 = new JRadioButton();

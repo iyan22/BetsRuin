@@ -77,8 +77,8 @@ public class SetWinnerPredictionGUI extends JFrame {
 
 				mod.addRow(row);
 			}
-			table.getColumnModel().getColumn(0).setPreferredWidth(150);
-			table.getColumnModel().getColumn(1).setPreferredWidth(150);
+			//table.getColumnModel().getColumn(0).setPreferredWidth(150);
+			//table.getColumnModel().getColumn(1).setPreferredWidth(150);
 		}
 
 		btnClose = new JButton("Close");

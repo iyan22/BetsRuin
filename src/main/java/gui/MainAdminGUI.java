@@ -60,7 +60,7 @@ public class MainAdminGUI extends JFrame {
 
 		this.setSize(635, 557);
 		this.setContentPane(getJContentPane());
-		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainAdminGUI.this.title")); //$NON-NLS-1$ //$NON-NLS-2$
+		this.setTitle("Main Admin"); //$NON-NLS-1$ //$NON-NLS-2$
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
