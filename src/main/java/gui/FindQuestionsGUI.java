@@ -312,7 +312,7 @@ public class FindQuestionsGUI extends JFrame {
 		lblUserVar.setBounds(95, 9, 188, 19);
 		panelInfo.add(lblUserVar);
 
-		JLabel lblSaldoVar = new JLabel(u.getFunds() + "€");
+		JLabel lblSaldoVar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("FindQuestionsGUI.lblSaldoVar.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lblSaldoVar.setForeground(new Color(61, 45, 20));
 		lblSaldoVar.setFont(new Font("PT Sans", Font.BOLD, 14));
 		lblSaldoVar.setBounds(96, 40, 187, 19);

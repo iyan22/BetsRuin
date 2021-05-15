@@ -268,7 +268,7 @@ public class MainUserGUI extends JFrame {
 	}
 	private JLabel getJLabelWelcome() {
 		if (jLabelWelcome == null) {
-			jLabelWelcome = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Wellcome")); //$NON-NLS-1$ //$NON-NLS-2$
+			jLabelWelcome = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Welcome")); //$NON-NLS-1$ //$NON-NLS-2$
 			jLabelWelcome.setForeground(new Color(61, 45, 20));
 			jLabelWelcome.setFont(new Font("PT Sans", Font.BOLD, 24));
 			jLabelWelcome.setBounds(248, 53, 141, 32);
@@ -431,7 +431,7 @@ public class MainUserGUI extends JFrame {
 	}
 	private JLabel getLblEspanol() {
 		if (lblEspanol == null) {
-			lblEspanol = new JLabel("¡Nos entiendes?"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-2$
+			lblEspanol = new JLabel("ï¿½Nos entiendes?"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-2$
 			lblEspanol.setHorizontalAlignment(SwingConstants.CENTER);
 			lblEspanol.setBounds(16, 7, 203, 19);
 			lblEspanol.setForeground(new Color(61, 45, 20));
@@ -558,7 +558,7 @@ public class MainUserGUI extends JFrame {
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("KnowEvents"));
 		btnReturn.setText(ResourceBundle.getBundle("Etiquetas").getString("Logout"));
 		UserZone.setText(ResourceBundle.getBundle("Etiquetas").getString("UserZone"));
-		jLabelWelcome.setText(ResourceBundle.getBundle("Etiquetas").getString("Wellcome")); 
+		jLabelWelcome.setText(ResourceBundle.getBundle("Etiquetas").getString("Welcome")); 
 		lblCategorias.setText(ResourceBundle.getBundle("Etiquetas").getString("Enjoy"));
 		lblEventosInteres.setText(ResourceBundle.getBundle("Etiquetas").getString("Interesting"));
 		btnApostar.setText(ResourceBundle.getBundle("Etiquetas").getString("Bet"));
